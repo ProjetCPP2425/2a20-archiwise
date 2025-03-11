@@ -1,0 +1,697 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1203</width>
+    <height>773</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Gestion des Clients</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QStackedWidget" name="stackedWidget">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>-20</y>
+      <width>1021</width>
+      <height>691</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="page">
+     <widget class="QWidget" name="maincontent_2" native="true">
+      <property name="geometry">
+       <rect>
+        <x>-20</x>
+        <y>30</y>
+        <width>1061</width>
+        <height>711</height>
+       </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>10</horstretch>
+        <verstretch>16</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QWidget#maincontent
+ {
+    background-color: white;
+}
+</string>
+      </property>
+      <widget class="QPushButton" name="pushButton_4">
+       <property name="geometry">
+        <rect>
+         <x>240</x>
+         <y>20</y>
+         <width>201</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #007bff;  /* Bleu */
+    color: white;
+    border-radius: 5px;
+    padding: 8px 15px;
+    font-size: 12pt;
+    font-weight: bold;
+}
+
+QPushButton:hover {
+    background-color: #0056b3;  /* Bleu foncé au survol */
+}
+
+</string>
+       </property>
+       <property name="text">
+        <string>exporter en PDF</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_5">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>200</y>
+         <width>41</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLabel {
+    font-size: 16px;
+    color: #0f3460;
+    padding-left: 8px;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>🔍</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_5">
+       <property name="geometry">
+        <rect>
+         <x>450</x>
+         <y>20</y>
+         <width>201</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #007bff;  /* Bleu */
+    color: white;
+    border-radius: 5px;
+    padding: 8px 15px;
+    font-size: 12pt;
+    font-weight: bold;
+}
+
+QPushButton:hover {
+    background-color: #0056b3;  /* Bleu foncé au survol */
+}
+</string>
+       </property>
+       <property name="text">
+        <string>statistique</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label">
+       <property name="geometry">
+        <rect>
+         <x>440</x>
+         <y>110</y>
+         <width>191</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #2E86C1; /* Couleur du texte */
+font-size: 18px; /* Taille de la police */
+font-weight: bold; /* Texte en gras */</string>
+       </property>
+       <property name="text">
+        <string>Liste des employés</string>
+       </property>
+      </widget>
+      <widget class="QTableWidget" name="tableWidget">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>260</y>
+         <width>871</width>
+         <height>181</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QTableWidget {
+    background-color: white;
+    border: 2px solid #007bff;
+    border-radius: 5px;
+    gridline-color: #007bff;
+    font-size: 12pt;
+    font-weight: bold;
+}
+
+/* Header Styling */
+QHeaderView::section {
+    background-color: #007bff; /* Blue header */
+    color: white;
+    padding: 8px;
+    border: 1px solid #0056b3; /* Dark blue border */
+    font-size: 12pt;
+    font-weight: bold;
+}
+
+/* Table Cells */
+QTableWidget::item {
+    padding: 8px;
+}
+
+/* Selected Row Styling */
+QTableWidget::item:selected {
+    background-color: #0056b3; /* Darker blue */
+    color: white;
+}
+</string>
+       </property>
+       <column>
+        <property name="text">
+         <string>Nom</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Prenom</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Email</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Numero</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Numero</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Salaire</string>
+        </property>
+       </column>
+       <column>
+        <property name="text">
+         <string>Action</string>
+        </property>
+       </column>
+      </widget>
+      <widget class="QPushButton" name="pushButton_6">
+       <property name="geometry">
+        <rect>
+         <x>700</x>
+         <y>200</y>
+         <width>201</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #007bff;  /* Bleu */
+    color: white;
+    border-radius: 5px;
+    padding: 8px 15px;
+    font-size: 12pt;
+    font-weight: bold;
+}
+
+QPushButton:hover {
+    background-color: #0056b3;  /* Bleu foncé au survol */
+}
+
+</string>
+       </property>
+       <property name="text">
+        <string>Supprimer</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_7">
+       <property name="geometry">
+        <rect>
+         <x>460</x>
+         <y>200</y>
+         <width>201</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #007bff;  /* Bleu */
+    color: white;
+    border-radius: 5px;
+    padding: 8px 15px;
+    font-size: 12pt;
+    font-weight: bold;
+}
+
+QPushButton:hover {
+    background-color: #0056b3;  /* Bleu foncé au survol */
+}
+
+</string>
+       </property>
+       <property name="text">
+        <string>Modfier</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_8">
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>200</y>
+         <width>201</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #007bff;  /* Bleu */
+    color: white;
+    border-radius: 5px;
+    padding: 8px 15px;
+    font-size: 12pt;
+    font-weight: bold;
+}
+
+QPushButton:hover {
+    background-color: #0056b3;  /* Bleu foncé au survol */
+}
+
+</string>
+       </property>
+       <property name="text">
+        <string>Ajouter</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="lineEdit_4">
+       <property name="geometry">
+        <rect>
+         <x>50</x>
+         <y>200</y>
+         <width>171</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLineEdit {
+    background-color: #f5f5f5;  /* Fond gris clair moderne */
+    border: 2px solid #0f3460;  /* Bordure bleu foncé */
+    border-radius: 8px;  /* Coins arrondis */
+    padding: 8px 12px;  /* Espacement du texte */
+    font-size: 14px;
+    color: #333;  /* Couleur du texte */
+}
+
+QLineEdit:focus {
+    border: 2px solid #e94560;  /* Bordure rouge clair quand on clique */
+    background-color: white;  /* Fond blanc au focus */
+}
+</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="ajmateriel_3">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>20</y>
+         <width>201</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #007bff;  /* Bleu */
+    color: white;
+    border-radius: 5px;
+    padding: 8px 15px;
+    font-size: 12pt;
+    font-weight: bold;
+}
+
+QPushButton:hover {
+    background-color: #0056b3;  /* Bleu foncé au survol */
+}
+</string>
+       </property>
+       <property name="text">
+        <string>ajouter matériel</string>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_2">
+     <widget class="QLineEdit" name="lineEdit">
+      <property name="geometry">
+       <rect>
+        <x>230</x>
+        <y>40</y>
+        <width>301</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>               remplir le formulaire </string>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="side" native="true">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>-20</y>
+      <width>231</width>
+      <height>701</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QWidget#side {
+    background-color: #1e1e1e;
+}
+</string>
+    </property>
+    <widget class="QWidget" name="layoutWidget_2">
+     <property name="geometry">
+      <rect>
+       <x>9</x>
+       <y>19</y>
+       <width>211</width>
+       <height>521</height>
+      </rect>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QLabel" name="titlelabel_2">
+        <property name="styleSheet">
+         <string notr="true">QLabel {
+	font: 18pt &quot;Segoe UI&quot;;
+    color: white;
+}
+</string>
+        </property>
+        <property name="text">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;Archi&lt;span style=&quot; font-weight:700; color:#3282f6;&quot;&gt;Wise&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer_3">
+        <property name="orientation">
+         <enum>Qt::Orientation::Vertical</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Policy::Minimum</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnhome_2">
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+    background-color: #0f3460;  /* Bleu foncé moderne */
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    border: 2px solid #0f3460;
+    border-radius: 8px; /* Coins arrondis */
+    padding: 10px 15px;
+    transition: 0.3s;
+}
+
+QPushButton:hover {
+    background-color: #1a5276;  /* Bleu plus clair au survol */
+    border: 2px solid white;
+}
+
+QPushButton:pressed {
+    background-color: #e94560; /* Rouge clair au clic */
+    border: 2px solid #e94560;
+}
+QPushButton:pressed {
+    background-color: #e94560;
+    border: 2px solid #e94560;
+    transform: scale(0.95); /* Effet d'appui */
+}
+</string>
+        </property>
+        <property name="text">
+         <string>🏠 Accueil</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnProjects_2">
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+    background-color: #0f3460;  /* Bleu foncé moderne */
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    border: 2px solid #0f3460;
+    border-radius: 8px; /* Coins arrondis */
+    padding: 10px 15px;
+    transition: 0.3s;
+}
+
+QPushButton:hover {
+    background-color: #1a5276;  /* Bleu plus clair au survol */
+    border: 2px solid white;
+}
+
+QPushButton:pressed {
+    background-color: #e94560; /* Rouge clair au clic */
+    border: 2px solid #e94560;
+}
+</string>
+        </property>
+        <property name="text">
+         <string>📂 Projets</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnclients_2">
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+    background-color: #0f3460;  /* Bleu foncé moderne */
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    border: 2px solid #0f3460;
+    border-radius: 8px; /* Coins arrondis */
+    padding: 10px 15px;
+    transition: 0.3s;
+}
+
+QPushButton:hover {
+    background-color: #1a5276;  /* Bleu plus clair au survol */
+    border: 2px solid white;
+}
+
+QPushButton:pressed {
+    background-color: #e94560; /* Rouge clair au clic */
+    border: 2px solid #e94560;
+}
+</string>
+        </property>
+        <property name="text">
+         <string>👥 Clients</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnemployee_2">
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+    background-color: #0f3460;  /* Bleu foncé moderne */
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    border: 2px solid #0f3460;
+    border-radius: 8px; /* Coins arrondis */
+    padding: 10px 15px;
+    transition: 0.3s;
+}
+
+QPushButton:hover {
+    background-color: #1a5276;  /* Bleu plus clair au survol */
+    border: 2px solid white;
+}
+
+QPushButton:pressed {
+    background-color: #e94560; /* Rouge clair au clic */
+    border: 2px solid #e94560;
+}
+</string>
+        </property>
+        <property name="text">
+         <string>👷 Employés</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnchantiers_2">
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+    background-color: #0f3460;  /* Bleu foncé moderne */
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    border: 2px solid #0f3460;
+    border-radius: 8px; /* Coins arrondis */
+    padding: 10px 15px;
+    transition: 0.3s;
+}
+
+QPushButton:hover {
+    background-color: #1a5276;  /* Bleu plus clair au survol */
+    border: 2px solid white;
+}
+
+QPushButton:pressed {
+    background-color: #e94560; /* Rouge clair au clic */
+    border: 2px solid #e94560;
+}
+</string>
+        </property>
+        <property name="text">
+         <string>🏗️ Chantiers</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnmateriels_2">
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+    background-color: #0f3460;  /* Bleu foncé moderne */
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    border: 2px solid #0f3460;
+    border-radius: 8px; /* Coins arrondis */
+    padding: 10px 15px;
+    transition: 0.3s;
+}
+
+QPushButton:hover {
+    background-color: #1a5276;  /* Bleu plus clair au survol */
+    border: 2px solid white;
+}
+
+QPushButton:pressed {
+    background-color: #e94560; /* Rouge clair au clic */
+    border: 2px solid #e94560;
+}
+</string>
+        </property>
+        <property name="text">
+         <string>🛠️ Matériels</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnmateriels_3">
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
+    background-color: #0f3460;  /* Bleu foncé moderne */
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    border: 2px solid #0f3460;
+    border-radius: 8px; /* Coins arrondis */
+    padding: 10px 15px;
+    transition: 0.3s;
+}
+
+QPushButton:hover {
+    background-color: #1a5276;  /* Bleu plus clair au survol */
+    border: 2px solid white;
+}
+
+QPushButton:pressed {
+    background-color: #e94560; /* Rouge clair au clic */
+    border: 2px solid #e94560;
+}
+</string>
+        </property>
+        <property name="text">
+         <string>fournisseurs</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer_4">
+        <property name="orientation">
+         <enum>Qt::Orientation::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>40</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1203</width>
+     <height>25</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources/>
+ <connections/>
+</ui>
