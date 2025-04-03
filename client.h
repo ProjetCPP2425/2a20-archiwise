@@ -6,9 +6,11 @@
 #include <QSqlQueryModel>
 #include <QSqlQuery>
 
-class Client {
+
+class Client  {
 public:
     // Constructeurs
+
     Client();
     Client(QString nom, QString prenom, QString adresse, QString tel, double prix, QString type, QDate dateInscription);
 
@@ -36,18 +38,19 @@ public:
     bool ajouter();
     QSqlQueryModel* afficher();
     bool supprimer(int id);
-    //bool modifier(int,QString, QString, QString , QString, double , QString , QDate );
-    bool modifier(int id, QString nom, QString prenom, QString adresse, QString tel, double prix, QString type, QDate dateInscription);
+    bool modifier(int id);
+    QSqlQueryModel* rechercher(const QString &critere);  // Nouvelle méthode
     Client getclientById(int id);
+
 private:
-    int id; // Identifiant du client
-    QString nom; // Nom du client
-    QString prenom; // Prénom du client
-    QString adresse; // Adresse du client
-    QString tel; // Numéro de téléphone du client
-    double prix; // Prix associé au client
-    QString type; // Type de client
-    QDate dateInscription; // Date d'inscription du client
+    int id;
+    QString nom;
+    QString prenom;
+    QString adresse;
+    QString tel;
+    double prix;
+    QString type;
+    QDate dateInscription;
 };
 
 #endif // CLIENT_H

@@ -42,7 +42,7 @@ public:
     QWidget *maincontent_2;
     QPushButton *pushButton_4;
     QLabel *label_5;
-    QLineEdit *lineEdit_3;
+    QLineEdit *lineEdit_recherche;
     QTableView *tableView;
     QPushButton *pushButton_5;
     QLabel *label;
@@ -296,17 +296,17 @@ public:
 ""));
         label_5 = new QLabel(maincontent_2);
         label_5->setObjectName("label_5");
-        label_5->setGeometry(QRect(1060, 140, 81, 31));
+        label_5->setGeometry(QRect(790, 140, 81, 31));
         label_5->setStyleSheet(QString::fromUtf8("QLabel {\n"
 "    font-size: 16px;\n"
 "    color: #0f3460;\n"
 "    padding-left: 8px;\n"
 "}\n"
 ""));
-        lineEdit_3 = new QLineEdit(maincontent_2);
-        lineEdit_3->setObjectName("lineEdit_3");
-        lineEdit_3->setGeometry(QRect(1110, 140, 181, 31));
-        lineEdit_3->setStyleSheet(QString::fromUtf8("QLineEdit {\n"
+        lineEdit_recherche = new QLineEdit(maincontent_2);
+        lineEdit_recherche->setObjectName("lineEdit_recherche");
+        lineEdit_recherche->setGeometry(QRect(860, 130, 181, 41));
+        lineEdit_recherche->setStyleSheet(QString::fromUtf8("QLineEdit {\n"
 "    background-color: #f5f5f5;  /* Fond gris clair moderne */\n"
 "    border: 2px solid #0f3460;  /* Bordure bleu fonc\303\251 */\n"
 "    border-radius: 8px;  /* Coins arrondis */\n"
@@ -401,7 +401,7 @@ public:
 ""));
         label = new QLabel(maincontent_2);
         label->setObjectName("label");
-        label->setGeometry(QRect(610, 70, 271, 71));
+        label->setGeometry(QRect(550, 50, 271, 71));
         label->setStyleSheet(QString::fromUtf8("color: #2E86C1; /* Couleur du texte */\n"
 "font-size: 18px; /* Taille de la police */\n"
 "font-weight: bold; /* Texte en gras */"));
@@ -1834,7 +1834,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(2);
+        stackedWidget->setCurrentIndex(0);
         stackedWidget_3->setCurrentIndex(0);
         stackedWidget_4->setCurrentIndex(1);
 

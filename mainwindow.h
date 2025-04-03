@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include <QSortFilterProxyModel>
 #include <QMainWindow>
 #include <QSqlQueryModel>
 #include "client.h"
@@ -24,13 +25,16 @@ private slots:
     void button_maram();
     void on_lineEdit_id_clicked();
     void on_modifierClient_clicked();
-
+    //void on_rechercherClient_clicked();
     void on_pushButton_12_clicked();
+    void on_lineEdit_recherche_textChanged(const QString &arg1);
+   // void on_pushButton_recherche_clicked();
 
 private:
     Ui::MainWindow *ui;
     Client client;
     QSqlQueryModel *model;
+
     int currentClientId;
 
 

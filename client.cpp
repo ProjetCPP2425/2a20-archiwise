@@ -99,25 +99,28 @@ bool Client::supprimer(int id) {
     }
 }
 
-// Modifier un client
-bool Client::modifier(int id, QString nom, QString prenom, QString adresse, QString tel, double prix, QString type, QDate dateInscription) {
+bool Client::modifier(int id) {
     QSqlQuery query;
 
-    // Préparation de la requête SQL
-    query.prepare("UPDATE CLIENTS SET NOM = :nom, PRENOM = :prenom, ADRESSE = :adresse, TEL = :tel, PRIX = :prix, TYPE = :type, DATEINSCRIPTION = :dateInscription "
+    query.prepare("UPDATE CLIENTS SET "
+                  "NOM = :nom, "
+                  "PRENOM = :prenom, "
+                  "ADRESSE = :adresse, "
+                  "TEL = :tel, "
+                  "PRIX = :prix, "
+                  "TYPE = :type, "
+                  "DATEINSCRIPTION = :dateInscription "
                   "WHERE ID = :id");
 
-    // Liaison des valeurs aux paramètres de la requête
     query.bindValue(":nom", nom);
     query.bindValue(":prenom", prenom);
     query.bindValue(":adresse", adresse);
     query.bindValue(":tel", tel);
     query.bindValue(":prix", prix);
     query.bindValue(":type", type);
-    query.bindValue(":dateInscription", dateInscription.toString("yyyy-MM-dd")); // Format SQL pour la date
+    query.bindValue(":dateInscription", dateInscription);
     query.bindValue(":id", id);
 
-    // Exécution de la requête
     if (query.exec()) {
         qDebug() << "Client modifié avec succès !";
         return true;
@@ -148,4 +151,38 @@ Client Client::getclientById(int id) {
     }
 
     return client;
+}
+QSqlQueryModel* Client::rechercher(const QString &critere) {
+    QSqlQueryModel *model = new QSqlQueryModel();
+    QSqlQuery query;
+
+    query.prepare("SELECT ID, nom, prenom, adresse, tel, prix, type, DateInscription FROM CLIENTS "
+                  "WHERE (nom LIKE :critere OR prenom LIKE :critere OR tel LIKE :critere) "
+                  "ORDER BY nom");
+    query.bindValue(":critere", "%" + critere + "%");
+
+    if (!query.exec()) {
+        qDebug() << "Erreur recherche:" << query.lastError();
+        return model;
+    }
+
+    model->setQuery(query);
+
+    // Définir les en-têtes des colonnes
+    model->setHeaderData(0, Qt::Horizontal, "ID");
+    model->setHeaderData(1, Qt::Horizontal, "Nom");
+    model->setHeaderData(2, Qt::Horizontal, "Prenom");
+    model->setHeaderData(3, Qt::Horizontal, "Adresse");
+    model->setHeaderData(4, Qt::Horizontal, "Tel");
+    model->setHeaderData(5, Qt::Horizontal, "Prix");
+    model->setHeaderData(6, Qt::Horizontal, "Type");
+    model->setHeaderData(7, Qt::Horizontal, "DateInscription");
+
+    // Ajouter les colonnes pour les boutons
+    model->insertColumn(model->columnCount());
+    model->insertColumn(model->columnCount());
+    model->setHeaderData(8, Qt::Horizontal, "Update");
+    model->setHeaderData(9, Qt::Horizontal, "Delete");
+
+    return model;
 }
