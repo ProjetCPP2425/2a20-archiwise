@@ -40,11 +40,11 @@ public:
     QStackedWidget *stackedWidget_3;
     QWidget *page_7;
     QWidget *maincontent_2;
-    QPushButton *pushButton_4;
+    QPushButton *exportPdfButton;
     QLabel *label_5;
     QLineEdit *lineEdit_recherche;
     QTableView *tableView;
-    QPushButton *pushButton_5;
+    QPushButton *showStatsButton_clicked;
     QLabel *label;
     QPushButton *lineEdit_id;
     QLabel *label_10;
@@ -100,38 +100,34 @@ public:
     QGroupBox *groupBox;
     QLineEdit *lineEdit_nom;
     QLineEdit *lineEdit_prenom;
-    QLineEdit *lineEdit_prix;
     QLineEdit *lineEdit_tel;
     QLineEdit *lineEdit_adresse;
-    QLineEdit *lineEdit_type;
     QLabel *label_2;
     QLabel *label_3;
     QLabel *label_4;
     QLabel *label_7;
-    QLabel *label_8;
     QLabel *label_9;
     QPushButton *ajouterClient;
     QPushButton *pushButton_2;
     QLabel *label_22;
     QDateEdit *dateEdit_inscription;
+    QComboBox *comboBox_type_2;
     QWidget *page_3;
     QGroupBox *groupBox_2;
     QLineEdit *n;
     QLineEdit *p;
-    QLineEdit *pr;
     QLineEdit *t;
     QLineEdit *a;
-    QLineEdit *ty;
     QLabel *label_23;
     QLabel *label_24;
     QLabel *label_25;
     QLabel *label_26;
-    QLabel *label_27;
     QLabel *label_28;
     QPushButton *modifierClient;
     QPushButton *pushButton_12;
     QLabel *label_29;
     QDateEdit *di;
+    QComboBox *comboBox_type;
     QWidget *side;
     QWidget *layoutWidget_2;
     QVBoxLayout *verticalLayout_2;
@@ -158,7 +154,7 @@ public:
         centralWidget->setObjectName("centralWidget");
         stackedWidget = new QStackedWidget(centralWidget);
         stackedWidget->setObjectName("stackedWidget");
-        stackedWidget->setGeometry(QRect(230, 0, 1351, 801));
+        stackedWidget->setGeometry(QRect(230, 0, 1421, 781));
         stackedWidget->setStyleSheet(QString::fromUtf8("QWidget {\n"
 "    background-color: #f8f9fa; /* Couleur de fond douce */\n"
 "}\n"
@@ -277,10 +273,10 @@ public:
 "    background-color: white;\n"
 "}\n"
 ""));
-        pushButton_4 = new QPushButton(maincontent_2);
-        pushButton_4->setObjectName("pushButton_4");
-        pushButton_4->setGeometry(QRect(810, 490, 201, 41));
-        pushButton_4->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+        exportPdfButton = new QPushButton(maincontent_2);
+        exportPdfButton->setObjectName("exportPdfButton");
+        exportPdfButton->setGeometry(QRect(810, 490, 201, 41));
+        exportPdfButton->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    background-color: #007bff;  /* Bleu */\n"
 "    color: white;\n"
 "    border-radius: 5px;\n"
@@ -296,7 +292,7 @@ public:
 ""));
         label_5 = new QLabel(maincontent_2);
         label_5->setObjectName("label_5");
-        label_5->setGeometry(QRect(790, 140, 81, 31));
+        label_5->setGeometry(QRect(910, 140, 81, 31));
         label_5->setStyleSheet(QString::fromUtf8("QLabel {\n"
 "    font-size: 16px;\n"
 "    color: #0f3460;\n"
@@ -305,7 +301,7 @@ public:
 ""));
         lineEdit_recherche = new QLineEdit(maincontent_2);
         lineEdit_recherche->setObjectName("lineEdit_recherche");
-        lineEdit_recherche->setGeometry(QRect(860, 130, 181, 41));
+        lineEdit_recherche->setGeometry(QRect(960, 130, 181, 41));
         lineEdit_recherche->setStyleSheet(QString::fromUtf8("QLineEdit {\n"
 "    background-color: #f5f5f5;  /* Fond gris clair moderne */\n"
 "    border: 2px solid #0f3460;  /* Bordure bleu fonc\303\251 */\n"
@@ -383,10 +379,10 @@ public:
 "QScrollBar::sub-page:vertical {\n"
 "    background: none; /* Supprimer l'arri\303\250re-plan de la barre */\n"
 "}"));
-        pushButton_5 = new QPushButton(maincontent_2);
-        pushButton_5->setObjectName("pushButton_5");
-        pushButton_5->setGeometry(QRect(1050, 490, 201, 41));
-        pushButton_5->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+        showStatsButton_clicked = new QPushButton(maincontent_2);
+        showStatsButton_clicked->setObjectName("showStatsButton_clicked");
+        showStatsButton_clicked->setGeometry(QRect(1050, 490, 201, 41));
+        showStatsButton_clicked->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    background-color: #007bff;  /* Bleu */\n"
 "    color: white;\n"
 "    border-radius: 5px;\n"
@@ -1236,21 +1232,6 @@ public:
 "QLineEdit:focus {\n"
 "    border: 2px solid #2196f3; /* Bordure bleue lorsqu'il est s\303\251lectionn\303\251 */\n"
 "}"));
-        lineEdit_prix = new QLineEdit(groupBox);
-        lineEdit_prix->setObjectName("lineEdit_prix");
-        lineEdit_prix->setGeometry(QRect(190, 340, 301, 51));
-        lineEdit_prix->setStyleSheet(QString::fromUtf8("QLineEdit {\n"
-"    background-color: #ffffff; /* Fond blanc */\n"
-"    border: 1px solid #cccccc; /* Bordure grise */\n"
-"    border-radius: 5px; /* Coins arrondis */\n"
-"    padding: 8px; /* Espace int\303\251rieur */\n"
-"    font-size: 14px; /* Taille de la police */\n"
-"    color: #333333; /* Couleur du texte gris fonc\303\251 */\n"
-"}\n"
-"\n"
-"QLineEdit:focus {\n"
-"    border: 2px solid #2196f3; /* Bordure bleue lorsqu'il est s\303\251lectionn\303\251 */\n"
-"}"));
         lineEdit_tel = new QLineEdit(groupBox);
         lineEdit_tel->setObjectName("lineEdit_tel");
         lineEdit_tel->setGeometry(QRect(190, 270, 301, 51));
@@ -1270,21 +1251,6 @@ public:
         lineEdit_adresse->setObjectName("lineEdit_adresse");
         lineEdit_adresse->setGeometry(QRect(190, 200, 301, 51));
         lineEdit_adresse->setStyleSheet(QString::fromUtf8("QLineEdit {\n"
-"    background-color: #ffffff; /* Fond blanc */\n"
-"    border: 1px solid #cccccc; /* Bordure grise */\n"
-"    border-radius: 5px; /* Coins arrondis */\n"
-"    padding: 8px; /* Espace int\303\251rieur */\n"
-"    font-size: 14px; /* Taille de la police */\n"
-"    color: #333333; /* Couleur du texte gris fonc\303\251 */\n"
-"}\n"
-"\n"
-"QLineEdit:focus {\n"
-"    border: 2px solid #2196f3; /* Bordure bleue lorsqu'il est s\303\251lectionn\303\251 */\n"
-"}"));
-        lineEdit_type = new QLineEdit(groupBox);
-        lineEdit_type->setObjectName("lineEdit_type");
-        lineEdit_type->setGeometry(QRect(190, 410, 301, 51));
-        lineEdit_type->setStyleSheet(QString::fromUtf8("QLineEdit {\n"
 "    background-color: #ffffff; /* Fond blanc */\n"
 "    border: 1px solid #cccccc; /* Bordure grise */\n"
 "    border-radius: 5px; /* Coins arrondis */\n"
@@ -1328,17 +1294,9 @@ public:
 "    font-weight: bold; /* Texte en gras */\n"
 "    color: #333333; /* Couleur du texte gris fonc\303\251 */\n"
 "}"));
-        label_8 = new QLabel(groupBox);
-        label_8->setObjectName("label_8");
-        label_8->setGeometry(QRect(70, 340, 101, 41));
-        label_8->setStyleSheet(QString::fromUtf8("QLabel {\n"
-"    font-size: 14px; /* Taille de la police */\n"
-"    font-weight: bold; /* Texte en gras */\n"
-"    color: #333333; /* Couleur du texte gris fonc\303\251 */\n"
-"}"));
         label_9 = new QLabel(groupBox);
         label_9->setObjectName("label_9");
-        label_9->setGeometry(QRect(70, 410, 111, 51));
+        label_9->setGeometry(QRect(80, 350, 111, 51));
         label_9->setStyleSheet(QString::fromUtf8("QLabel {\n"
 "    font-size: 14px; /* Taille de la police */\n"
 "    font-weight: bold; /* Texte en gras */\n"
@@ -1346,7 +1304,7 @@ public:
 "}"));
         ajouterClient = new QPushButton(groupBox);
         ajouterClient->setObjectName("ajouterClient");
-        ajouterClient->setGeometry(QRect(180, 560, 141, 41));
+        ajouterClient->setGeometry(QRect(180, 540, 141, 41));
         ajouterClient->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    background-color: #2196f3; /* Fond bleu */\n"
 "    color: white; /* Texte blanc */\n"
@@ -1366,7 +1324,7 @@ public:
 "}"));
         pushButton_2 = new QPushButton(groupBox);
         pushButton_2->setObjectName("pushButton_2");
-        pushButton_2->setGeometry(QRect(350, 560, 141, 41));
+        pushButton_2->setGeometry(QRect(350, 540, 141, 41));
         pushButton_2->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    background-color: #f44336; /* Fond rouge */\n"
 "    color: white; /* Texte blanc */\n"
@@ -1386,7 +1344,7 @@ public:
 "}"));
         label_22 = new QLabel(groupBox);
         label_22->setObjectName("label_22");
-        label_22->setGeometry(QRect(40, 480, 141, 51));
+        label_22->setGeometry(QRect(40, 440, 141, 51));
         label_22->setStyleSheet(QString::fromUtf8("QLabel {\n"
 "    font-size: 14px; /* Taille de la police */\n"
 "    font-weight: bold; /* Texte en gras */\n"
@@ -1394,7 +1352,13 @@ public:
 "}"));
         dateEdit_inscription = new QDateEdit(groupBox);
         dateEdit_inscription->setObjectName("dateEdit_inscription");
-        dateEdit_inscription->setGeometry(QRect(190, 470, 301, 41));
+        dateEdit_inscription->setGeometry(QRect(190, 440, 301, 41));
+        comboBox_type_2 = new QComboBox(groupBox);
+        comboBox_type_2->addItem(QString());
+        comboBox_type_2->addItem(QString());
+        comboBox_type_2->addItem(QString());
+        comboBox_type_2->setObjectName("comboBox_type_2");
+        comboBox_type_2->setGeometry(QRect(190, 360, 301, 41));
         stackedWidget->addWidget(page_2);
         page_3 = new QWidget();
         page_3->setObjectName("page_3");
@@ -1440,21 +1404,6 @@ public:
 "QLineEdit:focus {\n"
 "    border: 2px solid #2196f3; /* Bordure bleue lorsqu'il est s\303\251lectionn\303\251 */\n"
 "}"));
-        pr = new QLineEdit(groupBox_2);
-        pr->setObjectName("pr");
-        pr->setGeometry(QRect(190, 340, 301, 51));
-        pr->setStyleSheet(QString::fromUtf8("QLineEdit {\n"
-"    background-color: #ffffff; /* Fond blanc */\n"
-"    border: 1px solid #cccccc; /* Bordure grise */\n"
-"    border-radius: 5px; /* Coins arrondis */\n"
-"    padding: 8px; /* Espace int\303\251rieur */\n"
-"    font-size: 14px; /* Taille de la police */\n"
-"    color: #333333; /* Couleur du texte gris fonc\303\251 */\n"
-"}\n"
-"\n"
-"QLineEdit:focus {\n"
-"    border: 2px solid #2196f3; /* Bordure bleue lorsqu'il est s\303\251lectionn\303\251 */\n"
-"}"));
         t = new QLineEdit(groupBox_2);
         t->setObjectName("t");
         t->setGeometry(QRect(190, 270, 301, 51));
@@ -1474,21 +1423,6 @@ public:
         a->setObjectName("a");
         a->setGeometry(QRect(190, 200, 301, 51));
         a->setStyleSheet(QString::fromUtf8("QLineEdit {\n"
-"    background-color: #ffffff; /* Fond blanc */\n"
-"    border: 1px solid #cccccc; /* Bordure grise */\n"
-"    border-radius: 5px; /* Coins arrondis */\n"
-"    padding: 8px; /* Espace int\303\251rieur */\n"
-"    font-size: 14px; /* Taille de la police */\n"
-"    color: #333333; /* Couleur du texte gris fonc\303\251 */\n"
-"}\n"
-"\n"
-"QLineEdit:focus {\n"
-"    border: 2px solid #2196f3; /* Bordure bleue lorsqu'il est s\303\251lectionn\303\251 */\n"
-"}"));
-        ty = new QLineEdit(groupBox_2);
-        ty->setObjectName("ty");
-        ty->setGeometry(QRect(190, 410, 301, 51));
-        ty->setStyleSheet(QString::fromUtf8("QLineEdit {\n"
 "    background-color: #ffffff; /* Fond blanc */\n"
 "    border: 1px solid #cccccc; /* Bordure grise */\n"
 "    border-radius: 5px; /* Coins arrondis */\n"
@@ -1532,17 +1466,9 @@ public:
 "    font-weight: bold; /* Texte en gras */\n"
 "    color: #333333; /* Couleur du texte gris fonc\303\251 */\n"
 "}"));
-        label_27 = new QLabel(groupBox_2);
-        label_27->setObjectName("label_27");
-        label_27->setGeometry(QRect(70, 340, 101, 41));
-        label_27->setStyleSheet(QString::fromUtf8("QLabel {\n"
-"    font-size: 14px; /* Taille de la police */\n"
-"    font-weight: bold; /* Texte en gras */\n"
-"    color: #333333; /* Couleur du texte gris fonc\303\251 */\n"
-"}"));
         label_28 = new QLabel(groupBox_2);
         label_28->setObjectName("label_28");
-        label_28->setGeometry(QRect(70, 410, 111, 51));
+        label_28->setGeometry(QRect(80, 350, 111, 51));
         label_28->setStyleSheet(QString::fromUtf8("QLabel {\n"
 "    font-size: 14px; /* Taille de la police */\n"
 "    font-weight: bold; /* Texte en gras */\n"
@@ -1550,7 +1476,7 @@ public:
 "}"));
         modifierClient = new QPushButton(groupBox_2);
         modifierClient->setObjectName("modifierClient");
-        modifierClient->setGeometry(QRect(180, 560, 141, 41));
+        modifierClient->setGeometry(QRect(170, 530, 141, 41));
         modifierClient->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    background-color: #2196f3; /* Fond bleu */\n"
 "    color: white; /* Texte blanc */\n"
@@ -1570,7 +1496,7 @@ public:
 "}"));
         pushButton_12 = new QPushButton(groupBox_2);
         pushButton_12->setObjectName("pushButton_12");
-        pushButton_12->setGeometry(QRect(350, 560, 141, 41));
+        pushButton_12->setGeometry(QRect(350, 530, 141, 41));
         pushButton_12->setStyleSheet(QString::fromUtf8("QPushButton {\n"
 "    background-color: #f44336; /* Fond rouge */\n"
 "    color: white; /* Texte blanc */\n"
@@ -1590,7 +1516,7 @@ public:
 "}"));
         label_29 = new QLabel(groupBox_2);
         label_29->setObjectName("label_29");
-        label_29->setGeometry(QRect(40, 480, 141, 51));
+        label_29->setGeometry(QRect(40, 430, 141, 51));
         label_29->setStyleSheet(QString::fromUtf8("QLabel {\n"
 "    font-size: 14px; /* Taille de la police */\n"
 "    font-weight: bold; /* Texte en gras */\n"
@@ -1598,7 +1524,10 @@ public:
 "}"));
         di = new QDateEdit(groupBox_2);
         di->setObjectName("di");
-        di->setGeometry(QRect(190, 480, 301, 41));
+        di->setGeometry(QRect(190, 440, 301, 41));
+        comboBox_type = new QComboBox(groupBox_2);
+        comboBox_type->setObjectName("comboBox_type");
+        comboBox_type->setGeometry(QRect(190, 360, 301, 41));
         stackedWidget->addWidget(page_3);
         side = new QWidget(centralWidget);
         side->setObjectName("side");
@@ -1821,6 +1750,8 @@ public:
         verticalLayout_2->addItem(verticalSpacer_4);
 
         MainWindow->setCentralWidget(centralWidget);
+        side->raise();
+        stackedWidget->raise();
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName("menuBar");
         menuBar->setGeometry(QRect(0, 0, 1673, 26));
@@ -1834,7 +1765,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        stackedWidget->setCurrentIndex(0);
+        stackedWidget->setCurrentIndex(2);
         stackedWidget_3->setCurrentIndex(0);
         stackedWidget_4->setCurrentIndex(1);
 
@@ -1845,9 +1776,9 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QCoreApplication::translate("MainWindow", "Gestion des Clients", nullptr));
-        pushButton_4->setText(QCoreApplication::translate("MainWindow", "Exporter en PDF", nullptr));
+        exportPdfButton->setText(QCoreApplication::translate("MainWindow", "Exporter en PDF", nullptr));
         label_5->setText(QCoreApplication::translate("MainWindow", "\360\237\224\215", nullptr));
-        pushButton_5->setText(QCoreApplication::translate("MainWindow", "Statistique", nullptr));
+        showStatsButton_clicked->setText(QCoreApplication::translate("MainWindow", "Statistique", nullptr));
         label->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:16pt;\">Liste des clients</span></p></body></html>", nullptr));
         lineEdit_id->setText(QCoreApplication::translate("MainWindow", "Ajouter Client ", nullptr));
         label_10->setText(QCoreApplication::translate("MainWindow", "<html><head/><body><p><span style=\" font-size:18pt;\">Gestion Des Clients</span></p></body></html>", nullptr));
@@ -1928,31 +1859,29 @@ public:
         groupBox->setTitle(QCoreApplication::translate("MainWindow", "remplir ce formulaire", nullptr));
         lineEdit_nom->setText(QString());
         lineEdit_prenom->setText(QString());
-        lineEdit_prix->setText(QString());
         lineEdit_tel->setText(QString());
         lineEdit_adresse->setText(QString());
-        lineEdit_type->setText(QString());
         label_2->setText(QCoreApplication::translate("MainWindow", "Nom", nullptr));
         label_3->setText(QCoreApplication::translate("MainWindow", "Pr\303\251nom", nullptr));
         label_4->setText(QCoreApplication::translate("MainWindow", "Adresse", nullptr));
         label_7->setText(QCoreApplication::translate("MainWindow", "T\303\251l\303\251phone", nullptr));
-        label_8->setText(QCoreApplication::translate("MainWindow", "Prix", nullptr));
         label_9->setText(QCoreApplication::translate("MainWindow", "Type", nullptr));
         ajouterClient->setText(QCoreApplication::translate("MainWindow", "Ajouter", nullptr));
         pushButton_2->setText(QCoreApplication::translate("MainWindow", "Annuler", nullptr));
         label_22->setText(QCoreApplication::translate("MainWindow", "Date d'inscription", nullptr));
+        comboBox_type_2->setItemText(0, QCoreApplication::translate("MainWindow", "Premium", nullptr));
+        comboBox_type_2->setItemText(1, QCoreApplication::translate("MainWindow", "Entreprise", nullptr));
+        comboBox_type_2->setItemText(2, QCoreApplication::translate("MainWindow", "Particulier", nullptr));
+
         groupBox_2->setTitle(QCoreApplication::translate("MainWindow", "Modifier le client ", nullptr));
         n->setText(QString());
         p->setText(QString());
-        pr->setText(QString());
         t->setText(QString());
         a->setText(QString());
-        ty->setText(QString());
         label_23->setText(QCoreApplication::translate("MainWindow", "Nom", nullptr));
         label_24->setText(QCoreApplication::translate("MainWindow", "Pr\303\251nom", nullptr));
         label_25->setText(QCoreApplication::translate("MainWindow", "Adresse", nullptr));
         label_26->setText(QCoreApplication::translate("MainWindow", "T\303\251l\303\251phone", nullptr));
-        label_27->setText(QCoreApplication::translate("MainWindow", "Prix", nullptr));
         label_28->setText(QCoreApplication::translate("MainWindow", "Type", nullptr));
         modifierClient->setText(QCoreApplication::translate("MainWindow", "Mettre \303\240 jour", nullptr));
         pushButton_12->setText(QCoreApplication::translate("MainWindow", "Annuler", nullptr));

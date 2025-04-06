@@ -407,7 +407,11 @@ Makefile: ../../Atelier_Connexion.pro ../../../qt/6.7.3/mingw_64/mkspecs/feature
 		../../../qt/6.7.3/mingw_64/mkspecs/features/yacc.prf \
 		../../../qt/6.7.3/mingw_64/mkspecs/features/lex.prf \
 		../../Atelier_Connexion.pro \
+		../../../qt/6.7.3/mingw_64/lib/Qt6PrintSupport.prl \
+		../../../qt/6.7.3/mingw_64/lib/Qt6Charts.prl \
+		../../../qt/6.7.3/mingw_64/lib/Qt6OpenGLWidgets.prl \
 		../../../qt/6.7.3/mingw_64/lib/Qt6Widgets.prl \
+		../../../qt/6.7.3/mingw_64/lib/Qt6OpenGL.prl \
 		../../../qt/6.7.3/mingw_64/lib/Qt6Gui.prl \
 		../../../qt/6.7.3/mingw_64/lib/Qt6Sql.prl \
 		../../../qt/6.7.3/mingw_64/lib/Qt6Core.prl \
@@ -751,7 +755,11 @@ Makefile: ../../Atelier_Connexion.pro ../../../qt/6.7.3/mingw_64/mkspecs/feature
 ../../../qt/6.7.3/mingw_64/mkspecs/features/yacc.prf:
 ../../../qt/6.7.3/mingw_64/mkspecs/features/lex.prf:
 ../../Atelier_Connexion.pro:
+../../../qt/6.7.3/mingw_64/lib/Qt6PrintSupport.prl:
+../../../qt/6.7.3/mingw_64/lib/Qt6Charts.prl:
+../../../qt/6.7.3/mingw_64/lib/Qt6OpenGLWidgets.prl:
 ../../../qt/6.7.3/mingw_64/lib/Qt6Widgets.prl:
+../../../qt/6.7.3/mingw_64/lib/Qt6OpenGL.prl:
 ../../../qt/6.7.3/mingw_64/lib/Qt6Gui.prl:
 ../../../qt/6.7.3/mingw_64/lib/Qt6Sql.prl:
 ../../../qt/6.7.3/mingw_64/lib/Qt6Core.prl:

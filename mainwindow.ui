@@ -19,8 +19,8 @@
      <rect>
       <x>230</x>
       <y>0</y>
-      <width>1351</width>
-      <height>801</height>
+      <width>1421</width>
+      <height>781</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -75,7 +75,7 @@ QPushButton#annuler:hover {
 </string>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="page">
      <widget class="QStackedWidget" name="stackedWidget_3">
@@ -164,7 +164,7 @@ QPushButton#annuler:hover {
 }
 </string>
         </property>
-        <widget class="QPushButton" name="pushButton_4">
+        <widget class="QPushButton" name="exportPdfButton">
          <property name="geometry">
           <rect>
            <x>810</x>
@@ -196,7 +196,7 @@ QPushButton:hover {
         <widget class="QLabel" name="label_5">
          <property name="geometry">
           <rect>
-           <x>790</x>
+           <x>910</x>
            <y>140</y>
            <width>81</width>
            <height>31</height>
@@ -217,7 +217,7 @@ QPushButton:hover {
         <widget class="QLineEdit" name="lineEdit_recherche">
          <property name="geometry">
           <rect>
-           <x>860</x>
+           <x>960</x>
            <y>130</y>
            <width>181</width>
            <height>41</height>
@@ -310,7 +310,7 @@ QScrollBar::sub-page:vertical {
 }</string>
          </property>
         </widget>
-        <widget class="QPushButton" name="pushButton_5">
+        <widget class="QPushButton" name="showStatsButton_clicked">
          <property name="geometry">
           <rect>
            <x>1050</x>
@@ -1914,33 +1914,6 @@ QLineEdit:focus {
         <string/>
        </property>
       </widget>
-      <widget class="QLineEdit" name="lineEdit_prix">
-       <property name="geometry">
-        <rect>
-         <x>190</x>
-         <y>340</y>
-         <width>301</width>
-         <height>51</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLineEdit {
-    background-color: #ffffff; /* Fond blanc */
-    border: 1px solid #cccccc; /* Bordure grise */
-    border-radius: 5px; /* Coins arrondis */
-    padding: 8px; /* Espace intérieur */
-    font-size: 14px; /* Taille de la police */
-    color: #333333; /* Couleur du texte gris foncé */
-}
-
-QLineEdit:focus {
-    border: 2px solid #2196f3; /* Bordure bleue lorsqu'il est sélectionné */
-}</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
       <widget class="QLineEdit" name="lineEdit_tel">
        <property name="geometry">
         <rect>
@@ -1973,33 +1946,6 @@ QLineEdit:focus {
         <rect>
          <x>190</x>
          <y>200</y>
-         <width>301</width>
-         <height>51</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLineEdit {
-    background-color: #ffffff; /* Fond blanc */
-    border: 1px solid #cccccc; /* Bordure grise */
-    border-radius: 5px; /* Coins arrondis */
-    padding: 8px; /* Espace intérieur */
-    font-size: 14px; /* Taille de la police */
-    color: #333333; /* Couleur du texte gris foncé */
-}
-
-QLineEdit:focus {
-    border: 2px solid #2196f3; /* Bordure bleue lorsqu'il est sélectionné */
-}</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="lineEdit_type">
-       <property name="geometry">
-        <rect>
-         <x>190</x>
-         <y>410</y>
          <width>301</width>
          <height>51</height>
         </rect>
@@ -2102,31 +2048,11 @@ QLineEdit:focus {
         <string>Téléphone</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_8">
-       <property name="geometry">
-        <rect>
-         <x>70</x>
-         <y>340</y>
-         <width>101</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLabel {
-    font-size: 14px; /* Taille de la police */
-    font-weight: bold; /* Texte en gras */
-    color: #333333; /* Couleur du texte gris foncé */
-}</string>
-       </property>
-       <property name="text">
-        <string>Prix</string>
-       </property>
-      </widget>
       <widget class="QLabel" name="label_9">
        <property name="geometry">
         <rect>
-         <x>70</x>
-         <y>410</y>
+         <x>80</x>
+         <y>350</y>
          <width>111</width>
          <height>51</height>
         </rect>
@@ -2146,7 +2072,7 @@ QLineEdit:focus {
        <property name="geometry">
         <rect>
          <x>180</x>
-         <y>560</y>
+         <y>540</y>
          <width>141</width>
          <height>41</height>
         </rect>
@@ -2178,7 +2104,7 @@ QPushButton:pressed {
        <property name="geometry">
         <rect>
          <x>350</x>
-         <y>560</y>
+         <y>540</y>
          <width>141</width>
          <height>41</height>
         </rect>
@@ -2210,7 +2136,7 @@ QPushButton:pressed {
        <property name="geometry">
         <rect>
          <x>40</x>
-         <y>480</y>
+         <y>440</y>
          <width>141</width>
          <height>51</height>
         </rect>
@@ -2230,11 +2156,36 @@ QPushButton:pressed {
        <property name="geometry">
         <rect>
          <x>190</x>
-         <y>470</y>
+         <y>440</y>
          <width>301</width>
          <height>41</height>
         </rect>
        </property>
+      </widget>
+      <widget class="QComboBox" name="comboBox_type_2">
+       <property name="geometry">
+        <rect>
+         <x>190</x>
+         <y>360</y>
+         <width>301</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>Premium</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Entreprise</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Particulier</string>
+        </property>
+       </item>
       </widget>
      </widget>
     </widget>
@@ -2316,33 +2267,6 @@ QLineEdit:focus {
         <string/>
        </property>
       </widget>
-      <widget class="QLineEdit" name="pr">
-       <property name="geometry">
-        <rect>
-         <x>190</x>
-         <y>340</y>
-         <width>301</width>
-         <height>51</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLineEdit {
-    background-color: #ffffff; /* Fond blanc */
-    border: 1px solid #cccccc; /* Bordure grise */
-    border-radius: 5px; /* Coins arrondis */
-    padding: 8px; /* Espace intérieur */
-    font-size: 14px; /* Taille de la police */
-    color: #333333; /* Couleur du texte gris foncé */
-}
-
-QLineEdit:focus {
-    border: 2px solid #2196f3; /* Bordure bleue lorsqu'il est sélectionné */
-}</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
       <widget class="QLineEdit" name="t">
        <property name="geometry">
         <rect>
@@ -2375,33 +2299,6 @@ QLineEdit:focus {
         <rect>
          <x>190</x>
          <y>200</y>
-         <width>301</width>
-         <height>51</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLineEdit {
-    background-color: #ffffff; /* Fond blanc */
-    border: 1px solid #cccccc; /* Bordure grise */
-    border-radius: 5px; /* Coins arrondis */
-    padding: 8px; /* Espace intérieur */
-    font-size: 14px; /* Taille de la police */
-    color: #333333; /* Couleur du texte gris foncé */
-}
-
-QLineEdit:focus {
-    border: 2px solid #2196f3; /* Bordure bleue lorsqu'il est sélectionné */
-}</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-      <widget class="QLineEdit" name="ty">
-       <property name="geometry">
-        <rect>
-         <x>190</x>
-         <y>410</y>
          <width>301</width>
          <height>51</height>
         </rect>
@@ -2504,31 +2401,11 @@ QLineEdit:focus {
         <string>Téléphone</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_27">
-       <property name="geometry">
-        <rect>
-         <x>70</x>
-         <y>340</y>
-         <width>101</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QLabel {
-    font-size: 14px; /* Taille de la police */
-    font-weight: bold; /* Texte en gras */
-    color: #333333; /* Couleur du texte gris foncé */
-}</string>
-       </property>
-       <property name="text">
-        <string>Prix</string>
-       </property>
-      </widget>
       <widget class="QLabel" name="label_28">
        <property name="geometry">
         <rect>
-         <x>70</x>
-         <y>410</y>
+         <x>80</x>
+         <y>350</y>
          <width>111</width>
          <height>51</height>
         </rect>
@@ -2547,8 +2424,8 @@ QLineEdit:focus {
       <widget class="QPushButton" name="modifierClient">
        <property name="geometry">
         <rect>
-         <x>180</x>
-         <y>560</y>
+         <x>170</x>
+         <y>530</y>
          <width>141</width>
          <height>41</height>
         </rect>
@@ -2580,7 +2457,7 @@ QPushButton:pressed {
        <property name="geometry">
         <rect>
          <x>350</x>
-         <y>560</y>
+         <y>530</y>
          <width>141</width>
          <height>41</height>
         </rect>
@@ -2612,7 +2489,7 @@ QPushButton:pressed {
        <property name="geometry">
         <rect>
          <x>40</x>
-         <y>480</y>
+         <y>430</y>
          <width>141</width>
          <height>51</height>
         </rect>
@@ -2632,7 +2509,17 @@ QPushButton:pressed {
        <property name="geometry">
         <rect>
          <x>190</x>
-         <y>480</y>
+         <y>440</y>
+         <width>301</width>
+         <height>41</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="comboBox_type">
+       <property name="geometry">
+        <rect>
+         <x>190</x>
+         <y>360</y>
          <width>301</width>
          <height>41</height>
         </rect>
@@ -2927,6 +2814,8 @@ QPushButton:pressed {
      </layout>
     </widget>
    </widget>
+   <zorder>side</zorder>
+   <zorder>stackedWidget</zorder>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
