@@ -3,47 +3,73 @@
 #include <QSqlError>
 #include <QDebug>
 #include <QSqlDatabase>
+#include <QMessageBox>
 
 using namespace std;
 
 // Constructeur par défaut
+// Constructeur par défaut
 Partenaire::Partenaire()
-    : Id(0), Nom(""), TypePartenaire(""), Adresse(""), Ville(""), ContactPrincipal(""), Email("") {}
+    : Id(0), Nom(""), TypePartenaire(""), Adresse(""), Ville(""), ContactPrincipal(""), Email(""), DateDebut(QDate::currentDate()), DateFin(QDate::currentDate()) {}
 
 // Constructeur paramétré
-Partenaire::Partenaire(QString Nom, QString TypePartenaire, QString Adresse, QString Ville, QString ContactPrincipal, QString Email)
-    : Id(0), Nom(Nom), TypePartenaire(TypePartenaire), Adresse(Adresse), Ville(Ville), ContactPrincipal(ContactPrincipal), Email(Email) {}
+Partenaire::Partenaire(QString Nom, QString TypePartenaire, QString Adresse, QString Ville, QString ContactPrincipal, QString Email, QDate DateDebut, QDate DateFin)
+    : Id(0), Nom(Nom), TypePartenaire(TypePartenaire), Adresse(Adresse), Ville(Ville), ContactPrincipal(ContactPrincipal), Email(Email), DateDebut(DateDebut), DateFin(DateFin) {}
 
 // Méthode pour afficher les partenaires dans un QTableWidget
-QSqlQueryModel* Partenaire::afficher() {
+QSqlQueryModel* Partenaire::statistiquesParType()
+{
+    QSqlQueryModel *model = new QSqlQueryModel();
 
+    model->setQuery("SELECT TYPEPARTENAIRE, COUNT(*) AS NOMBRE FROM PARTENAIRES GROUP BY TYPEPARTENAIRE");
 
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("Type de Partenaire"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("Nombre"));
 
-    // Create a new query model to hold the results
-    QSqlQueryModel *model = new QSqlQueryModel();  // Dynamically allocated model
-
-
-
-model->setQuery("select * from partenaires");
-    // Set the header data for the columns (optional)
-    model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
-    model->setHeaderData(1, Qt::Horizontal, QObject::tr("Nom"));
-    model->setHeaderData(2, Qt::Horizontal, QObject::tr("Type Partenaire"));
-    model->setHeaderData(3, Qt::Horizontal, QObject::tr("Adresse"));
-    model->setHeaderData(4, Qt::Horizontal, QObject::tr("Ville"));
-    model->setHeaderData(5, Qt::Horizontal, QObject::tr("Contact Principal"));
-    model->setHeaderData(6, Qt::Horizontal, QObject::tr("Email"));
-
-    return model;  // Return the model populated with the data
+    return model;
 }
+
+QStandardItemModel* Partenaire::afficher() {
+    QStandardItemModel *model = new QStandardItemModel();
+
+    QSqlQuery query("SELECT * FROM PARTENAIRES");
+
+    // Définir les en-têtes
+    QStringList headers = {"ID", "Nom", "Type Partenaire", "Adresse", "Ville",
+                           "Contact Principal", "Email", "Date Début", "Date Fin", "Expiring Soon"};
+    model->setHorizontalHeaderLabels(headers);
+
+    QDate currentDate = QDate::currentDate();
+    QDate dateLimite = currentDate.addDays(7);
+
+    int row = 0;
+    while (query.next()) {
+        QList<QStandardItem *> rowItems;
+        for (int col = 0; col < 9; ++col) {
+            rowItems << new QStandardItem(query.value(col).toString());
+        }
+
+        // Vérifier si la date de fin est dans les 7 jours
+        QDate dateFin = query.value(8).toDate();
+        int isExpiring = (dateFin >= currentDate && dateFin <= dateLimite) ? 1 : 0;
+
+        rowItems << new QStandardItem(QString::number(isExpiring));
+
+        model->appendRow(rowItems);
+        row++;
+    }
+
+    return model;
+}
+
 
 // Méthode pour ajouter un partenaire à la base de données
 bool Partenaire::ajouter() {
     QSqlQuery query;
 
-    // Préparer la requête d'insertion
-    query.prepare("INSERT INTO PARTENAIRES ( NOM, TYPEPARTENAIRE, ADRESSE, VILLE, CONTACTPRINCIPAL, EMAIL) "
-                  "VALUES ( :Nom, :TypePartenaire, :Adresse, :Ville, :ContactPrincipal, :Email)");
+    // Préparer la requête d'insertion en tenant compte de DATEDEBUT et DATEFIN
+    query.prepare("INSERT INTO PARTENAIRES (NOM, TYPEPARTENAIRE, ADRESSE, VILLE, CONTACTPRINCIPAL, EMAIL, DATEDEBUT, DATEFIN) "
+                  "VALUES (:Nom, :TypePartenaire, :Adresse, :Ville, :ContactPrincipal, :Email, :DateDebut, :DateFin)");
 
     // Liaison des valeurs aux paramètres
     query.bindValue(":Nom", Nom);
@@ -52,6 +78,8 @@ bool Partenaire::ajouter() {
     query.bindValue(":Ville", Ville);
     query.bindValue(":ContactPrincipal", ContactPrincipal);
     query.bindValue(":Email", Email);
+    query.bindValue(":DateDebut", DateDebut);  // Liaison de la date de début
+    query.bindValue(":DateFin", DateFin);      // Liaison de la date de fin
 
     // Log the query and parameters for debugging
     qDebug() << "Exécution de la requête : " << query.lastQuery();
@@ -61,7 +89,9 @@ bool Partenaire::ajouter() {
              << "\nAdresse: " << Adresse
              << "\nVille: " << Ville
              << "\nContactPrincipal: " << ContactPrincipal
-             << "\nEmail: " << Email;
+             << "\nEmail: " << Email
+             << "\nDateDebut: " << DateDebut
+             << "\nDateFin: " << DateFin;
 
     if (!query.exec()) {
         qDebug() << "❌ Erreur lors de l'insertion : " << query.lastError().text();
@@ -71,6 +101,7 @@ bool Partenaire::ajouter() {
     qDebug() << "✅ Partenaire ajouté avec succès !";
     return true;
 }
+
 bool Partenaire::supprimer(int id) {
     QSqlQuery query;
 
@@ -131,5 +162,24 @@ bool Partenaire::recupererParId(int id) {
     return true;
 }
 
+int Partenaire::nombreContratsEnCours()
+{
+    QSqlQuery query;
 
+    // Utilisation d'une requête SQL pour compter les contrats en cours
+    query.prepare("SELECT COUNT(*) FROM PARTENAIRES WHERE :currentDate BETWEEN DATEDEBUT AND DATEFIN");
+
+    // Assurez-vous que vous passez une date correcte au format SQL
+    query.bindValue(":currentDate", QDate::currentDate());
+
+    if (query.exec()) {
+        if (query.next()) {
+            return query.value(0).toInt();  // Retourne le nombre de contrats en cours
+        }
+    } else {
+        qDebug() << "Erreur lors de l'exécution de la requête : " << query.lastError();
+    }
+
+    return 0;  // Retourne 0 en cas d'erreur ou si aucun contrat en cours n'est trouvé
+}
 

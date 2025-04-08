@@ -8,9 +8,11 @@
 #include <QTableView>          // For displaying data in a table view
 #include <QDebug>              // For debug output
 #include <QSqlError>           // For error handling
-
+#include <QDate>
 #include <QMessageBox>
 #include <QSqlQueryModel>
+#include <QStandardItemModel>
+
 class Partenaire
 {
 private:
@@ -21,11 +23,13 @@ private:
     QString Ville;
     QString ContactPrincipal;
     QString Email;
+    QDate DateDebut;  // Nouvelle variable pour la date de début
+    QDate DateFin;
 
 public:
     // Constructors
     Partenaire();  // Default constructor
-    Partenaire(QString Nom, QString TypePartenaire, QString Adresse, QString Ville, QString ContactPrincipal, QString Email);
+    Partenaire(QString Nom, QString TypePartenaire, QString Adresse, QString Ville, QString ContactPrincipal, QString Email, QDate DateDebut, QDate DateFin);
 
     // Getters
     int getId() { return Id; }
@@ -47,9 +51,10 @@ public:
 
     // Database functions
     bool ajouter();                 // Function to add a new partner to the database
-    QSqlQueryModel* afficher();     // Function to display partners in a table
-    bool supprimer(int id);        // Function to delete a partner by ID
-
+    QStandardItemModel* afficher();    // Function to display partners in a table
+    QSqlQueryModel* statistiquesParType();
+    bool supprimer(int id);    // Function to delete a partner by ID
+    int nombreContratsEnCours();
     bool recupererParId(int id);  // Récupérer un partenaire par ID
     bool modifier(int id);
     QList<int> recupererTousLesIds();

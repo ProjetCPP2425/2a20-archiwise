@@ -3,21 +3,41 @@
 #include "partenaire.h"
 
 #include <QPushButton>  // Inclusion nécessaire pour QPushButton
-#include <QMessageBox>  // Pour afficher des messages d'erreur
+#include <QMessageBox>// Pour afficher des messages d'erreur
+#include <QFile>
+#include <QStandardPaths>
+#include <QTextStream>
+#include <QVoice>
+#include <QStandardItemModel>
+#include <QProcess>
+#include <QtCharts/QChartView>
+#include <QtCharts/QBarSeries>
+#include <QtCharts/QBarSet>
+#include <QtCharts/QChart>
+#include <QtCharts/QCategoryAxis>
+#include <QtCharts/QValueAxis>
+#include <QSqlQuery>
+#include <QtCharts>
+
+#include <QSqlError>
+#include <QVBoxLayout>
 
 // Constructeur
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow),
+    tts(new QTextToSpeech(this)),  // Initialisation de QTextToSpeech
+    timer(new QTimer(this))
 {
     ui->setupUi(this);
     ui->TypePartenaire->addItem("Sélectionnez un type"); // Premier choix invalide
-    ui->TypePartenaire->addItem("Client");
+    ui->TypePartenaire->addItem("Architecte");
     ui->TypePartenaire->addItem("Fournisseur");
     ui->typePartenaireInput->addItem("Sélectionnez un type"); // Premier choix invalide
-    ui->typePartenaireInput->addItem("Client");
+    ui->typePartenaireInput->addItem("Architecte");
     ui->typePartenaireInput->addItem("Fournisseur");
     ui->tabWidget->setCurrentIndex(1);
+
 
 
 
@@ -29,7 +49,16 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     // Liez le modèle au QTableView
+    rappelContratsFinissants();
     ui->tableView1->setModel(p.afficher());
+    ui->tableView1->setItemDelegate(new ContratFinissantDelegate(this));
+    ui->tableView1->setColumnHidden(9, true);
+
+afficherNombreContratsEnCours();
+    ui->tableView->setModel(p.statistiquesParType());
+    ui->tableView->setColumnWidth(0, 150);
+    ui->tableViewContrats->setColumnWidth(0, 150);
+
     qDebug() << "✅ Affichage des partenaires réussi.";
 
     QSqlQuery query("SELECT ID FROM PARTENAIRES");
@@ -62,6 +91,8 @@ ui->comboBoxPartenaires->addItem("Sélectionnez un id");
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete tts;
+    delete timer;
 }
 
 // Slot pour ajouter un partenaire
@@ -74,6 +105,8 @@ void MainWindow::on_btnAjouter_clicked()
     QString ville = ui->Ville->text().trimmed();
     QString contactPrincipal = ui->ContactPrincipal->text().trimmed();
     QString email = ui->Email->text().trimmed();
+    QDate dateDebut = ui->dateEdit->date();
+    QDate dateFin = ui->dateEdit_2->date();
 
     // Vérification : Aucun champ ne doit être vide
     if (nom.isEmpty() || typePartenaire.isEmpty() || adresse.isEmpty() ||
@@ -125,25 +158,37 @@ void MainWindow::on_btnAjouter_clicked()
         return;
     }
 
-    // 6. Validation de l'email : Format d'email valide
-    bool isValidEmail = !email.isEmpty() && email.contains('@') && email.contains('.');
-    int atIndex = email.indexOf('@');
-    int dotIndex = email.lastIndexOf('.');
+    // Regex pour valider exemple@domaine.com ou exemple@domaine.tn
+    QRegularExpression emailRegex(R"(^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|tn)$)");
 
-    // Vérification supplémentaire : '@' avant le dernier '.', caractères avant '@' et après '.'
-    if (!(isValidEmail && atIndex > 0 && dotIndex > atIndex + 1 && dotIndex < email.length() - 1)) {
-        QMessageBox::warning(this, "Erreur", "L'email est invalide (ex: exemple@domaine.com) !");
+    if (!emailRegex.match(email).hasMatch()) {
+        QMessageBox::warning(this, "Erreur", "L'email est invalide (ex: exemple@domaine.com ou exemple@domaine.tn) !");
+        return;
+    }
+    if (dateDebut > dateFin) {
+        QMessageBox::warning(this, "Erreur", "La date de fin doit être postérieure à la date de début !");
+        return;
+    }
+    // 7. Validation de la date de début : La date de début doit être postérieure à la date actuelle
+    if (dateDebut < QDate::currentDate()) {
+        QMessageBox::warning(this, "Erreur", "La date de début doit être postérieure à la date actuelle !");
         return;
     }
 
 
     // Créer un objet Partenaire avec les valeurs récupérées
-    Partenaire p(nom, typePartenaire, adresse, ville, contactPrincipal, email);
+    Partenaire p(nom, typePartenaire, adresse, ville, contactPrincipal, email,dateDebut, dateFin);
 
     // Ajouter le partenaire dans la base
     if (p.ajouter()) {
         qDebug() << "✅ Partenaire ajouté avec succès !";
         ui->tableView1->setModel(p.afficher());
+        ui->tableView1->setItemDelegate(new ContratFinissantDelegate(this));
+        ui->tableView1->setColumnHidden(9, true);
+        afficherNombreContratsEnCours();
+        ui->tableView->setModel(p.statistiquesParType());
+        ui->tableView->setColumnWidth(0, 150);
+        ui->tableViewContrats->setColumnWidth(0, 150);
         // Affichage d'un message de succès
         QMessageBox::information(this, "Succès", "L'ajout du partenaire a réussi avec succès !");
 
@@ -206,6 +251,11 @@ void MainWindow::on_supprimerr_clicked()
         // Afficher un message selon le résultat de la suppression
         if (test) {
             ui->tableView1->setModel(p.afficher());
+            ui->tableView1->setModel(p.afficher());
+            afficherNombreContratsEnCours();
+            ui->tableView->setModel(p.statistiquesParType());
+            ui->tableView->setColumnWidth(0, 150);
+            ui->tableViewContrats->setColumnWidth(0, 150);
 
             // Si la suppression a réussi
             QSqlQuery query("SELECT ID FROM PARTENAIRES");
@@ -339,17 +389,15 @@ void MainWindow::on_recuperer_clicked() {
             return;
         }
 
-        // 6. Validation de l'email : Format d'email valide
-        bool isValidEmail = !email.isEmpty() && email.contains('@') && email.contains('.');
-        int atIndex = email.indexOf('@');
-        int dotIndex = email.lastIndexOf('.');
 
-        // Vérification supplémentaire : '@' avant le dernier '.', caractères avant '@' et après '.'
-        if (!(isValidEmail && atIndex > 0 && dotIndex > atIndex + 1 && dotIndex < email.length() - 1)) {
-            QMessageBox::warning(this, "Erreur", "L'email est invalide (ex: exemple@domaine.com) !");
+
+        // Regex pour valider exemple@domaine.com ou exemple@domaine.tn
+        QRegularExpression emailRegex(R"(^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|tn)$)");
+
+        if (!emailRegex.match(email).hasMatch()) {
+            QMessageBox::warning(this, "Erreur", "L'email est invalide (ex: exemple@domaine.com ou exemple@domaine.tn) !");
             return;
         }
-
 
         // L'ID du partenaire à modifier, récupéré depuis le QLineEdit
         int partnerId = ui->comboBoxPartenaires->currentData().toInt();;
@@ -366,6 +414,12 @@ void MainWindow::on_recuperer_clicked() {
         if (partenaire.modifier(partnerId)) {
             Partenaire p;
             ui->tableView1->setModel(p.afficher());
+            ui->tableView1->setItemDelegate(new ContratFinissantDelegate(this));
+            ui->tableView1->setColumnHidden(9, true);
+            afficherNombreContratsEnCours();
+            ui->tableView->setModel(p.statistiquesParType());
+            ui->tableView->setColumnWidth(0, 150);
+            ui->tableViewContrats->setColumnWidth(0, 150);
             ui->nomInput->clear();
             ui->typePartenaireInput->setCurrentIndex(0);
             ui->adresseInput->clear();
@@ -407,4 +461,173 @@ void MainWindow::on_recuperer_clicked() {
         ui->ContactPrincipal->clear();
         ui->Email->clear();
     }
+
+    void MainWindow::afficherNombreContratsEnCours()
+
+
+        {
+            // Créer une instance de Partenaire
+            Partenaire partenaire;
+
+            // Obtenir le nombre de contrats en cours
+            int nombreContrats = partenaire.nombreContratsEnCours();
+
+            // Créer un modèle pour afficher les résultats dans un QTableView
+            QStandardItemModel* model = new QStandardItemModel(1, 1, this);  // 1 ligne et 1 colonne
+
+            // Définir le nom de la colonne
+            model->setHorizontalHeaderItem(0, new QStandardItem("Contrat en cours"));
+
+            // Ajouter la valeur du nombre de contrats en cours à la cellule (0, 0)
+            model->setItem(0, 0, new QStandardItem(QString::number(nombreContrats)));
+
+            // Afficher les résultats dans un QTableView
+            ui->tableViewContrats->setModel(model);  // tableViewContrats est votre QTableView dans le fichier UI
+        }
+
+
+
+
+        void MainWindow::on_recherche_clicked()
+        {
+            QString rechercheNom = ui->lineEditRechercheNom->text();
+            QString attributTrier = ui->comboBoxTrierPar->currentText();
+
+            QString queryStr = "SELECT * FROM PARTENAIRES WHERE NOM LIKE :rechercheNom";
+
+            if (!attributTrier.isEmpty()) {
+                queryStr += " ORDER BY " + attributTrier;
+            }
+
+            QSqlQuery query;
+            query.prepare(queryStr);
+            query.bindValue(":rechercheNom", "%" + rechercheNom + "%"); // chaîne partielle
+
+            if (!query.exec()) {
+                qDebug() << "Erreur de requête : " << query.lastError().text();
+                return;
+            }
+
+            QSqlQueryModel *model = new QSqlQueryModel();
+            model->setQuery(query);
+            if (model->rowCount() == 0) {
+                QMessageBox::information(this, "Aucun résultat", "Aucun partenaire trouvé avec ce nom.");
+                 // Vider la table
+                return;
+            }
+            else{
+            model->setHeaderData(0, Qt::Horizontal, "ID");
+            model->setHeaderData(1, Qt::Horizontal, "Nom");
+            model->setHeaderData(2, Qt::Horizontal, "Type partenaire");
+            model->setHeaderData(3, Qt::Horizontal, "Adresse");
+            model->setHeaderData(4, Qt::Horizontal, "Ville");
+            model->setHeaderData(5, Qt::Horizontal, "Contact");
+            model->setHeaderData(6, Qt::Horizontal, "Email");
+            model->setHeaderData(7, Qt::Horizontal, "Date Début");
+            model->setHeaderData(8, Qt::Horizontal, "Date Fin");
+
+            ui->tableView1->setModel(model);
+            }
+
+
+        }
+
+
+        void MainWindow::on_annuler_recherche_clicked()
+        {
+            Partenaire p;
+
+            // Récupérez le modèle et vérifiez qu'il n'est pas nul
+
+
+            // Liez le modèle au QTableView
+
+            ui->tableView1->setModel(p.afficher());
+            ui->lineEditRechercheNom->clear();
+
+        }
+        void MainWindow::on_pushButtonExporter_clicked()
+        {
+            QString desktopPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
+            QString fileName = desktopPath + "/export_partenaire.csv";
+
+            QFile file(fileName);
+            if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+                QMessageBox::warning(this, "Erreur", "Impossible d'ouvrir le fichier pour écriture.");
+                return;
+            }
+
+            QTextStream stream(&file);
+            QAbstractItemModel *model = ui->tableView1->model();
+
+
+
+            // Vérifie si le modèle est nul OU s'il n'a pas de lignes
+            if (!model || model->rowCount() == 0) {
+                QMessageBox::warning(this, "Erreur", "Aucune donnée à exporter.");
+                return;
+            }
+
+
+            // En-têtes
+            stream << "Nom,TypePartenaire,Email\n";
+
+            for (int row = 0; row < model->rowCount(); ++row) {
+                QString nom = model->data(model->index(row, 1)).toString();     // Colonne 1 : NOM
+                QString type = model->data(model->index(row, 2)).toString();    // Colonne 2 : TYPEPARTENAIRE
+                QString email = model->data(model->index(row, 6)).toString();   // Colonne 6 : EMAIL
+
+                stream << "\"" << nom << "\","
+                       << "\"" << type << "\","
+                       << "\"" << email << "\"\n";
+            }
+
+            file.close();
+            QMessageBox::information(this, "Succès", "Export réussi ! Fichier : export_partenaire.csv (sur le bureau)");
+        }
+
+        void MainWindow::rappelContratsFinissants()
+        {
+            QDate currentDate = QDate::currentDate();
+            QDate dateLimite = currentDate.addDays(7);
+
+            if (!QSqlDatabase::database().isOpen()) {
+                qDebug() << "La base de données n'est pas ouverte.";
+                return;
+            }
+
+            // Requête pour compter les contrats expirant bientôt
+            QSqlQuery query;
+            query.prepare(R"(
+        SELECT COUNT(*)
+        FROM PARTENAIRES
+        WHERE DATEFIN BETWEEN :currentDate AND :dateLimite
+    )");
+            query.bindValue(":currentDate", currentDate);
+            query.bindValue(":dateLimite", dateLimite);
+
+            if (!query.exec()) {
+                qDebug() << "Erreur lors de l'exécution de la requête : " << query.lastError().text();
+                return;
+            }
+
+            int count = 0;
+            if (query.next()) {
+                count = query.value(0).toInt();
+            }
+
+            // Annonce avec QTextToSpeech
+            if (count > 0) {
+                QString message = QString("There %1 contract%2 that will expire in the next seven days.")
+                .arg(count)
+                    .arg(count > 1 ? "s" : "");
+                tts->say(message);
+            } else {
+                tts->say("No contracts are expiring in the next seven days.");
+            }
+
+        }
+
+
+
 
