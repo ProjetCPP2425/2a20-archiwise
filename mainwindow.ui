@@ -6,12 +6,18 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1292</width>
-    <height>759</height>
+    <width>1387</width>
+    <height>782</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
+  </property>
+  <property name="iconSize">
+   <size>
+    <width>70</width>
+    <height>70</height>
+   </size>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QWidget" name="side" native="true">
@@ -303,10 +309,10 @@ QPushButton:pressed {
    <widget class="QStackedWidget" name="stackedWidget">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>0</y>
-      <width>1021</width>
-      <height>691</height>
+      <x>240</x>
+      <y>10</y>
+      <width>1111</width>
+      <height>751</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -1641,10 +1647,10 @@ QPushButton:hover {
        <widget class="QTabWidget" name="tabWidget">
         <property name="geometry">
          <rect>
-          <x>40</x>
+          <x>20</x>
           <y>40</y>
-          <width>901</width>
-          <height>641</height>
+          <width>1031</width>
+          <height>691</height>
          </rect>
         </property>
         <property name="whatsThis">
@@ -1701,7 +1707,7 @@ QTabBar::close-button:hover {
 </string>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="ajout">
          <attribute name="title">
@@ -2093,7 +2099,7 @@ color: rgb(0, 0, 0);</string>
           <property name="geometry">
            <rect>
             <x>190</x>
-            <y>180</y>
+            <y>220</y>
             <width>113</width>
             <height>28</height>
            </rect>
@@ -2105,8 +2111,8 @@ color: rgb(0, 0, 0);</string>
          <widget class="QPushButton" name="recherche">
           <property name="geometry">
            <rect>
-            <x>600</x>
-            <y>180</y>
+            <x>330</x>
+            <y>220</y>
             <width>101</width>
             <height>29</height>
            </rect>
@@ -2133,7 +2139,7 @@ border-radius:10px;</string>
           <property name="geometry">
            <rect>
             <x>60</x>
-            <y>540</y>
+            <y>560</y>
             <width>101</width>
             <height>29</height>
            </rect>
@@ -2156,196 +2162,13 @@ border-radius:10px;</string>
            <string>exportation</string>
           </property>
          </widget>
-         <widget class="QComboBox" name="comboBoxTrierPar">
-          <property name="geometry">
-           <rect>
-            <x>460</x>
-            <y>180</y>
-            <width>101</width>
-            <height>28</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QComboBox {
-    background-color: #1e1e1e;        /* Fond noir/gris foncé */
-    color: #ffffff;                   /* Texte blanc */
-    border: 2px solid #0f3460;        /* Bordure bleue */
-    border-radius: 6px;               /* Coins arrondis */
-    padding: 6px 10px;                /* Espacement interne */
-    font-size: 14px;
-}
-
-QComboBox:hover {
-    background-color: #2a2a2a;        /* Léger éclaircissement au survol */
-    border: 2px solid #3d8eb9;        /* Bordure bleu clair au survol */
-}
-
-QComboBox::drop-down {
-    subcontrol-origin: padding;
-    subcontrol-position: top right;
-    width: 28px;
-    border-left: 1px solid #0f3460;
-    background-color: #0f3460;        /* Bouton bleu */
-    border-top-right-radius: 6px;
-    border-bottom-right-radius: 6px;
-}
-
-QComboBox::down-arrow {
-    image: url(:/icons/down-arrow.png); /* Icône perso ou retirer cette ligne */
-    width: 10px;
-    height: 10px;
-}
-
-QComboBox QAbstractItemView {
-    background-color: #1e1e1e;        /* Fond de la liste déroulante */
-    color: white;
-    selection-background-color: #0f3460;
-    selection-color: white;
-    border: 1px solid #0f3460;
-}
-</string>
-          </property>
-          <item>
-           <property name="text">
-            <string>NOM</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>DATEDEBUT</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>DATEFIN</string>
-           </property>
-          </item>
-         </widget>
          <widget class="QTableView" name="tableView1">
           <property name="geometry">
            <rect>
             <x>40</x>
-            <y>230</y>
-            <width>801</width>
+            <y>260</y>
+            <width>631</width>
             <height>291</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QTableView {
-    border: 1px solid #dddddd;             /* Bordure légère */
-    border-radius: 5px;                    /* Coins arrondis */
-    background-color: #0f3460;             /* Couleur de fond personnalisée en bleu foncé */
-    font-size: 12px;                       /* Taille de police */
-    padding: 5px;                          /* Espacement interne */
-    color: white;                          /* Couleur du texte blanc pour contraste */
-}
-
-QTableView::item {
-    padding: 5px;
-    color: white;                          /* Assurer que le texte dans les items est visible */
-}
-
-QTableView::item:selected {
-    background-color: #3d8eb9;             /* Couleur de fond de la sélection */
-    color: white;                          /* Couleur du texte sélectionné en blanc */
-}
-
-QHeaderView::section {
-    background-color: #1e2a47;             /* Couleur de fond légèrement plus claire pour les en-têtes */
-    padding: 5px;
-    font-weight: bold;                     /* Police en gras pour les en-têtes */
-    border: 1px solid #cccccc;             /* Bordure autour des en-têtes */
-    color: white;                          /* Couleur du texte dans les en-têtes */
-}
-
-QTableView QTableCornerButton::section {
-    background-color: #1e2a47;             /* Couleur du coin en haut à gauche pour correspondre aux en-têtes */
-    color: white;                          /* Texte blanc pour le coin */
-}
-</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_41">
-          <property name="geometry">
-           <rect>
-            <x>430</x>
-            <y>540</y>
-            <width>141</width>
-            <height>31</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QLabel {
-    font-size: 14px; /* Taille de la police */
-    font-weight: bold; /* Texte en gras */
-    color: #333333; /* Couleur du texte gris foncé */
-}</string>
-          </property>
-          <property name="text">
-           <string>id a supprimer :</string>
-          </property>
-         </widget>
-         <widget class="QComboBox" name="comboBoxPartenaires_2">
-          <property name="geometry">
-           <rect>
-            <x>570</x>
-            <y>540</y>
-            <width>141</width>
-            <height>31</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QTableView" name="tableView">
-          <property name="geometry">
-           <rect>
-            <x>530</x>
-            <y>20</y>
-            <width>311</width>
-            <height>141</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QTableView {
-    border: 1px solid #dddddd;             /* Bordure légère */
-    border-radius: 5px;                    /* Coins arrondis */
-    background-color: #0f3460;             /* Couleur de fond personnalisée en bleu foncé */
-    font-size: 12px;                       /* Taille de police */
-    padding: 5px;                          /* Espacement interne */
-    color: white;                          /* Couleur du texte blanc pour contraste */
-}
-
-QTableView::item {
-    padding: 5px;
-    color: white;                          /* Assurer que le texte dans les items est visible */
-}
-
-QTableView::item:selected {
-    background-color: #3d8eb9;             /* Couleur de fond de la sélection */
-    color: white;                          /* Couleur du texte sélectionné en blanc */
-}
-
-QHeaderView::section {
-    background-color: #1e2a47;             /* Couleur de fond légèrement plus claire pour les en-têtes */
-    padding: 5px;
-    font-weight: bold;                     /* Police en gras pour les en-têtes */
-    border: 1px solid #cccccc;             /* Bordure autour des en-têtes */
-    color: white;                          /* Couleur du texte dans les en-têtes */
-}
-
-QTableView QTableCornerButton::section {
-    background-color: #1e2a47;             /* Couleur du coin en haut à gauche pour correspondre aux en-têtes */
-    color: white;                          /* Texte blanc pour le coin */
-}
-</string>
-          </property>
-         </widget>
-         <widget class="QTableView" name="tableViewContrats">
-          <property name="geometry">
-           <rect>
-            <x>120</x>
-            <y>30</y>
-            <width>256</width>
-            <height>91</height>
            </rect>
           </property>
           <property name="styleSheet">
@@ -2386,8 +2209,8 @@ QTableView QTableCornerButton::section {
          <widget class="QLabel" name="label_16">
           <property name="geometry">
            <rect>
-            <x>20</x>
-            <y>180</y>
+            <x>30</x>
+            <y>220</y>
             <width>141</width>
             <height>31</height>
            </rect>
@@ -2403,31 +2226,11 @@ QTableView QTableCornerButton::section {
            <string>recherche par nom</string>
           </property>
          </widget>
-         <widget class="QLabel" name="label_24">
-          <property name="geometry">
-           <rect>
-            <x>340</x>
-            <y>180</y>
-            <width>111</width>
-            <height>31</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QLabel {
-    font-size: 14px; /* Taille de la police */
-    font-weight: bold; /* Texte en gras */
-    color: #333333; /* Couleur du texte gris foncé */
-}</string>
-          </property>
-          <property name="text">
-           <string>trier par</string>
-          </property>
-         </widget>
          <widget class="QPushButton" name="annuler_recherche">
           <property name="geometry">
            <rect>
-            <x>720</x>
-            <y>180</y>
+            <x>460</x>
+            <y>220</y>
             <width>101</width>
             <height>29</height>
            </rect>
@@ -2450,31 +2253,117 @@ border-radius:10px;</string>
            <string>annuler</string>
           </property>
          </widget>
-         <widget class="QPushButton" name="supprimerr">
+         <widget class="QWidget" name="chartContainer" native="true">
           <property name="geometry">
            <rect>
-            <x>730</x>
-            <y>540</y>
-            <width>101</width>
+            <x>480</x>
+            <y>10</y>
+            <width>401</width>
+            <height>201</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QWidget" name="chartContainerContrats" native="true">
+          <property name="geometry">
+           <rect>
+            <x>40</x>
+            <y>10</y>
+            <width>421</width>
+            <height>201</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QTextEdit" name="conversationTextEdit">
+          <property name="geometry">
+           <rect>
+            <x>700</x>
+            <y>270</y>
+            <width>291</width>
+            <height>281</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QTextEdit {
+    background-color: #1e1e1e;   /* Fond noir/gris foncé */
+    color: #f0f0f0;              /* Texte clair */
+    font-family: &quot;Segoe UI&quot;, sans-serif;
+    font-size: 14px;
+    border: 1px solid #444444;
+    border-radius: 10px;
+    padding: 10px;
+}
+</string>
+          </property>
+          <property name="html">
+           <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Segoe UI','sans-serif'; font-size:14px; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-family:'Segoe UI'; font-size:9pt;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="inputLineEdit">
+          <property name="geometry">
+           <rect>
+            <x>700</x>
+            <y>570</y>
+            <width>211</width>
+            <height>28</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLineEdit {
+    background-color: #ffffff;
+    color: #333333;
+    font-family: &quot;Segoe UI&quot;, sans-serif;
+    font-size: 14px;
+    border: 1px solid #cccccc;
+    border-radius: 10px;
+    padding: 6px;
+}
+
+QLineEdit:focus {
+    border: 1px solid #0078d7;
+}
+</string>
+          </property>
+          <property name="inputMask">
+           <string/>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="sendButton">
+          <property name="geometry">
+           <rect>
+            <x>920</x>
+            <y>570</y>
+            <width>83</width>
             <height>29</height>
            </rect>
           </property>
-          <property name="font">
-           <font>
-            <family>Segoe Print</family>
-           </font>
-          </property>
-          <property name="focusPolicy">
-           <enum>Qt::FocusPolicy::NoFocus</enum>
-          </property>
           <property name="styleSheet">
-           <string notr="true">color: rgb(0, 0, 0);
-background-color: #f44336;
-;
-border-radius:10px;</string>
+           <string notr="true">QPushButton {
+    background-color: #0078d7;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 14px;
+}
+
+QPushButton:hover {
+    background-color: #005fa1;
+}
+
+QPushButton:pressed {
+    background-color: #004d80;
+}
+</string>
           </property>
           <property name="text">
-           <string>supprimer</string>
+           <string>PushButton</string>
           </property>
          </widget>
         </widget>
@@ -2755,68 +2644,86 @@ border-radius:10px;</string>
 color: rgb(0, 0, 0);</string>
            </property>
           </widget>
-         </widget>
-         <widget class="QLabel" name="label_40">
-          <property name="geometry">
-           <rect>
-            <x>170</x>
-            <y>20</y>
-            <width>141</width>
-            <height>31</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QLabel {
+          <widget class="QDateEdit" name="DD">
+           <property name="geometry">
+            <rect>
+             <x>170</x>
+             <y>270</y>
+             <width>110</width>
+             <height>29</height>
+            </rect>
+           </property>
+           <property name="displayFormat">
+            <string>yyyy/M/d</string>
+           </property>
+           <property name="date">
+            <date>
+             <year>2025</year>
+             <month>1</month>
+             <day>1</day>
+            </date>
+           </property>
+          </widget>
+          <widget class="QDateEdit" name="FF">
+           <property name="geometry">
+            <rect>
+             <x>470</x>
+             <y>270</y>
+             <width>110</width>
+             <height>29</height>
+            </rect>
+           </property>
+           <property name="displayFormat">
+            <string>yyyy/M/d</string>
+           </property>
+           <property name="date">
+            <date>
+             <year>2025</year>
+             <month>1</month>
+             <day>1</day>
+            </date>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_24">
+           <property name="geometry">
+            <rect>
+             <x>40</x>
+             <y>270</y>
+             <width>111</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QLabel {
     font-size: 14px; /* Taille de la police */
     font-weight: bold; /* Texte en gras */
     color: #333333; /* Couleur du texte gris foncé */
 }</string>
-          </property>
-          <property name="text">
-           <string>id a modifier :</string>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="recuperer">
-          <property name="geometry">
-           <rect>
-            <x>530</x>
-            <y>20</y>
-            <width>141</width>
-            <height>41</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QPushButton {
-    background-color: #2196f3; /* Fond bleu */
-    color: white; /* Texte blanc */
+           </property>
+           <property name="text">
+            <string>date debut</string>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_27">
+           <property name="geometry">
+            <rect>
+             <x>340</x>
+             <y>270</y>
+             <width>111</width>
+             <height>31</height>
+            </rect>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QLabel {
     font-size: 14px; /* Taille de la police */
     font-weight: bold; /* Texte en gras */
-    border: none; /* Pas de bordure */
-    border-radius: 5px; /* Coins arrondis */
-    padding: 10px 20px; /* Espace intérieur */
-}
-
-QPushButton:hover {
-    background-color: #1976d2; /* Fond bleu foncé au survol */
-}
-
-QPushButton:pressed {
-    background-color: #0d47a1; /* Fond bleu très foncé au clic */
+    color: #333333; /* Couleur du texte gris foncé */
 }</string>
-          </property>
-          <property name="text">
-           <string>récupérer</string>
-          </property>
-         </widget>
-         <widget class="QComboBox" name="comboBoxPartenaires">
-          <property name="geometry">
-           <rect>
-            <x>330</x>
-            <y>20</y>
-            <width>141</width>
-            <height>31</height>
-           </rect>
-          </property>
+           </property>
+           <property name="text">
+            <string>date fin</string>
+           </property>
+          </widget>
          </widget>
         </widget>
        </widget>
@@ -2831,7 +2738,7 @@ QPushButton:pressed {
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1292</width>
+     <width>1387</width>
      <height>25</height>
     </rect>
    </property>

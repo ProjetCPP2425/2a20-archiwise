@@ -36,7 +36,7 @@ QStandardItemModel* Partenaire::afficher() {
 
     // Définir les en-têtes
     QStringList headers = {"ID", "Nom", "Type Partenaire", "Adresse", "Ville",
-                           "Contact Principal", "Email", "Date Début", "Date Fin", "Expiring Soon"};
+                           "Contact Principal", "Email", "Date Début", "Date Fin", "Expiring Soon", "Actions"};
     model->setHorizontalHeaderLabels(headers);
 
     QDate currentDate = QDate::currentDate();
@@ -45,15 +45,37 @@ QStandardItemModel* Partenaire::afficher() {
     int row = 0;
     while (query.next()) {
         QList<QStandardItem *> rowItems;
+
+        // Ajouter toutes les colonnes standard
         for (int col = 0; col < 9; ++col) {
-            rowItems << new QStandardItem(query.value(col).toString());
+            QStandardItem *item = new QStandardItem();
+
+            // Traitement spécial pour les dates
+            if (col == 7 || col == 8) { // Colonnes Date Début et Date Fin
+                QDate date = query.value(col).toDate();
+                item->setText(date.toString("yyyy/MM/dd"));
+                item->setData(date, Qt::UserRole); // Stocker la date brute pour le tri
+            } else {
+                item->setText(query.value(col).toString());
+            }
+
+            // Rendre les cellules non éditable
+            item->setFlags(item->flags() & ~Qt::ItemIsEditable);
+
+            rowItems << item;
         }
 
-        // Vérifier si la date de fin est dans les 7 jours
+        // Calcul Expiring Soon
         QDate dateFin = query.value(8).toDate();
         int isExpiring = (dateFin >= currentDate && dateFin <= dateLimite) ? 1 : 0;
+        QStandardItem *expiringItem = new QStandardItem(QString::number(isExpiring));
+        expiringItem->setFlags(expiringItem->flags() & ~Qt::ItemIsEditable);
+        rowItems << expiringItem;
 
-        rowItems << new QStandardItem(QString::number(isExpiring));
+        // Colonne Actions (vide - sera gérée par le délégué)
+        QStandardItem *actionItem = new QStandardItem();
+        actionItem->setFlags(actionItem->flags() & ~Qt::ItemIsEditable);
+        rowItems << actionItem;
 
         model->appendRow(rowItems);
         row++;
@@ -61,7 +83,6 @@ QStandardItemModel* Partenaire::afficher() {
 
     return model;
 }
-
 
 // Méthode pour ajouter un partenaire à la base de données
 bool Partenaire::ajouter() {
@@ -123,7 +144,16 @@ bool Partenaire::supprimer(int id) {
 bool Partenaire::modifier(int id) {
     QSqlQuery query;
 
-    query.prepare("UPDATE PARTENAIRES SET NOM = :Nom, TYPEPARTENAIRE = :TypePartenaire, ADRESSE = :Adresse, VILLE = :Ville, CONTACTPRINCIPAL = :ContactPrincipal, EMAIL = :Email WHERE ID = :Id");
+    query.prepare("UPDATE PARTENAIRES SET "
+                  "NOM = :Nom, "
+                  "TYPEPARTENAIRE = :TypePartenaire, "
+                  "ADRESSE = :Adresse, "
+                  "VILLE = :Ville, "
+                  "CONTACTPRINCIPAL = :ContactPrincipal, "
+                  "EMAIL = :Email, "
+                  "DATEDEBUT = :DateDebut, "
+                  "DATEFIN = :DateFin "
+                  "WHERE ID = :Id");
 
     query.bindValue(":Id", id);
     query.bindValue(":Nom", Nom);
@@ -132,6 +162,10 @@ bool Partenaire::modifier(int id) {
     query.bindValue(":Ville", Ville);
     query.bindValue(":ContactPrincipal", ContactPrincipal);
     query.bindValue(":Email", Email);
+
+    // Supposons que tes deux dates soient des QDate
+    query.bindValue(":DateDebut", DateDebut);
+    query.bindValue(":DateFin", DateFin);
 
     if (!query.exec()) {
         qDebug() << "❌ Erreur lors de la modification : " << query.lastError().text();
@@ -143,43 +177,46 @@ bool Partenaire::modifier(int id) {
 }
 bool Partenaire::recupererParId(int id) {
     QSqlQuery query;
-    query.prepare("SELECT NOM, TYPEPARTENAIRE, ADRESSE, VILLE, CONTACTPRINCIPAL, EMAIL FROM PARTENAIRES WHERE ID = :Id");
-    query.bindValue(":Id", id);
+    query.prepare("SELECT * FROM PARTENAIRES WHERE ID = :id");
+    query.bindValue(":id", id);
 
-    if (!query.exec() || !query.next()) {
-        qDebug() << "❌ Aucun partenaire trouvé avec l'ID : " << id;
-        return false;
+    if (query.exec() && query.next()) {
+        // Remplir les propriétés de l'objet
+        this->Id = query.value(0).toInt();
+        Nom = query.value(1).toString();
+        TypePartenaire = query.value(2).toString();
+        Adresse = query.value(3).toString();
+        Ville = query.value(4).toString();
+        ContactPrincipal = query.value(5).toString();
+        Email = query.value(6).toString();
+        DateDebut = query.value(7).toDate();
+        DateFin = query.value(8).toDate();
+        return true;
     }
-
-    Nom = query.value(0).toString();
-    TypePartenaire = query.value(1).toString();
-    Adresse = query.value(2).toString();
-    Ville = query.value(3).toString();
-    ContactPrincipal = query.value(4).toString();
-    Email = query.value(5).toString();
-
-    qDebug() << "✅ Partenaire trouvé : " << Nom << ", " << TypePartenaire;
-    return true;
+    return false;
 }
 
-int Partenaire::nombreContratsEnCours()
+
+int Partenaire::nombreContratsEnCours() const
 {
     QSqlQuery query;
-
-    // Utilisation d'une requête SQL pour compter les contrats en cours
-    query.prepare("SELECT COUNT(*) FROM PARTENAIRES WHERE :currentDate BETWEEN DATEDEBUT AND DATEFIN");
-
-    // Assurez-vous que vous passez une date correcte au format SQL
-    query.bindValue(":currentDate", QDate::currentDate());
-
-    if (query.exec()) {
-        if (query.next()) {
-            return query.value(0).toInt();  // Retourne le nombre de contrats en cours
-        }
-    } else {
-        qDebug() << "Erreur lors de l'exécution de la requête : " << query.lastError();
-    }
-
-    return 0;  // Retourne 0 en cas d'erreur ou si aucun contrat en cours n'est trouvé
+    query.prepare("SELECT COUNT(*) FROM PARTENAIRES WHERE DATEDEBUT <= CURRENT_DATE AND DATEFIN >= CURRENT_DATE");
+    if (query.exec() && query.next()) return query.value(0).toInt();
+    return 0;
 }
 
+int Partenaire::nombreContratsExpires() const
+{
+    QSqlQuery query;
+    query.prepare("SELECT COUNT(*) FROM PARTENAIRES WHERE DATEFIN < CURRENT_DATE");
+    if (query.exec() && query.next()) return query.value(0).toInt();
+    return 0;
+}
+
+int Partenaire::nombreContratsFuturs() const
+{
+    QSqlQuery query;
+    query.prepare("SELECT COUNT(*) FROM PARTENAIRES WHERE DATEDEBUT > CURRENT_DATE");
+    if (query.exec() && query.next()) return query.value(0).toInt();
+    return 0;
+}

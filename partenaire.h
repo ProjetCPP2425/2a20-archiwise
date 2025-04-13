@@ -39,6 +39,14 @@ public:
     QString getVille() { return Ville; }
     QString getContactPrincipal() { return ContactPrincipal; }
     QString getEmail() { return Email; }
+    QDate getDateDebut() const {
+        return DateDebut;
+    }
+
+    QDate getDateFin() const {
+        return DateFin;
+    }
+
 
     // Setters
     void setId(int id) { Id = id; }
@@ -48,16 +56,29 @@ public:
     void setVille(const QString& ville) { Ville = ville; }
     void setContactPrincipal(const QString& contactPrincipal) { ContactPrincipal = contactPrincipal; }
     void setEmail(const QString& email) { Email = email; }
+    void setDateDebut(const QDate &date) {
+        DateDebut = date;
+    }
+
+    void setDateFin(const QDate &date) {
+        DateFin = date;
+    }
 
     // Database functions
     bool ajouter();                 // Function to add a new partner to the database
     QStandardItemModel* afficher();    // Function to display partners in a table
     QSqlQueryModel* statistiquesParType();
     bool supprimer(int id);    // Function to delete a partner by ID
-    int nombreContratsEnCours();
+
     bool recupererParId(int id);  // Récupérer un partenaire par ID
     bool modifier(int id);
     QList<int> recupererTousLesIds();
+    int nombreContratsEnCours() const;
+
+    int nombreContratsExpires() const;
+
+    int nombreContratsFuturs() const;
+
     // Function to read data from the database and populate QTableView
 
 };

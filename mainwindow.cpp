@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "partenaire.h"
+#include "ButtonDelegate.h"
+#include <QRegularExpression>
 
 #include <QPushButton>  // Inclusion nécessaire pour QPushButton
 #include <QMessageBox>// Pour afficher des messages d'erreur
@@ -11,6 +13,8 @@
 #include <QStandardItemModel>
 #include <QProcess>
 #include <QtCharts/QChartView>
+#include <QtCharts/QPieSeries>
+#include <QtCharts/QPieSlice>
 #include <QtCharts/QBarSeries>
 #include <QtCharts/QBarSet>
 #include <QtCharts/QChart>
@@ -18,9 +22,20 @@
 #include <QtCharts/QValueAxis>
 #include <QSqlQuery>
 #include <QtCharts>
-
+#include <QFileDialog>
+#include <QPrinter>
+#include <QTextDocument>
+#include <QTextCursor>
+#include <QTextTable>
 #include <QSqlError>
 #include <QVBoxLayout>
+#include <random>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
 
 // Constructeur
 MainWindow::MainWindow(QWidget *parent) :
@@ -28,6 +43,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow),
     tts(new QTextToSpeech(this)),  // Initialisation de QTextToSpeech
     timer(new QTimer(this))
+
 {
     ui->setupUi(this);
     ui->TypePartenaire->addItem("Sélectionnez un type"); // Premier choix invalide
@@ -39,45 +55,39 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->tabWidget->setCurrentIndex(1);
 
 
+    botResponses << "Bonjour! Comment puis-je vous aider avec les partenaires ?"
+                 << "D'accord, je vais vérifier les partenaires."
+                 << "Je peux vous aider à gérer les informations des partenaires."
+                 << "Quel type de partenaire voulez-vous consulter ?"
+                 << "Avez-vous des questions sur les contrats ?";
+
+
+    ajouterMessageBot("👋 Bonjour ! Je suis votre assistant intelligent. Posez-moi n'importe quelle question concernant les partenaires !");
+    ajouterMessageBot(QSslSocket::supportsSsl() ? "✅ SSL OK !" : "❌ SSL non supporté");
 
 
 
     // Créez un objet Partenaire
-    Partenaire p;
+
 
     // Récupérez le modèle et vérifiez qu'il n'est pas nul
 
 
     // Liez le modèle au QTableView
     rappelContratsFinissants();
-    ui->tableView1->setModel(p.afficher());
-    ui->tableView1->setItemDelegate(new ContratFinissantDelegate(this));
-    ui->tableView1->setColumnHidden(9, true);
 
-afficherNombreContratsEnCours();
-    ui->tableView->setModel(p.statistiquesParType());
-    ui->tableView->setColumnWidth(0, 150);
-    ui->tableViewContrats->setColumnWidth(0, 150);
+    setupTableView();
+    // Colonne "Actions"
+
+
+
+afficherStatistiquesContrats();
+
+    afficherStatistiquesPartenaires();
 
     qDebug() << "✅ Affichage des partenaires réussi.";
 
     QSqlQuery query("SELECT ID FROM PARTENAIRES");
-
-
-ui->comboBoxPartenaires->clear();
-    ui->comboBoxPartenaires_2->clear();
-ui->comboBoxPartenaires_2->addItem("Sélectionnez un id");
-ui->comboBoxPartenaires->addItem("Sélectionnez un id");
-    while (query.next()) {
-        int id = query.value(0).toInt();
-         ui->comboBoxPartenaires->addItem(QString::number(id), id);
-         ui->comboBoxPartenaires_2->addItem(QString::number(id), id);
-
-    }
-
-
-
-
 
 
 
@@ -94,7 +104,165 @@ MainWindow::~MainWindow()
     delete tts;
     delete timer;
 }
+void MainWindow::ajouterMessageUtilisateur(const QString &message) {
+    QString html = "<table width='100%' ><tr><td></td><td align='left' width='70%'>"
+                   "<div style='background-color:#ffc7c7; color:#fff; padding:10px 12px; "
+                   "border-radius:18px 18px 0 18px; margin:4px 0; display:inline-block; "
+                   "font-family:Segoe UI, Arial, sans-serif;'>"
+                   "<b>👤 Vous :</b> " + message + "</div></td></tr></table>";
+    ui->conversationTextEdit->append(html);
+}
 
+void MainWindow::ajouterMessageBot(const QString &message) {
+    QString html = "<table width='100%'><tr><td align='left' width='70%'>"
+                   "<div style='background-color:#e4e6eb; color:#000; padding:10px 12px; "
+                   "border-radius:18px 18px 18px 0; margin:4px 0; display:inline-block; "
+                   "font-family:Segoe UI, Arial, sans-serif;'>"
+                   "<b>🤖 Bot :</b> " + message + "</div></td></tr></table>";
+    ui->conversationTextEdit->append(html);
+}
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
+
+
+
+
+
+void MainWindow::processUserInput(const QString &input)
+{
+    QString response;
+
+    // Exemple de gestion des entrées
+    if (input.contains("combien de partenaires de type fournisseur", Qt::CaseInsensitive)) {
+        // Requête SQL pour obtenir le nombre de fournisseurs
+        QSqlQuery query;
+        query.prepare("SELECT COUNT(*) FROM PARTENAIRES WHERE TYPEPARTENAIRE = :type");
+        query.bindValue(":type", "Fournisseur");
+
+        if (query.exec()) {
+            if (query.next()) {
+                int count = query.value(0).toInt();
+                response = QString("Il y a %1 partenaires de type fournisseur.").arg(count);
+            }
+        } else {
+            qDebug() << "Erreur lors de l'exécution de la requête : " << query.lastError();
+            response = "Je n'ai pas pu obtenir le nombre de fournisseurs pour l'instant.";
+        }
+    } else if (input.contains("combien de partenaires de type architecte", Qt::CaseInsensitive)) {
+        // Requête SQL pour obtenir le nombre d'architectes
+        QSqlQuery query;
+        query.prepare("SELECT COUNT(*) FROM PARTENAIRES WHERE TYPEPARTENAIRE = :type");
+        query.bindValue(":type", "Architecte");
+
+        if (query.exec()) {
+            if (query.next()) {
+                int count = query.value(0).toInt();
+                response = QString("Il y a %1 partenaires de type architecte.").arg(count);
+            }
+        } else {
+            qDebug() << "Erreur lors de l'exécution de la requête : " << query.lastError();
+            response = "Je n'ai pas pu obtenir le nombre d'architectes pour l'instant.";
+        }
+    } else if (input.contains("combien de partenaires dans la ville", Qt::CaseInsensitive)) {
+        // Extraction de la ville de la question (simple exemple ici)
+        QRegularExpression regExp("ville ([\\w\\s]+)");
+        QRegularExpressionMatch match = regExp.match(input);
+        QString ville;
+        if (match.hasMatch()) {
+            ville = match.captured(1);
+        }
+
+        // Requête SQL pour obtenir le nombre de partenaires dans la ville
+        QSqlQuery query;
+        query.prepare("SELECT COUNT(*) FROM PARTENAIRES WHERE VILLE = :ville");
+        query.bindValue(":ville", ville);
+
+        if (query.exec()) {
+            if (query.next()) {
+                int count = query.value(0).toInt();
+                response = QString("Il y a %1 partenaires dans la ville %2.").arg(count).arg(ville);
+            }
+        } else {
+            qDebug() << "Erreur lors de l'exécution de la requête : " << query.lastError();
+            response = "Je n'ai pas pu obtenir le nombre de partenaires dans cette ville pour l'instant.";
+        }
+    } else if (input.contains("quels partenaires ont un contrat expiré", Qt::CaseInsensitive)) {
+        // Requête SQL pour obtenir les partenaires dont le contrat est expiré
+        QSqlQuery query;
+        query.prepare("SELECT NOM FROM PARTENAIRES WHERE DATEFINCONTRAT < CURRENT_DATE");
+
+        if (query.exec()) {
+            QStringList partenaires;
+            while (query.next()) {
+                partenaires.append(query.value(0).toString());
+            }
+
+            if (!partenaires.isEmpty()) {
+                response = "Les partenaires dont le contrat est expiré sont : " + partenaires.join(", ");
+            } else {
+                response = "Aucun partenaire n'a de contrat expiré.";
+            }
+        } else {
+            qDebug() << "Erreur lors de l'exécution de la requête : " << query.lastError();
+            response = "Je n'ai pas pu obtenir la liste des partenaires avec contrat expiré.";
+        }
+    } else if (input.contains("aide", Qt::CaseInsensitive)) {
+        response = "Je peux vous aider à gérer les partenaires, les contrats, et plus encore!";
+    } else {
+        // Réponse aléatoire si aucune correspondance
+        static std::random_device rd;
+        static std::mt19937 gen(rd());
+        std::uniform_int_distribution<> dis(0, botResponses.size() - 1);
+        response = botResponses[dis(gen)];
+    }
+
+    // Ajouter la réponse du bot dans la zone de texte
+    ajouterMessageBot(response);
+}
+
+
+
+
+void MainWindow::addBotMessage(const QString &message)
+{
+    ui->conversationTextEdit->append("Bot: " + message);
+}
+void MainWindow::setupTableView()
+{
+    Partenaire p;
+    // Créer un modèle pour afficher les données
+    QStandardItemModel *model = p.afficher();
+
+    // Créer un QSortFilterProxyModel
+    QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
+    proxyModel->setSourceModel(model);  // Lier le proxy au modèle
+
+    // Activer le tri par colonne
+    proxyModel->setSortCaseSensitivity(Qt::CaseInsensitive); // Insensible à la casse
+    ui->tableView1->setModel(proxyModel);
+
+    // Activer la possibilité de trier les colonnes par clic
+    ui->tableView1->setSortingEnabled(true);
+
+    // Facultatif : spécifier le tri par défaut sur la première colonne (Nom par exemple)
+    ui->tableView1->horizontalHeader()->setSortIndicator(0, Qt::AscendingOrder);
+    ui->tableView1->horizontalHeader()->setSortIndicatorShown(true);
+    ui->tableView1->setColumnWidth(10, 200);
+    ui->tableView1->setItemDelegate(new ContratFinissantDelegate(this));
+    ui->tableView1->setColumnHidden(9, true);
+    ButtonDelegate *buttonDelegate = new ButtonDelegate(ui->tableView1);
+    ui->tableView1->setItemDelegateForColumn(10, buttonDelegate);
+    connect(buttonDelegate, &ButtonDelegate::editClicked, this, &MainWindow::onEditClicked);
+    connect(buttonDelegate, &ButtonDelegate::deleteClicked, this, &MainWindow::onDeleteClicked);
+}
+void MainWindow::resizeEvent(QResizeEvent *event) {
+    // Implémentez votre code ici pour gérer l'événement de redimensionnement
+    QMainWindow::resizeEvent(event);  // Facultatif, si vous voulez appeler la méthode de la classe de base
+}
 // Slot pour ajouter un partenaire
 void MainWindow::on_btnAjouter_clicked()
 {
@@ -182,13 +350,10 @@ void MainWindow::on_btnAjouter_clicked()
     // Ajouter le partenaire dans la base
     if (p.ajouter()) {
         qDebug() << "✅ Partenaire ajouté avec succès !";
-        ui->tableView1->setModel(p.afficher());
-        ui->tableView1->setItemDelegate(new ContratFinissantDelegate(this));
-        ui->tableView1->setColumnHidden(9, true);
-        afficherNombreContratsEnCours();
-        ui->tableView->setModel(p.statistiquesParType());
-        ui->tableView->setColumnWidth(0, 150);
-        ui->tableViewContrats->setColumnWidth(0, 150);
+        setupTableView();
+        afficherStatistiquesContrats();
+        afficherStatistiquesPartenaires();
+
         // Affichage d'un message de succès
         QMessageBox::information(this, "Succès", "L'ajout du partenaire a réussi avec succès !");
 
@@ -204,16 +369,7 @@ void MainWindow::on_btnAjouter_clicked()
         //mettre a jour la liste des selections de la supprestion et modification
         QSqlQuery query("SELECT ID FROM PARTENAIRES");
 
-        ui->comboBoxPartenaires->clear();
-        ui->comboBoxPartenaires_2->clear();
-        ui->comboBoxPartenaires_2->addItem("Sélectionnez un id");
-        ui->comboBoxPartenaires->addItem("Sélectionnez un id");
-        while (query.next()) {
-            int id = query.value(0).toInt();
-            ui->comboBoxPartenaires->addItem(QString::number(id), id);
-            ui->comboBoxPartenaires_2->addItem(QString::number(id), id);
 
-        }
 
         // Mettre à jour le QTableWidget avec les nouvelles données
 
@@ -224,95 +380,6 @@ void MainWindow::on_btnAjouter_clicked()
         QMessageBox::critical(this, "Erreur", "L'ajout du partenaire a échoué !");
     }
 }
-
-void MainWindow::on_supprimerr_clicked()
-{
-
-        // Récupérer l'ID du partenaire à supprimer à partir du QLineEdit
-
-        int id = ui->comboBoxPartenaires_2->currentData().toInt();
-        if (ui->comboBoxPartenaires_2->currentIndex() == 0) {
-            QMessageBox::warning(this, "Erreur", "Veuillez sélectionner un id!");
-            return;
-        }        // Assurez-vous que le QLineEdit s'appelle "lineEdit_IDS"
-
-        // Vérifier que l'ID est valide (si l'ID est <= 0, la suppression n'est pas possible)
-        if (id <= 0) {
-            QMessageBox::warning(this, "ID invalide", "Veuillez entrer un ID valide !");
-            return;
-        }
-
-        // Créer un objet Partenaire pour appeler la méthode supprimer()
-        Partenaire p;
-
-        // Appel de la méthode supprimer() et stocker le résultat dans test
-        bool test = p.supprimer(id);
-
-        // Afficher un message selon le résultat de la suppression
-        if (test) {
-            ui->tableView1->setModel(p.afficher());
-            ui->tableView1->setModel(p.afficher());
-            afficherNombreContratsEnCours();
-            ui->tableView->setModel(p.statistiquesParType());
-            ui->tableView->setColumnWidth(0, 150);
-            ui->tableViewContrats->setColumnWidth(0, 150);
-
-            // Si la suppression a réussi
-            QSqlQuery query("SELECT ID FROM PARTENAIRES");
-
-            ui->comboBoxPartenaires->clear();
-            ui->comboBoxPartenaires_2->clear();
-            ui->comboBoxPartenaires_2->addItem("Sélectionnez un id");
-            ui->comboBoxPartenaires->addItem("Sélectionnez un id");
-            while (query.next()) {
-                int id = query.value(0).toInt();
-                ui->comboBoxPartenaires->addItem(QString::number(id), id);
-                ui->comboBoxPartenaires_2->addItem(QString::number(id), id);
-
-            }
-            QMessageBox::information(this, QObject::tr("Succès"),
-                                     QObject::tr("Suppression effectuée\nClick Cancel to exit."),
-                                     QMessageBox::Cancel);
-        } else {
-            // Si la suppression a échoué
-            QMessageBox::critical(this, QObject::tr("Erreur"),
-                                  QObject::tr("Suppression non effectuée.\nClick Cancel to exit."),
-                                  QMessageBox::Cancel);
-        }
-    }
-
-void MainWindow::on_recuperer_clicked() {
-    // Récupérer l'ID du partenaire depuis un QLineEdit (par exemple)
-    int partnerId = ui->comboBoxPartenaires->currentData().toInt();
-    if (ui->comboBoxPartenaires->currentIndex() == 0) {
-        QMessageBox::warning(this, "Erreur", "Veuillez sélectionner un id!");
-        return;
-    }        // Assurez-vous que le QLineEdit s'appelle "lineEdit_IDS"
-    // ID récupéré depuis un QLineEdit
-
-    Partenaire partenaire;
-
-    // Vérifier si le partenaire existe dans la base
-    if (partenaire.recupererParId(partnerId)) {
-        // Si l'ID est trouvé, remplir les champs du formulaire avec les anciennes informations
-        ui->nomInput->setText(partenaire.getNom());
-        QString typePartenaire =partenaire.getTypePartenaire();
-        if((typePartenaire)=="Client"){ui->typePartenaireInput->setCurrentIndex(1);}
-        else{ui->typePartenaireInput->setCurrentIndex(2);}
-        ui->adresseInput->setText(partenaire.getAdresse());
-        ui->villeInput->setText(partenaire.getVille());
-        ui->contactPrincipalInput->setText(partenaire.getContactPrincipal());
-        ui->emailInput->setText(partenaire.getEmail());
-
-        // Afficher un message de succès
-        qDebug() << "✅ Partenaire trouvé, formulaire prêt pour modification.";
-        ui->comboBoxPartenaires->setEnabled(false);
-    } else {
-        // Si l'ID n'est pas trouvé, afficher un message d'erreur
-        qDebug() << "❌ Aucun partenaire trouvé avec l'ID : " << partnerId;
-    }
-}
-
 
 
 
@@ -333,10 +400,12 @@ void MainWindow::on_recuperer_clicked() {
         QString ville = ui->villeInput->text();
         QString contactPrincipal = ui->contactPrincipalInput->text();
         QString email = ui->emailInput->text();
+        QDate dateDebut = ui->DD->date();
+        QDate dateFin = ui->FF->date();
 
 
-        if (ui->comboBoxPartenaires->currentIndex() == 0) {
-            QMessageBox::warning(this, "Erreur", "Veuillez sélectionner un id!");
+        if (currentPartnerId <= 0) {
+            QMessageBox::warning(this, "Erreur", "Aucun partenaire sélectionné !");
             return;
         }
         // Vérification : Aucun champ ne doit être vide
@@ -388,7 +457,10 @@ void MainWindow::on_recuperer_clicked() {
             QMessageBox::warning(this, "Erreur", "Le contact principal est invalide (100 caractères max) !");
             return;
         }
-
+        if (dateDebut > dateFin) {
+            QMessageBox::warning(this, "Erreur", "La date de fin doit être postérieure à la date de début !");
+            return;
+        }
 
 
         // Regex pour valider exemple@domaine.com ou exemple@domaine.tn
@@ -400,7 +472,7 @@ void MainWindow::on_recuperer_clicked() {
         }
 
         // L'ID du partenaire à modifier, récupéré depuis le QLineEdit
-        int partnerId = ui->comboBoxPartenaires->currentData().toInt();;
+        int partnerId = currentPartnerId;
 
         Partenaire partenaire;
         partenaire.setNom(nom);
@@ -409,17 +481,15 @@ void MainWindow::on_recuperer_clicked() {
         partenaire.setVille(ville);
         partenaire.setContactPrincipal(contactPrincipal);
         partenaire.setEmail(email);
+        partenaire.setDateDebut(dateDebut);
+        partenaire.setDateFin(dateFin);
 
         // Modifier les informations dans la base de données
         if (partenaire.modifier(partnerId)) {
-            Partenaire p;
-            ui->tableView1->setModel(p.afficher());
-            ui->tableView1->setItemDelegate(new ContratFinissantDelegate(this));
-            ui->tableView1->setColumnHidden(9, true);
-            afficherNombreContratsEnCours();
-            ui->tableView->setModel(p.statistiquesParType());
-            ui->tableView->setColumnWidth(0, 150);
-            ui->tableViewContrats->setColumnWidth(0, 150);
+            setupTableView();
+            afficherStatistiquesContrats();
+            afficherStatistiquesPartenaires();
+
             ui->nomInput->clear();
             ui->typePartenaireInput->setCurrentIndex(0);
             ui->adresseInput->clear();
@@ -430,18 +500,20 @@ void MainWindow::on_recuperer_clicked() {
                                      QObject::tr("modification effectuée\nClick Cancel to exit."),
                                      QMessageBox::Cancel);
             qDebug() << "✅ Modifications enregistrées avec succès.";
-            ui->comboBoxPartenaires->setEnabled(true);
-            ui->comboBoxPartenaires->setCurrentIndex(0);
+            currentPartnerId=-1;
+
         } else {
             qDebug() << "❌ Erreur lors de l'enregistrement des modifications.";
+            QMessageBox::information(this, QObject::tr("Succès"),
+                                     QObject::tr("modification hhhhhhhhhhhh."),
+                                     QMessageBox::Cancel);
         }
     }
 
 
     void MainWindow::on_annuler_modification_clicked()
     {
-        ui->comboBoxPartenaires->setEnabled(true);
-        ui->comboBoxPartenaires->setCurrentIndex(0);
+
         ui->nomInput->clear();
         ui->typePartenaireInput->setCurrentIndex(0);
         ui->adresseInput->clear();
@@ -462,42 +534,98 @@ void MainWindow::on_recuperer_clicked() {
         ui->Email->clear();
     }
 
-    void MainWindow::afficherNombreContratsEnCours()
+    void MainWindow::afficherStatistiquesContrats()
+    {
+        // 1. Créer une instance de Partenaire
+        Partenaire partenaire;
+
+        // 2. Obtenir les différents compteurs
+        int contratsEnCours = partenaire.nombreContratsEnCours();
+        int contratsExpires = partenaire.nombreContratsExpires();
+        int contratsFuturs = partenaire.nombreContratsFuturs();
+
+        // 3. Créer le diagramme circulaire
+        QPieSeries *series = new QPieSeries();
+
+        // 4. Définir les couleurs spécifiques
 
 
-        {
-            // Créer une instance de Partenaire
-            Partenaire partenaire;
+        // 5. Ajouter systématiquement les trois catégories
+        QPieSlice *sliceEnCours = series->append(QString("En cours (%1)").arg(contratsEnCours), contratsEnCours);
+        sliceEnCours->setColor(Qt::green);
+        sliceEnCours->setLabelVisible(true);
+        sliceEnCours->setLabelColor(Qt::black);
+        sliceEnCours->setLabelPosition(QPieSlice::LabelOutside);
 
-            // Obtenir le nombre de contrats en cours
-            int nombreContrats = partenaire.nombreContratsEnCours();
+        QPieSlice *sliceExpires = series->append(QString("Expirés (%1)").arg(contratsExpires), contratsExpires);
+        sliceExpires->setColor(Qt::red);
+        sliceExpires->setLabelVisible(true);
+        sliceExpires->setLabelColor(Qt::black);
+        sliceExpires->setLabelPosition(QPieSlice::LabelOutside);
 
-            // Créer un modèle pour afficher les résultats dans un QTableView
-            QStandardItemModel* model = new QStandardItemModel(1, 1, this);  // 1 ligne et 1 colonne
+        QPieSlice *sliceFuturs = series->append(QString("Futurs (%1)").arg(contratsFuturs), contratsFuturs);
+        sliceFuturs->setColor(Qt::blue);
+        sliceFuturs->setLabelVisible(true);
+        sliceFuturs->setLabelColor(Qt::black);
+        sliceFuturs->setLabelPosition(QPieSlice::LabelOutside);
 
-            // Définir le nom de la colonne
-            model->setHorizontalHeaderItem(0, new QStandardItem("Contrat en cours"));
+        // 6. Configurer le graphique
+        QChart *chart = new QChart();
+        chart->addSeries(series);
+        chart->setTitle(QString("Statut des contrats - %1").arg(QDate::currentDate().toString("dd/MM/yyyy")));
+        chart->setTitleFont(QFont("Arial", 12, QFont::Bold));
+        chart->legend()->setAlignment(Qt::AlignRight);
+        chart->legend()->setFont(QFont("Arial", 9));
+        chart->setBackgroundVisible(false);
 
-            // Ajouter la valeur du nombre de contrats en cours à la cellule (0, 0)
-            model->setItem(0, 0, new QStandardItem(QString::number(nombreContrats)));
+        // 7. Configurer les animations
+        chart->setAnimationOptions(QChart::SeriesAnimations);
+        chart->setAnimationDuration(1200);
+        chart->setAnimationEasingCurve(QEasingCurve::OutBack);
 
-            // Afficher les résultats dans un QTableView
-            ui->tableViewContrats->setModel(model);  // tableViewContrats est votre QTableView dans le fichier UI
+        // 8. Créer la vue du graphique
+        QChartView *chartView = new QChartView(chart);
+        chartView->setRenderHint(QPainter::Antialiasing);
+        chartView->setStyleSheet("background: transparent; border: none;");
+
+        // 9. Nettoyer le conteneur existant
+        QLayout *oldLayout = ui->chartContainerContrats->layout();
+        if (oldLayout) {
+            QLayoutItem *item;
+            while ((item = oldLayout->takeAt(0))) {
+                if (item->widget()) delete item->widget();
+                delete item;
+            }
+            delete oldLayout;
         }
 
+        // 10. Configurer le nouveau layout
+        QVBoxLayout *layout = new QVBoxLayout(ui->chartContainerContrats);
+        layout->setContentsMargins(5, 5, 5, 5);
+        layout->setSpacing(0);
+        layout->addWidget(chartView);
 
+        // 11. Appliquer le style au conteneur
+        ui->chartContainerContrats->setStyleSheet(
+            "background-color: white;"
+            "border-radius: 10px;"
+            "border: 1px solid #d0d0d0;"
+            );
+
+        // 12. Gestion des tailles
+        chartView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        ui->chartContainerContrats->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    }
 
 
         void MainWindow::on_recherche_clicked()
         {
             QString rechercheNom = ui->lineEditRechercheNom->text();
-            QString attributTrier = ui->comboBoxTrierPar->currentText();
+
 
             QString queryStr = "SELECT * FROM PARTENAIRES WHERE NOM LIKE :rechercheNom";
 
-            if (!attributTrier.isEmpty()) {
-                queryStr += " ORDER BY " + attributTrier;
-            }
+
 
             QSqlQuery query;
             query.prepare(queryStr);
@@ -526,7 +654,15 @@ void MainWindow::on_recuperer_clicked() {
             model->setHeaderData(7, Qt::Horizontal, "Date Début");
             model->setHeaderData(8, Qt::Horizontal, "Date Fin");
 
-            ui->tableView1->setModel(model);
+            QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
+            proxyModel->setSourceModel(model);  // Lier le proxy au modèle
+
+            // Activer le tri par colonne
+            proxyModel->setSortCaseSensitivity(Qt::CaseInsensitive); // Insensible à la casse
+            ui->tableView1->setModel(proxyModel);
+
+            // Activer la possibilité de trier les colonnes par clic
+            ui->tableView1->setSortingEnabled(true);
             }
 
 
@@ -535,56 +671,69 @@ void MainWindow::on_recuperer_clicked() {
 
         void MainWindow::on_annuler_recherche_clicked()
         {
-            Partenaire p;
-
-            // Récupérez le modèle et vérifiez qu'il n'est pas nul
 
 
-            // Liez le modèle au QTableView
+            setupTableView();
 
-            ui->tableView1->setModel(p.afficher());
             ui->lineEditRechercheNom->clear();
 
         }
         void MainWindow::on_pushButtonExporter_clicked()
         {
-            QString desktopPath = QStandardPaths::writableLocation(QStandardPaths::DesktopLocation);
-            QString fileName = desktopPath + "/export_partenaire.csv";
+            QString fileName = QFileDialog::getSaveFileName(
+                this,
+                "Enregistrer le fichier PDF",
+                QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation) + "/export_partenaire.pdf",
+                "Fichiers PDF (*.pdf);;Tous les fichiers (*)"
+                );
 
-            QFile file(fileName);
-            if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
-                QMessageBox::warning(this, "Erreur", "Impossible d'ouvrir le fichier pour écriture.");
+            if (fileName.isEmpty())
                 return;
-            }
 
-            QTextStream stream(&file);
+            QPrinter printer(QPrinter::PrinterResolution);
+            printer.setOutputFormat(QPrinter::PdfFormat);
+            printer.setOutputFileName(fileName);
+
+            QTextDocument doc;
+            QTextCursor cursor(&doc);
+
             QAbstractItemModel *model = ui->tableView1->model();
 
-
-
-            // Vérifie si le modèle est nul OU s'il n'a pas de lignes
             if (!model || model->rowCount() == 0) {
                 QMessageBox::warning(this, "Erreur", "Aucune donnée à exporter.");
                 return;
             }
 
+            // Titre
+            cursor.insertHtml("<h2>Liste des partenaires</h2><br>");
 
-            // En-têtes
-            stream << "Nom,TypePartenaire,Email\n";
+            // Créer un tableau dans le document
+            int rows = model->rowCount();
+            int cols = model->columnCount();
 
-            for (int row = 0; row < model->rowCount(); ++row) {
-                QString nom = model->data(model->index(row, 1)).toString();     // Colonne 1 : NOM
-                QString type = model->data(model->index(row, 2)).toString();    // Colonne 2 : TYPEPARTENAIRE
-                QString email = model->data(model->index(row, 6)).toString();   // Colonne 6 : EMAIL
+            QTextTableFormat tableFormat;
+            tableFormat.setBorder(1);
+            tableFormat.setCellPadding(4);
+            tableFormat.setCellSpacing(0);
+            QTextTable *table = cursor.insertTable(rows + 1, 3, tableFormat); // 3 colonnes : Nom, Type, Email
 
-                stream << "\"" << nom << "\","
-                       << "\"" << type << "\","
-                       << "\"" << email << "\"\n";
+            // Entêtes
+            table->cellAt(0, 0).firstCursorPosition().insertText("Nom");
+            table->cellAt(0, 1).firstCursorPosition().insertText("TypePartenaire");
+            table->cellAt(0, 2).firstCursorPosition().insertText("Email");
+
+            for (int row = 0; row < rows; ++row) {
+                table->cellAt(row + 1, 0).firstCursorPosition().insertText(model->data(model->index(row, 1)).toString());
+                table->cellAt(row + 1, 1).firstCursorPosition().insertText(model->data(model->index(row, 2)).toString());
+                table->cellAt(row + 1, 2).firstCursorPosition().insertText(model->data(model->index(row, 6)).toString());
             }
 
-            file.close();
-            QMessageBox::information(this, "Succès", "Export réussi ! Fichier : export_partenaire.csv (sur le bureau)");
+            doc.print(&printer);
+
+            QMessageBox::information(this, "Succès", "Export PDF réussi ! Fichier : " + fileName);
         }
+
+
 
         void MainWindow::rappelContratsFinissants()
         {
@@ -628,6 +777,174 @@ void MainWindow::on_recuperer_clicked() {
 
         }
 
+void MainWindow::afficherStatistiquesPartenaires()
+        {
+            // 1. Définir tous les types de partenaires attendus
+            QStringList typesPartenaires = {"Architecte", "Fournisseur"}; // Ajoutez d'autres types si nécessaire
+
+            // 2. Préparer la structure pour stocker les comptages
+            QMap<QString, int> compteurs;
+            foreach (const QString &type, typesPartenaires) {
+                compteurs[type] = 0; // Initialiser à 0
+            }
+
+            // 3. Récupérer les données existantes depuis la base
+            QSqlQuery query("SELECT TYPEPARTENAIRE, COUNT(*) AS NOMBRE FROM PARTENAIRES GROUP BY TYPEPARTENAIRE");
+            while (query.next()) {
+                QString type = query.value("TYPEPARTENAIRE").toString();
+                compteurs[type] = query.value("NOMBRE").toInt();
+            }
+
+            // 4. Création du diagramme circulaire
+            QPieSeries *series = new QPieSeries();
+
+            // Couleurs prédéfinies (bleu et vert en priorité)
+            QList<QColor> couleurs =  {Qt::blue, Qt::green, Qt::red, Qt::yellow, Qt::cyan, Qt::magenta};
+
+            // 5. Ajouter chaque type au graphique
+            for (int i = 0; i < typesPartenaires.size(); ++i) {
+                QString type = typesPartenaires[i];
+                int nombre = compteurs[type];
+
+                // Créer la tranche même si nombre = 0
+                QString libelle = QString("%1 (%2)").arg(type).arg(nombre);
+                QPieSlice *slice = series->append(libelle, nombre);
+
+                // Configurer l'apparence
+                slice->setLabelVisible(true);
+                slice->setLabelColor(Qt::black);
+                slice->setLabelPosition(QPieSlice::LabelOutside);
+
+                // Attribuer une couleur
+                if (i < couleurs.size()) {
+                    slice->setColor(couleurs[i]);
+                } else {
+                    // Couleur par défaut si on dépasse la liste
+                    slice->setColor(QColor::fromHsl(rand() % 360, 150 + rand() % 106, 150 + rand() % 106));
+                }
+            }
+
+            // 6. Configuration du graphique
+            QChart *chart = new QChart();
+            chart->addSeries(series);
+            chart->setTitle("Répartition des partenaires par type");
+            chart->setTitleFont(QFont("Arial", 12, QFont::Bold));
+            chart->legend()->setAlignment(Qt::AlignRight);
+            chart->legend()->setFont(QFont("Arial", 9));
+            chart->setBackgroundVisible(false);
+
+            // Animations
+            chart->setAnimationOptions(QChart::SeriesAnimations);
+            chart->setAnimationDuration(1000);
+            chart->setAnimationEasingCurve(QEasingCurve::OutQuart);
+
+            // 7. Configuration de la vue
+            QChartView *chartView = new QChartView(chart);
+            chartView->setRenderHint(QPainter::Antialiasing);
+            chartView->setStyleSheet("background: transparent;");
+
+            // 8. Nettoyage du conteneur existant
+            QLayout *oldLayout = ui->chartContainer->layout();
+            if (oldLayout) {
+                QLayoutItem *item;
+                while ((item = oldLayout->takeAt(0))) {
+                    if (item->widget()) {
+                        delete item->widget();
+                    }
+                    delete item;
+                }
+                delete oldLayout;
+            }
+
+            // 9. Mise en place du nouveau layout
+            QVBoxLayout *layout = new QVBoxLayout(ui->chartContainer);
+            layout->setContentsMargins(5, 5, 5, 5);
+            layout->setSpacing(0);
+            layout->addWidget(chartView);
+
+            // 10. Style du conteneur
+            ui->chartContainer->setStyleSheet(
+                "background-color: white;"
+                "border-radius: 10px;"
+                "border: 1px solid #d0d0d0;"
+                );
+
+            // 11. Gestion des tailles
+            chartView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+            ui->chartContainer->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        }
 
 
+
+
+
+        void MainWindow::onEditClicked(int row) {
+            QModelIndex index = ui->tableView1->model()->index(row, 0); // Colonne ID
+            int partnerId = ui->tableView1->model()->data(index).toInt();
+
+               currentPartnerId = partnerId;
+
+            Partenaire partenaire;
+            if (partenaire.recupererParId(partnerId)) {
+                ui->nomInput->setText(partenaire.getNom());
+                QString typePartenaire = partenaire.getTypePartenaire();
+                if(typePartenaire == "Architecte") {
+                    ui->typePartenaireInput->setCurrentIndex(1);
+                } else {
+                    ui->typePartenaireInput->setCurrentIndex(2);
+                }
+                ui->adresseInput->setText(partenaire.getAdresse());
+                ui->villeInput->setText(partenaire.getVille());
+                ui->contactPrincipalInput->setText(partenaire.getContactPrincipal());
+                ui->emailInput->setText(partenaire.getEmail());
+                ui->DD->setDate(partenaire.getDateDebut());
+                ui->FF->setDate(partenaire.getDateFin());
+
+                // Activez l'onglet de modification si nécessaire
+                ui->tabWidget->setCurrentIndex(2); // Supposant que l'onglet 2 est pour les modifications
+            }
+        }
+
+        void MainWindow::onDeleteClicked(int row) {
+            QModelIndex index = ui->tableView1->model()->index(row, 0); // Colonne ID
+            int partnerId = ui->tableView1->model()->data(index).toInt();
+
+            QMessageBox::StandardButton reply;
+            reply = QMessageBox::question(this, "Confirmation", "Voulez-vous vraiment supprimer ce partenaire?",
+                                          QMessageBox::Yes|QMessageBox::No);
+            if (reply == QMessageBox::Yes) {
+                Partenaire p;
+                if (p.supprimer(partnerId)) {
+                    // Rafraîchir la table
+                    setupTableView();
+                    QMessageBox::information(this, "Succès", "Partenaire supprimé avec succès!");
+                    afficherStatistiquesContrats();
+                    afficherStatistiquesPartenaires();
+                } else {
+                    QMessageBox::warning(this, "Erreur", "Échec de la suppression!");
+                }
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+        void MainWindow::on_sendButton_clicked()
+        {
+            QString userInput = ui->inputLineEdit->text();
+
+            ajouterMessageUtilisateur(userInput);     // ✅ Affiche le message utilisateur
+            processUserInput(userInput);              // ✅ Ne doit être appelé qu’une seule fois !
+
+            ui->inputLineEdit->clear();
+        }
 

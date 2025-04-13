@@ -7,6 +7,9 @@
 #include <QDate>
 #include <QPainter>
 
+#include <QMainWindow>
+#include <QSortFilterProxyModel>
+#include <QDate>
 namespace Ui {
 class MainWindow;
 }
@@ -17,40 +20,46 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
+     void resizeEvent(QResizeEvent *event) override;
+
 
     ~MainWindow();
 public slots:
     void on_btnAjouter_clicked();
-    void on_pushButtonExporter_clicked();
-    void rappelContratsFinissants();
-    void statistique();
-    void on_annuler_recherche_clicked();
-    void verifierEtModifier();
 
-        void on_pushButton_9_clicked();
 
-    void afficherNombreContratsEnCours();
-    void on_recuperer_clicked();
-    void on_modifier_clicked();
-        void remplirComboBoxAvecIds();
+     void on_modifier_clicked();
+    void on_annuler_modification_clicked();
+       void on_annuler_ajout_clicked();
+      void afficherStatistiquesContrats();
+        void on_annuler_recherche_clicked();
+      void on_pushButtonExporter_clicked();
+         void rappelContratsFinissants();
+      void afficherStatistiquesPartenaires();
+         void on_recherche_clicked();
+    void onDeleteClicked(int row);
+    void onEditClicked(int row);
+
+
+
+
+    void setupTableView();
+
+
+
+
 
 private slots:
 
 
 
 
+ void on_sendButton_clicked();
+    void ajouterMessageUtilisateur(const QString &message);
+ void ajouterMessageBot(const QString &message);
+    void appelerOpenAI(const QString &question);
 
 
-    void on_supprimerr_clicked();
-
-    void on_annuler_modification_clicked();
-
-    void on_annuler_ajout_clicked();
-
-    void on_rechercher_clicked();
-
-
-    void on_recherche_clicked();
 
 
 
@@ -58,6 +67,14 @@ private:
     Ui::MainWindow *ui;
     QTextToSpeech *tts;  // Pour la synthèse vocale
     QTimer *timer;
+    int currentPartnerId;
+    Qt::SortOrder currentSortOrder = Qt::AscendingOrder;
+    QString currentSortColumn = "";
+     QSortFilterProxyModel *proxyModel;
+     QStringList botResponses;
+    void processUserInput(const QString &input); // Fonction pour traiter les entrées de l'utilisateur
+    void addBotMessage(const QString &message);
+
 
 };
 #include <QStyledItemDelegate>
@@ -80,5 +97,9 @@ public:
         QStyledItemDelegate::paint(painter, opt, index);
     }
 };
+
+
+
+
 
 #endif // MAINWINDOW_H
