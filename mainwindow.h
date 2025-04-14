@@ -51,8 +51,8 @@ public slots:
 
 private slots:
 
-
-
+    void on_nouvelle_disccusion_clicked();
+    void initialiserCompleter();
 
  void on_sendButton_clicked();
     void ajouterMessageUtilisateur(const QString &message);
@@ -62,6 +62,8 @@ private slots:
 
 
 
+
+    void on_sendButton_2_clicked();
 
 private:
     Ui::MainWindow *ui;

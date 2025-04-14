@@ -63,7 +63,29 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     ajouterMessageBot("👋 Bonjour ! Je suis votre assistant intelligent. Posez-moi n'importe quelle question concernant les partenaires !");
-    ajouterMessageBot(QSslSocket::supportsSsl() ? "✅ SSL OK !" : "❌ SSL non supporté");
+    ajouterMessageBot(" Voici quelques questions que vous pouvez me poser :<br>"
+                      "- quels sont les partenaires de type architecte ?<br>"
+                      "- quels sont les partenaires de type fournisseur?<br>"
+                      "- quels sont les partenaires dans la ville NomDeLaVille ?<br>"
+                      "- quels sont les partenaires qui ont un contrat expiré ?<br>"
+                      "- quels sont les partenaires qui ont un contrat en cours ?<br>"
+                      );
+    // Revenir au début du texte
+    QTextCursor cursor = ui->conversationTextEdit->textCursor();
+    cursor.movePosition(QTextCursor::Start);
+    ui->conversationTextEdit->setTextCursor(cursor);
+    QStringList suggestions = {
+        "quels sont les partenaires de type architecte",
+        "quels sont les partenaires de type fournisseur",
+        "quels sont les partenaires dans la ville NomDeLaVille",
+        "quels sont les partenaires qui ont un contrat expiré",
+        "quels sont les partenaires qui ont un contrat en cours"
+    };
+    QCompleter *completer = new QCompleter(suggestions, this);
+    completer->setCaseSensitivity(Qt::CaseInsensitive);
+    ui->inputLineEdit->setCompleter(completer);
+
+
 
 
 
@@ -77,6 +99,7 @@ MainWindow::MainWindow(QWidget *parent) :
     rappelContratsFinissants();
 
     setupTableView();
+    initialiserCompleter();
     // Colonne "Actions"
 
 
@@ -120,6 +143,8 @@ void MainWindow::ajouterMessageBot(const QString &message) {
                    "font-family:Segoe UI, Arial, sans-serif;'>"
                    "<b>🤖 Bot :</b> " + message + "</div></td></tr></table>";
     ui->conversationTextEdit->append(html);
+    ui->conversationTextEdit->moveCursor(QTextCursor::End);
+
 }
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
@@ -129,6 +154,20 @@ void MainWindow::ajouterMessageBot(const QString &message) {
 #include <QJsonArray>
 
 
+void MainWindow::initialiserCompleter() {
+    QStringList listeNoms;
+    QSqlQuery query("SELECT NOM FROM PARTENAIRES");
+
+    while (query.next()) {
+        listeNoms << query.value(0).toString();
+    }
+
+    QCompleter *completer = new QCompleter(listeNoms, this);
+    completer->setCaseSensitivity(Qt::CaseInsensitive);
+    completer->setFilterMode(Qt::MatchContains); // Pour suggérer même si le nom est au milieu de la saisie
+
+    ui->lineEditRechercheNom->setCompleter(completer);
+}
 
 
 
@@ -136,73 +175,95 @@ void MainWindow::processUserInput(const QString &input)
 {
     QString response;
 
-    // Exemple de gestion des entrées
-    if (input.contains("combien de partenaires de type fournisseur", Qt::CaseInsensitive)) {
-        // Requête SQL pour obtenir le nombre de fournisseurs
+    if (input.contains("quels sont les partenaires de type architecte", Qt::CaseInsensitive)) {
         QSqlQuery query;
-        query.prepare("SELECT COUNT(*) FROM PARTENAIRES WHERE TYPEPARTENAIRE = :type");
-        query.bindValue(":type", "Fournisseur");
-
-        if (query.exec()) {
-            if (query.next()) {
-                int count = query.value(0).toInt();
-                response = QString("Il y a %1 partenaires de type fournisseur.").arg(count);
-            }
-        } else {
-            qDebug() << "Erreur lors de l'exécution de la requête : " << query.lastError();
-            response = "Je n'ai pas pu obtenir le nombre de fournisseurs pour l'instant.";
-        }
-    } else if (input.contains("combien de partenaires de type architecte", Qt::CaseInsensitive)) {
-        // Requête SQL pour obtenir le nombre d'architectes
-        QSqlQuery query;
-        query.prepare("SELECT COUNT(*) FROM PARTENAIRES WHERE TYPEPARTENAIRE = :type");
+        query.prepare("SELECT NOM FROM PARTENAIRES WHERE TYPEPARTENAIRE = :type");
         query.bindValue(":type", "Architecte");
 
         if (query.exec()) {
-            if (query.next()) {
-                int count = query.value(0).toInt();
-                response = QString("Il y a %1 partenaires de type architecte.").arg(count);
+            QStringList noms;
+            while (query.next()) {
+                noms << query.value(0).toString();
+            }
+            if (!noms.isEmpty()) {
+                response = QString("Il y a %1 partenaires de type architecte :<br>- %2")
+                .arg(noms.size())
+                    .arg(noms.join("<br>- "));
+            } else {
+                response = "Aucun partenaire de type architecte trouvé.";
             }
         } else {
-            qDebug() << "Erreur lors de l'exécution de la requête : " << query.lastError();
-            response = "Je n'ai pas pu obtenir le nombre d'architectes pour l'instant.";
+            response = "Erreur lors de la récupération des architectes.";
         }
-    } else if (input.contains("combien de partenaires dans la ville", Qt::CaseInsensitive)) {
-        // Extraction de la ville de la question (simple exemple ici)
-        QRegularExpression regExp("ville ([\\w\\s]+)");
+    }
+
+    else if (input.contains("quels sont les partenaires de type fournisseur", Qt::CaseInsensitive)) {
+        QSqlQuery query;
+        query.prepare("SELECT NOM FROM PARTENAIRES WHERE TYPEPARTENAIRE = :type");
+        query.bindValue(":type", "Fournisseur");
+
+        if (query.exec()) {
+            QStringList noms;
+            while (query.next()) {
+                noms << query.value(0).toString();
+            }
+            if (!noms.isEmpty()) {
+                response = QString("Il y a %1 partenaires de type fournisseur :<br>- %2")
+                .arg(noms.size())
+                    .arg(noms.join("<br>- "));
+            } else {
+                response = "Aucun partenaire de type fournisseur trouvé.";
+            }
+        } else {
+            response = "Erreur lors de la récupération des fournisseurs.";
+        }
+    }
+
+    else if (input.contains("quels sont les partenaires dans la ville", Qt::CaseInsensitive)) {
+        QRegularExpression regExp("ville ([\\w\\s]+)", QRegularExpression::CaseInsensitiveOption);
         QRegularExpressionMatch match = regExp.match(input);
         QString ville;
         if (match.hasMatch()) {
-            ville = match.captured(1);
+            ville = match.captured(1).trimmed();
         }
 
-        // Requête SQL pour obtenir le nombre de partenaires dans la ville
         QSqlQuery query;
-        query.prepare("SELECT COUNT(*) FROM PARTENAIRES WHERE VILLE = :ville");
+        query.prepare("SELECT NOM FROM PARTENAIRES WHERE VILLE = :ville");
         query.bindValue(":ville", ville);
 
         if (query.exec()) {
-            if (query.next()) {
-                int count = query.value(0).toInt();
-                response = QString("Il y a %1 partenaires dans la ville %2.").arg(count).arg(ville);
+            QStringList noms;
+            while (query.next()) {
+                noms << query.value(0).toString();
+            }
+
+            if (!noms.isEmpty()) {
+                response = QString("Il y a %1 partenaires dans la ville %2 :<br>- %3")
+                .arg(noms.size())
+                    .arg(ville)
+                    .arg(noms.join("<br>- "));
+            } else {
+                response = QString("Aucun partenaire trouvé dans la ville %1.").arg(ville);
             }
         } else {
             qDebug() << "Erreur lors de l'exécution de la requête : " << query.lastError();
-            response = "Je n'ai pas pu obtenir le nombre de partenaires dans cette ville pour l'instant.";
+            response = "Je n'ai pas pu obtenir la liste des partenaires dans cette ville pour l'instant.";
         }
-    } else if (input.contains("quels partenaires ont un contrat expiré", Qt::CaseInsensitive)) {
-        // Requête SQL pour obtenir les partenaires dont le contrat est expiré
+    }
+
+
+    else if (input.contains("quels sont les partenaires qui ont un contrat expiré", Qt::CaseInsensitive)) {
         QSqlQuery query;
-        query.prepare("SELECT NOM FROM PARTENAIRES WHERE DATEFINCONTRAT < CURRENT_DATE");
+        query.prepare("SELECT NOM FROM PARTENAIRES WHERE DATEFIN < CURRENT_DATE");
 
         if (query.exec()) {
             QStringList partenaires;
             while (query.next()) {
-                partenaires.append(query.value(0).toString());
+                partenaires << query.value(0).toString();
             }
 
             if (!partenaires.isEmpty()) {
-                response = "Les partenaires dont le contrat est expiré sont : " + partenaires.join(", ");
+                response = "Les partenaires dont le contrat est expiré sont :<br>- " + partenaires.join("<br>- ");
             } else {
                 response = "Aucun partenaire n'a de contrat expiré.";
             }
@@ -210,20 +271,45 @@ void MainWindow::processUserInput(const QString &input)
             qDebug() << "Erreur lors de l'exécution de la requête : " << query.lastError();
             response = "Je n'ai pas pu obtenir la liste des partenaires avec contrat expiré.";
         }
-    } else if (input.contains("aide", Qt::CaseInsensitive)) {
-        response = "Je peux vous aider à gérer les partenaires, les contrats, et plus encore!";
-    } else {
-        // Réponse aléatoire si aucune correspondance
-        static std::random_device rd;
-        static std::mt19937 gen(rd());
-        std::uniform_int_distribution<> dis(0, botResponses.size() - 1);
-        response = botResponses[dis(gen)];
     }
 
-    // Ajouter la réponse du bot dans la zone de texte
+    else if (input.contains("quels sont les partenaires qui ont un contrat en cours", Qt::CaseInsensitive)) {
+        QSqlQuery query;
+        query.prepare("SELECT NOM FROM PARTENAIRES WHERE DATEFIN >= CURRENT_DATE and DATEDEBUT <= CURRENT_DATE");
+
+        if (query.exec()) {
+            QStringList partenaires;
+            while (query.next()) {
+                partenaires << query.value(0).toString();
+            }
+
+            if (!partenaires.isEmpty()) {
+                response = QString("Il y a %1 partenaires avec un contrat en cours :<br>- %2")
+                .arg(partenaires.size())
+                    .arg(partenaires.join("<br>- "));
+            } else {
+                response = "Aucun partenaire n'a de contrat en cours.";
+            }
+        } else {
+            qDebug() << "Erreur lors de l'exécution de la requête : " << query.lastError();
+            response = "Je n'ai pas pu obtenir la liste des partenaires avec contrat en cours.";
+        }
+    }
+
+
+    else {
+        // Réponse aléatoire si aucune correspondance
+
+        response = " veuillez choisir l'un de ces questions :<br>"
+                   "- quels sont les partenaires de type architecte ?<br>"
+                   "- quels sont les partenaires de type fournisseur?<br>"
+                   "- quels sont les partenaires dans la ville NomDeLaVille ?<br>"
+                   "- quels sont les partenaires qui ont un contrat expiré ?<br>"
+                   "- quels sont les partenaires qui ont un contrat en cours ?<br>";
+    }
+
     ajouterMessageBot(response);
 }
-
 
 
 
@@ -946,5 +1032,24 @@ void MainWindow::afficherStatistiquesPartenaires()
             processUserInput(userInput);              // ✅ Ne doit être appelé qu’une seule fois !
 
             ui->inputLineEdit->clear();
+        }
+
+
+        void MainWindow::on_nouvelle_disccusion_clicked()
+        {
+            ui->conversationTextEdit->clear();
+            ajouterMessageBot("👋 Bonjour ! Je suis votre assistant intelligent. Posez-moi n'importe quelle question concernant les partenaires !");
+            ajouterMessageBot(" Voici quelques questions que vous pouvez me poser :<br>"
+                              "- quels sont les partenaires de type architecte ?<br>"
+                              "- quels sont les partenaires de type fournisseur?<br>"
+                              "- quels sont les partenaires dans la ville NomDeLaVille ?<br>"
+                              "- quels sont les partenaires qui ont un contrat expiré ?<br>"
+                              "- quels sont les partenaires qui ont un contrat en cours ?<br>"
+                              );
+            // Revenir au début du texte
+            QTextCursor cursor = ui->conversationTextEdit->textCursor();
+            cursor.movePosition(QTextCursor::Start);
+            ui->conversationTextEdit->setTextCursor(cursor);
+
         }
 

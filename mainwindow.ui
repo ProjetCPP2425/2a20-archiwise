@@ -2104,6 +2104,22 @@ color: rgb(0, 0, 0);</string>
             <height>28</height>
            </rect>
           </property>
+          <property name="styleSheet">
+           <string notr="true">QLineEdit {
+    background-color: #ffffff;
+    color: #333333;
+    font-family: &quot;Segoe UI&quot;, sans-serif;
+    font-size: 14px;
+    border: 1px solid #cccccc;
+    border-radius: 10px;
+    padding: 6px;
+}
+
+QLineEdit:focus {
+    border: 1px solid #0078d7;
+}
+</string>
+          </property>
           <property name="inputMask">
            <string/>
           </property>
@@ -2256,9 +2272,9 @@ border-radius:10px;</string>
          <widget class="QWidget" name="chartContainer" native="true">
           <property name="geometry">
            <rect>
-            <x>480</x>
+            <x>520</x>
             <y>10</y>
-            <width>401</width>
+            <width>431</width>
             <height>201</height>
            </rect>
           </property>
@@ -2266,7 +2282,7 @@ border-radius:10px;</string>
          <widget class="QWidget" name="chartContainerContrats" native="true">
           <property name="geometry">
            <rect>
-            <x>40</x>
+            <x>70</x>
             <y>10</y>
             <width>421</width>
             <height>201</height>
@@ -2277,9 +2293,9 @@ border-radius:10px;</string>
           <property name="geometry">
            <rect>
             <x>700</x>
-            <y>270</y>
-            <width>291</width>
-            <height>281</height>
+            <y>260</y>
+            <width>331</width>
+            <height>291</height>
            </rect>
           </property>
           <property name="styleSheet">
@@ -2363,7 +2379,39 @@ QPushButton:pressed {
 </string>
           </property>
           <property name="text">
-           <string>PushButton</string>
+           <string>envoyer</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="nouvelle_disccusion">
+          <property name="geometry">
+           <rect>
+            <x>760</x>
+            <y>220</y>
+            <width>181</width>
+            <height>29</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+    background-color: #0078d7;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-size: 14px;
+}
+
+QPushButton:hover {
+    background-color: #005fa1;
+}
+
+QPushButton:pressed {
+    background-color: #004d80;
+}
+</string>
+          </property>
+          <property name="text">
+           <string>nouvelle discussion</string>
           </property>
          </widget>
         </widget>
