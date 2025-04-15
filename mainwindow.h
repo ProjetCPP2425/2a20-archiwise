@@ -1,12 +1,12 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+    #ifndef MAINWINDOW_H
+    #define MAINWINDOW_H
 
 #include <QMainWindow>
 #include <QSortFilterProxyModel>
 #include <QSqlQueryModel>
-#include "client.h"
 #include <QtCharts/QChartView>
 #include <QtCharts/QPieSeries>
+#include "client.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -32,10 +32,15 @@ private slots:
     //void on_pushButton_6_clicked();
     //void on_on_triDate_clicked_clicked();
     void on_exportPdfButton_clicked();  // Nouveau slot pour l'export PDF
-     void trierClients(int column, Qt::SortOrder order);
+    void trierClients(int column, Qt::SortOrder order);
     //void on_statsTabSelected();
     void on_showStatsButton_clicked_clicked();
     void on_staClient_4_clicked_clicked();
+
+    void on_exportPdfButton_2_clicked();
+    void setupHistoriqueTable();
+
+    void on_pushButton_4_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -51,4 +56,6 @@ private:
     QChartView *m_chartView;  // Ajoute ce membre pour garder une référence
 };
 
-#endif // MAINWINDOW_H
+
+
+    #endif // MAINWINDOW_H

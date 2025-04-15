@@ -3,11 +3,16 @@
 #include <QSqlError>
 #include <QDebug>
 #include <QSqlQueryModel>
+#include <QJsonObject>
+
 
 Client::Client() {
     id = 0;
     type = ClientType::Particulier;
+
 }
+
+
 
 Client::Client(QString nom, QString prenom, QString adresse, QString tel, ClientType type, QDate dateInscription) {
     this->nom = nom;
@@ -59,8 +64,13 @@ bool Client::ajouter() {
     query.bindValue(":type", get_typeString());
     query.bindValue(":dateInscription", dateInscription);
 
-    return query.exec();
-}
+    if (!query.exec()) {
+        return false;
+    }
+
+    // Enregistrer l'action dans l'historique si la modification a réussi
+    QString details = QString("ajout du client: %1 %2 (ID: %3)").arg(nom, prenom).arg(id);
+    return logAction("ajout", newId, details);}
 
 QSqlQueryModel* Client::afficher() {
     QSqlQueryModel* model = new QSqlQueryModel();
@@ -76,36 +86,52 @@ QSqlQueryModel* Client::afficher() {
 
     return model;
 }
-
 bool Client::supprimer(int id) {
     QSqlQuery query;
+    QString nomClient, prenomClient;
 
-    // Commencer une transaction
-    query.exec("BEGIN TRANSACTION");
+    // 1. Récupérer les infos du client AVANT suppression
+    query.prepare("SELECT NOM, PRENOM FROM CLIENTS WHERE ID = :id");
+    query.bindValue(":id", id);
+    if (!query.exec() || !query.next()) {
+        qDebug() << "Client introuvable :" << query.lastError().text();
+        return false;
+    }
+    nomClient = query.value("NOM").toString();
+    prenomClient = query.value("PRENOM").toString();
 
-    // Supprimer le client
+    // 2. Journaliser AVANT suppression
+    QString details = QString("Suppression de %1 %2 (ID: %3)").arg(nomClient, prenomClient).arg(id);
+    if (!logAction("Suppression", id, details)) {
+        qDebug() << "Échec de la journalisation";
+        return false; // Annuler la suppression si le log échoue
+    }
+
+    // 3. Supprimer le client
     query.prepare("DELETE FROM CLIENTS WHERE ID = :id");
     query.bindValue(":id", id);
     if (!query.exec()) {
-        query.exec("ROLLBACK");
+        qDebug() << "Erreur SQL :" << query.lastError().text();
         return false;
     }
 
-    // Mettre à jour les IDs des clients suivants
-    query.prepare("UPDATE CLIENTS SET ID = ID - 1 WHERE ID > :id");
-    query.bindValue(":id", id);
-    if (!query.exec()) {
-        query.exec("ROLLBACK");
+    // 4. Vérifier si la suppression a eu lieu
+    if (query.numRowsAffected() <= 0) {
+        qDebug() << "Aucun client supprimé (ID invalide?)";
         return false;
+
+    }
+    if (query.exec() && query.numRowsAffected() > 0) {
+
+        return logAction("SUPPRESSION", id, "Client supprimé");
     }
 
-    // Valider la transaction
-    query.exec("COMMIT");
+
     return true;
 }
-
 bool Client::modifier(int id) {
     QSqlQuery query;
+    int newId = query.value(0).toInt();
     query.prepare("UPDATE CLIENTS SET "
                   "NOM = :nom, "
                   "PRENOM = :prenom, "
@@ -122,8 +148,13 @@ bool Client::modifier(int id) {
     query.bindValue(":type", get_typeString());
     query.bindValue(":dateInscription", dateInscription);
     query.bindValue(":id", id);
+    if (!query.exec()) {
+        return false;
+    }
 
-    return query.exec();
+    // Enregistrer l'action dans l'historique si la modification a réussi
+    QString details = QString("Modification du client: %1 %2 (ID: %3)").arg(nom, prenom).arg(id);
+    return logAction("Modification", id, details);
 }
 
 Client Client::getclientById(int id) {
@@ -169,3 +200,66 @@ QSqlQueryModel* Client::rechercher(const QString &critere) {
 
     return model;
 }
+
+QSqlQueryModel* Client::afficherHistorique() {
+    QSqlQueryModel* model = new QSqlQueryModel();
+    QSqlQuery query;
+
+    query.prepare("SELECT "
+                  "ID, "
+                  "id_c, "
+                  "date_action, "
+                  "ACTION, "
+                  "DETAILS "
+                  "FROM HISTORIQUE_clients "
+                  "ORDER BY DATE_ACTION DESC");
+
+    if (!query.exec()) {
+        qDebug() << "Erreur requête historique:" << query.lastError().text();
+        return model;
+    }
+
+    // Utilisation de la méthode non dépréciée
+    model->setQuery(std::move(query));
+
+    // Définir les en-têtes
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("ID Client"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("Date"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("Action"));
+    model->setHeaderData(4, Qt::Horizontal, QObject::tr("Details"));
+
+    return model;
+}
+bool Client::logAction(const QString &action, int clientId, const QString &details) {
+    QSqlQuery query;
+    // Corriger la table ici : remplacer CLIENTS par HISTORIQUE_clients
+    query.prepare("SELECT NVL(MAX(ID), 0) + 1 FROM HISTORIQUE_clients");
+    if (!query.exec() || !query.next()) {
+        return false;
+    }
+    int newId = query.value(0).toInt();
+
+    query.prepare("INSERT INTO HISTORIQUE_clients (id, ID_C, ACTION, DATE_ACTION, DETAILS) "
+                  "VALUES (:id, :clientId, :action, :dateAction, :details)");
+
+    // Liaison des valeurs
+    query.bindValue(":id", newId);
+
+    query.bindValue(":clientId", clientId);
+    query.bindValue(":action", action);
+    query.bindValue(":dateAction", QDateTime::currentDateTime());
+    query.bindValue(":details", details);
+
+    if (!query.exec()) {
+        qDebug() << "Erreur lors du log:" << query.lastError().text();
+        qDebug() << "Requête:" << query.lastQuery();
+        return false;
+    }
+    return true;
+}
+
+
+
+
+

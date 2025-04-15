@@ -414,6 +414,7 @@ Makefile: ../../Atelier_Connexion.pro ../../../qt/6.7.3/mingw_64/mkspecs/feature
 		../../../qt/6.7.3/mingw_64/lib/Qt6OpenGL.prl \
 		../../../qt/6.7.3/mingw_64/lib/Qt6Gui.prl \
 		../../../qt/6.7.3/mingw_64/lib/Qt6Sql.prl \
+		../../../qt/6.7.3/mingw_64/lib/Qt6Network.prl \
 		../../../qt/6.7.3/mingw_64/lib/Qt6Core.prl \
 		../../../qt/6.7.3/mingw_64/lib/Qt6EntryPoint.prl \
 		../../../qt/6.7.3/mingw_64/mkspecs/features/build_pass.prf
@@ -762,6 +763,7 @@ Makefile: ../../Atelier_Connexion.pro ../../../qt/6.7.3/mingw_64/mkspecs/feature
 ../../../qt/6.7.3/mingw_64/lib/Qt6OpenGL.prl:
 ../../../qt/6.7.3/mingw_64/lib/Qt6Gui.prl:
 ../../../qt/6.7.3/mingw_64/lib/Qt6Sql.prl:
+../../../qt/6.7.3/mingw_64/lib/Qt6Network.prl:
 ../../../qt/6.7.3/mingw_64/lib/Qt6Core.prl:
 ../../../qt/6.7.3/mingw_64/lib/Qt6EntryPoint.prl:
 ../../../qt/6.7.3/mingw_64/mkspecs/features/build_pass.prf:

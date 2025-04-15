@@ -6,6 +6,7 @@
 #include <QSqlQueryModel>
 #include <QSqlQuery>
 
+
 enum class ClientType {
     Particulier,
     Entreprise,
@@ -46,6 +47,9 @@ public:
     bool modifier(int id);
     QSqlQueryModel* rechercher(const QString &critere);
     Client getclientById(int id);
+    QSqlQueryModel* afficherHistorique();
+    bool logAction(const QString &action, int clientId, const QString &details);
+
 
 private:
     int id;
@@ -55,6 +59,8 @@ private:
     QString tel;
     ClientType type;
     QDate dateInscription;
+
 };
+
 
 #endif // CLIENT_H

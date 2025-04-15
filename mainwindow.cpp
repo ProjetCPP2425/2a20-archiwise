@@ -15,6 +15,7 @@
 #include <QDate>
 #include <QAbstractItemModel>
 #include <QSqlError>
+#include "sms.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -22,6 +23,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     setupTableView();
+    setupHistoriqueTable();
+
     // Initialisation de l'interface
     ui->comboBox_type->addItem("Particulier");
     ui->comboBox_type->addItem("Entreprise");
@@ -34,18 +37,18 @@ MainWindow::MainWindow(QWidget *parent)
     // Connecter le nouveau bouton d'export PDF
     connect(ui->exportPdfButton, &QPushButton::clicked, this, &MainWindow::on_exportPdfButton_clicked);
     // Dans le constructeur :
-     /*connect(ui->staClient_4_clicked, &QPushButton::clicked, this, [this]() {
+    /*connect(ui->staClient_4_clicked, &QPushButton::clicked, this, [this]() {
                                  ui->stackedWidget->setCurrentIndex(1);
                              });*/
 
     connect(ui->showStatsButton_clicked, &QPushButton::clicked, this, &MainWindow::on_showStatsButton_clicked_clicked);
 
-     connect(ui->showStatsButton_clicked, &QPushButton::clicked, this, [this]() {
-         updateClientStats();
-         ui->stackedWidget->setCurrentIndex(ui->stackedWidget->count() - 1);
-     });
+    connect(ui->showStatsButton_clicked, &QPushButton::clicked, this, [this]() {
+        updateClientStats();
+        ui->stackedWidget->setCurrentIndex(ui->stackedWidget->count() - 1);
+    });
 
-     /*connect(ui->staClient_4_clicked, &QPushButton::clicked, this, [this]() {
+    /*connect(ui->staClient_4_clicked, &QPushButton::clicked, this, [this]() {
          ui->stackedWidget->setCurrentIndex(1);
      });*/
 }
@@ -118,10 +121,16 @@ void MainWindow::button_maram()
         connect(delete_button, &QPushButton::clicked, [this, row, proxy]() {
             QModelIndex sourceIndex = proxy->mapToSource(proxy->index(row, 0));
             int id = sourceIndex.data().toInt();
+
             if (this->client.supprimer(id)) {
+                // Rafraîchir le modèle
                 proxy->setSourceModel(this->client.afficher());
-                button_maram();
+                button_maram(); // Recréer les boutons
+                setupHistoriqueTable(); // Rafraîchir l'historique
+
                 QMessageBox::information(this, "Succès", "Client supprimé avec succès");
+            } else {
+                QMessageBox::critical(this, "Erreur", "Échec de la suppression !");
             }
         });
 
@@ -155,9 +164,14 @@ void MainWindow::on_ajouterClient_clicked()
     client.set_type(typeStr);
 
     if (client.ajouter()) {
+        SmsSender sender("71256cbaabc3fc040753ea0f2854966d-2f1fae87-b2f6-4b0c-b3fb-9ecb56a0abc0", "447491163443");
+        sender.sendSms("+21692550388", "Bienvenue ! Vous êtes maintenant inscrit"); // Replace with the recipient's phone number
+        QMessageBox::information(this, "sms sent", "sms sent to your number");
         QMessageBox::information(this, "Succès", "Client ajouté !");
         proxyModel->setSourceModel(this->client.afficher());
         button_maram();
+        setupHistoriqueTable(); // Rafraîchir l'historique
+
         ui->stackedWidget->setCurrentIndex(0);
 
         // Nettoyer les champs
@@ -188,9 +202,13 @@ void MainWindow::on_modifierClient_clicked()
     clientModifie.set_dateInscription(dateInscription);
 
     if (clientModifie.modifier(currentClientId)) {
+
+
         QMessageBox::information(this, "Succès", "Client modifié !");
         proxyModel->setSourceModel(this->client.afficher());
         button_maram();
+        setupHistoriqueTable(); // Rafraîchir l'historique
+
         ui->stackedWidget->setCurrentIndex(0);
     } else {
         QMessageBox::critical(this, "Erreur", "Échec de la modification.");
@@ -224,7 +242,7 @@ void MainWindow::on_supprimerClient_clicked(int id)
         if (test) {
             proxyModel->setSourceModel(this->client.afficher());
             button_maram();
-
+            setupHistoriqueTable(); // Rafraîchir l'historique
             QMessageBox::information(nullptr, QObject::tr("DONE"),
                                      QObject::tr("An event's been deleted.\n"
                                                  "Click Cancel to exit."), QMessageBox::Cancel);
@@ -249,7 +267,7 @@ void MainWindow::on_lineEdit_id_clicked()
 
 void MainWindow::on_pushButton_12_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(1);
+    ui->stackedWidget->setCurrentIndex(0);
 }
 
 void MainWindow::trierClients(int column, Qt::SortOrder order)
@@ -403,6 +421,28 @@ void MainWindow::on_showStatsButton_clicked_clicked()
 
 void MainWindow::on_staClient_4_clicked_clicked()
 {
-     ui->stackedWidget->setCurrentIndex(1);
+    ui->stackedWidget->setCurrentIndex(1);
 }
 
+
+void MainWindow::on_exportPdfButton_2_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(3);
+}
+void MainWindow::setupHistoriqueTable() {
+    QSqlQueryModel *historiqueModel = client.afficherHistorique();
+
+
+
+    ui->tableView_historique->setModel(historiqueModel);
+
+    // Ajuster les colonnes
+    ui->tableView_historique->setColumnHidden(0, true); // Cache la colonne ID
+    ui->tableView_historique->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
+    ui->tableView_historique->resizeColumnsToContents();
+}
+
+void MainWindow::on_pushButton_4_clicked()
+{
+    ui->stackedWidget->setCurrentIndex(0);
+}
