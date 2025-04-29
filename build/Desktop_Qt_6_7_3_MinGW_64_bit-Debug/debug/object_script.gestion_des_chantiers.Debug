@@ -1,0 +1,10 @@
+debug/SerialTemperatureManager.o
+debug/chantier.o
+debug/chantierdelegate.o
+debug/connection.o
+debug/main.o
+debug/mainwindow.o
+debug/qrc_ressources.o
+debug/moc_SerialTemperatureManager.o
+debug/moc_chantierdelegate.o
+debug/moc_mainwindow.o

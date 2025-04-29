@@ -1,0 +1,10 @@
+release/SerialTemperatureManager.o
+release/chantier.o
+release/chantierdelegate.o
+release/connection.o
+release/main.o
+release/mainwindow.o
+release/qrc_ressources.o
+release/moc_SerialTemperatureManager.o
+release/moc_chantierdelegate.o
+release/moc_mainwindow.o
