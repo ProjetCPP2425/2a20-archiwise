@@ -4,6 +4,7 @@
 #include "ButtonDelegate.h"
 #include <QRegularExpression>
 
+#include <QDebug>
 #include <QPushButton>  // Inclusion nécessaire pour QPushButton
 #include <QMessageBox>// Pour afficher des messages d'erreur
 #include <QFile>
@@ -87,13 +88,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
 
+    connect(&serialPort, &QSerialPort::readyRead, this, &MainWindow::readSerialData);
+
 
 
     // Créez un objet Partenaire
 
 
     // Récupérez le modèle et vérifiez qu'il n'est pas nul
-
+setupSerialPort();
 
     // Liez le modèle au QTableView
     rappelContratsFinissants();
@@ -437,6 +440,7 @@ void MainWindow::on_btnAjouter_clicked()
     if (p.ajouter()) {
         qDebug() << "✅ Partenaire ajouté avec succès !";
         setupTableView();
+        initialiserCompleter();
         afficherStatistiquesContrats();
         afficherStatistiquesPartenaires();
 
@@ -573,6 +577,7 @@ void MainWindow::on_btnAjouter_clicked()
         // Modifier les informations dans la base de données
         if (partenaire.modifier(partnerId)) {
             setupTableView();
+            initialiserCompleter();
             afficherStatistiquesContrats();
             afficherStatistiquesPartenaires();
 
@@ -749,6 +754,7 @@ void MainWindow::on_btnAjouter_clicked()
 
             // Activer la possibilité de trier les colonnes par clic
             ui->tableView1->setSortingEnabled(true);
+
             }
 
 
@@ -1003,6 +1009,7 @@ void MainWindow::afficherStatistiquesPartenaires()
                 if (p.supprimer(partnerId)) {
                     // Rafraîchir la table
                     setupTableView();
+                    initialiserCompleter();
                     QMessageBox::information(this, "Succès", "Partenaire supprimé avec succès!");
                     afficherStatistiquesContrats();
                     afficherStatistiquesPartenaires();
@@ -1051,5 +1058,105 @@ void MainWindow::afficherStatistiquesPartenaires()
             cursor.movePosition(QTextCursor::Start);
             ui->conversationTextEdit->setTextCursor(cursor);
 
+        }
+
+        void MainWindow::readSerialData() {
+            while (serialPort.canReadLine()) {
+                QString receivedData = QString::fromUtf8(serialPort.readLine()).trimmed(); // Renommez la variable
+
+                if (receivedData.startsWith("ID_COMPLET:")) {  // Utilisez le nouveau nom
+                    QString id = receivedData.mid(11);
+
+                    verifierPartenaire(id);
+
+                    // Feedback UI
+                    if (ui->statusbar) {  // Vérification de sécurité
+                        ui->statusbar->showMessage("Vérification ID: " + id, 2000);
+                    }
+                }
+            }
+        }
+        // Modifiez verifierPartenaire()
+        void MainWindow::verifierPartenaire(const QString &id) {
+            QSqlQuery query;
+
+            // CORRECTION: colonne ID au lieu de IDPARTENAIRE
+            query.prepare("SELECT DATEDEBUT, DATEFIN FROM PARTENAIRES WHERE ID = ?");
+            query.addBindValue(id);
+
+            // Vérifie si la requête SQL s’exécute
+            if (!query.exec()) {
+                qDebug() << "Erreur SQL:" << query.lastError().text();
+                sendToArduino("INCONNU");
+                return;
+            }
+
+            // Vérifie si l’ID existe
+            if (!query.next()) {
+                qDebug() << "Aucun partenaire trouvé avec l'ID:" << id;
+                sendToArduino("INCONNU");
+                return;
+            }
+
+            // Récupération des dates
+            QDate dateDebut = query.value(0).toDate();
+            QDate dateFin = query.value(1).toDate();
+            QDate today = QDate::currentDate();
+
+            // Log pour le débogage
+            qDebug() << "ID:" << id << " - Début:" << dateDebut << ", Fin:" << dateFin;
+
+            // Vérification de l’état du contrat
+            if (today < dateDebut) {
+                sendToArduino("CONTRAT_NON_COMMENCE");
+            } else if (today > dateFin) {
+                sendToArduino("CONTRAT_EXPIRE");
+            } else {
+                sendToArduino("CONTRAT_EN_COURS");
+            }
+        }
+
+
+
+        // Nouvelle méthode helper
+        void MainWindow::sendToArduino(const QString &message) {
+            if (serialPort.isOpen()) {
+                qDebug() << "Envoi à Arduino:" << message;
+                serialPort.write((message + "\n").toUtf8());
+                serialPort.waitForBytesWritten(1000);
+            } else {
+                qDebug() << "Port série fermé !";
+            }
+        }
+        void MainWindow::setupSerialPort()
+        {
+            // 1. Configuration du port
+            serialPort.setPortName("COM3"); // À adapter selon votre système
+            serialPort.setBaudRate(QSerialPort::Baud9600);
+            serialPort.setDataBits(QSerialPort::Data8);
+            serialPort.setParity(QSerialPort::NoParity);
+            serialPort.setStopBits(QSerialPort::OneStop);
+            serialPort.setFlowControl(QSerialPort::NoFlowControl);
+
+            // 2. Ouverture du port
+            if (!serialPort.open(QIODevice::ReadWrite)) {
+                QString errorMsg = "Erreur port série: " + serialPort.errorString();
+                qDebug() << errorMsg;
+                QMessageBox::critical(this, "Erreur", errorMsg);
+                return;
+            }
+
+            // 3. Connexion du signal readyRead
+            connect(&serialPort, &QSerialPort::readyRead,
+                    this, &MainWindow::readSerialData);
+
+            // 4. Vérification matérielle
+            QTimer::singleShot(1000, [this]() {
+                if (serialPort.isOpen()) {
+                    qDebug() << "Port série ouvert avec succès sur" << serialPort.portName();
+                    QMessageBox::critical(this, "Erreur", "Port série ouvert avec succès su");
+                    serialPort.write("SYSTEM_READY\n"); // Signal de test
+                }
+            });
         }
 

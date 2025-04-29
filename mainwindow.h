@@ -6,6 +6,7 @@
 #include <QStyledItemDelegate>
 #include <QDate>
 #include <QPainter>
+#include <QSerialPort>
 
 #include <QMainWindow>
 #include <QSortFilterProxyModel>
@@ -46,7 +47,7 @@ public slots:
     void setupTableView();
 
 
-
+    void setupSerialPort();
 
 
 private slots:
@@ -59,9 +60,11 @@ private slots:
  void ajouterMessageBot(const QString &message);
     void appelerOpenAI(const QString &question);
 
+ void verifierPartenaire(const QString &id);
 
 
-
+ void sendToArduino(const QString &message);
+ void readSerialData();
 
     void on_sendButton_2_clicked();
 
@@ -74,6 +77,7 @@ private:
     QString currentSortColumn = "";
      QSortFilterProxyModel *proxyModel;
      QStringList botResponses;
+     QSerialPort serialPort;
     void processUserInput(const QString &input); // Fonction pour traiter les entrées de l'utilisateur
     void addBotMessage(const QString &message);
 

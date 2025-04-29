@@ -2414,6 +2414,35 @@ QPushButton:pressed {
            <string>nouvelle discussion</string>
           </property>
          </widget>
+         <widget class="QLineEdit" name="statusBar">
+          <property name="geometry">
+           <rect>
+            <x>490</x>
+            <y>570</y>
+            <width>113</width>
+            <height>28</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLineEdit {
+    background-color: #ffffff;
+    color: #333333;
+    font-family: &quot;Segoe UI&quot;, sans-serif;
+    font-size: 14px;
+    border: 1px solid #cccccc;
+    border-radius: 10px;
+    padding: 6px;
+}
+
+QLineEdit:focus {
+    border: 1px solid #0078d7;
+}
+</string>
+          </property>
+          <property name="inputMask">
+           <string/>
+          </property>
+         </widget>
         </widget>
         <widget class="QWidget" name="tab">
          <attribute name="title">

@@ -1,7 +1,7 @@
 QT += core gui widgets sql texttospeech charts
 QT += printsupport
 QT += network
-
+QT += serialport
 CONFIG += c++11
 
 TARGET = Atelier_Connexion
