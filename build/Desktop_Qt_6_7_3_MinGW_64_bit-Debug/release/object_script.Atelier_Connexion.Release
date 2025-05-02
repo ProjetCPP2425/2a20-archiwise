@@ -1,0 +1,10 @@
+release/buttondelegate.o
+release/main.o
+release/mainwindow.o
+release/connection.o
+release/partenaire.o
+release/barchartwidget.o
+release/employe.o
+release/moc_buttondelegate.o
+release/moc_mainwindow.o
+release/moc_barchartwidget.o
