@@ -5,6 +5,10 @@
 #-------------------------------------------------
 
 QT       += core gui sql
+QT += charts
+QT += printsupport quickwidgets
+QT += serialport
+
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -25,12 +29,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 CONFIG += c++11
 
 SOURCES += \
+    arduino.cpp \
         main.cpp \
     connection.cpp \
     mainwindow.cpp \
     projet.cpp
 
 HEADERS += \
+    arduino.h \
     connection.h \
     mainwindow.h \
     projet.h
@@ -42,3 +48,6 @@ FORMS += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    ressources.qrc
