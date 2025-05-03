@@ -1,7 +1,10 @@
+QT += core gui sql printsupport charts
 QT += core gui widgets sql texttospeech charts
 QT += printsupport
 QT += network
 QT += serialport
+
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++17
 CONFIG += qt6 c++17
@@ -13,20 +16,26 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     buttondelegate.cpp \
+    chantier.cpp \
+    chantierdelegate.cpp \
     main.cpp \
     mainwindow.cpp \
     connection.cpp \
     partenaire.cpp\
     barchartwidget.cpp\
-    employe.cpp
+    employe.cpp \
+    serialtemperaturemanager.cpp
 
 HEADERS += \
     buttondelegate.h \
+    chantier.h \
+    chantierdelegate.h \
     mainwindow.h \
     connection.h \
     partenaire.h\
     barchartwidget.h\
-    employe.h
+    employe.h \
+    serialtemperaturemanager.h
 
 FORMS += \
     mainwindow.ui

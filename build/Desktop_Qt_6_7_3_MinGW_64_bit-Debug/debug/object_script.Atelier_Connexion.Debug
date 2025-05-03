@@ -1,10 +1,15 @@
 debug/buttondelegate.o
+debug/chantier.o
+debug/chantierdelegate.o
 debug/main.o
 debug/mainwindow.o
 debug/connection.o
 debug/partenaire.o
 debug/barchartwidget.o
 debug/employe.o
+debug/serialtemperaturemanager.o
 debug/moc_buttondelegate.o
+debug/moc_chantierdelegate.o
 debug/moc_mainwindow.o
 debug/moc_barchartwidget.o
+debug/moc_serialtemperaturemanager.o

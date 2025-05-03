@@ -8,9 +8,14 @@
 #include <QPainter>
 #include <QSerialPort>
 #include "employe.h"
-#include <QMainWindow>
 #include <QSortFilterProxyModel>
 #include <QDate>
+
+////////////////////////////////////////////////////////////////////////////hajjouni
+#include "chantier.h"
+#include "SerialTemperatureManager.h"
+
+
 namespace Ui {
 class MainWindow;
 }
@@ -50,6 +55,10 @@ public slots:
     void setupSerialPort();
 
 
+
+
+
+
 private slots:
 
     void on_nouvelle_disccusion_clicked();
@@ -83,7 +92,58 @@ private slots:
  void on_btn_recherche_clicked();
  void on_btn_reset_recherche_clicked();
  void showEvent(QShowEvent *event) override;
-private:
+
+
+
+ //////////////////////////////////////////////////////////////////////////////hajjouni
+ void button_hajjouni();
+ void on_pushButton_ajout_clicked();
+ void on_modifier_chantier_clicked(chantier c);
+ void on_delete_chantier_clicked(int id);
+
+ void on_pushButton_clicked();
+ void on_pushButton_3_clicked();
+
+
+
+ void on_pushButton_8_clicked();
+ void on_pushButton_2_clicked();
+
+
+ void on_recherche_input_textChanged(const QString &arg1);
+
+ void on_comboBox_currentTextChanged(const QString &arg1);
+
+ void on_pushButton_4_clicked();
+
+ void on_pushButton_13_clicked();
+
+ void on_pushButton_5_clicked();
+
+ void on_pushButton_ajout_2_clicked();
+
+ void detecterChantiersEnRetard();
+
+
+ void on_tableView_clicked(const QModelIndex &index);
+
+
+
+
+
+
+
+ void on_btnchantiers_2_clicked();
+
+ void on_pushButton_6_clicked();
+
+ void on_pushButton_9_clicked();
+
+ void on_pushButton_14_clicked();
+
+ void on_pushButton_15_clicked();
+
+ private:
     Ui::MainWindow *ui;
     QTextToSpeech *tts;  // Pour la synthèse vocale
     QTimer *timer;
@@ -97,6 +157,15 @@ private:
     void addBotMessage(const QString &message);
 
     Employe emp;
+
+
+
+    /////////////////////////////////////////////////hajjouni
+    chantier c;
+    int id;
+    SerialTemperatureManager *temperatureManager;
+
+
 
 
 };
