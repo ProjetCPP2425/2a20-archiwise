@@ -407,11 +407,9 @@ Makefile: ../../mimi.pro ../../../../Desktop/qt/6.7.3/mingw_64/mkspecs/features/
 		../../../../Desktop/qt/6.7.3/mingw_64/mkspecs/features/yacc.prf \
 		../../../../Desktop/qt/6.7.3/mingw_64/mkspecs/features/lex.prf \
 		../../mimi.pro \
-<<<<<<< HEAD
 		../../../../Desktop/qt/6.7.3/mingw_64/lib/Qt6Widgets.prl \
 		../../../../Desktop/qt/6.7.3/mingw_64/lib/Qt6Gui.prl \
 		../../../../Desktop/qt/6.7.3/mingw_64/lib/Qt6Sql.prl \
-=======
 		../../../../Desktop/qt/6.7.3/mingw_64/lib/Qt6Charts.prl \
 		../../../../Desktop/qt/6.7.3/mingw_64/lib/Qt6OpenGLWidgets.prl \
 		../../../../Desktop/qt/6.7.3/mingw_64/lib/Qt6PrintSupport.prl \
@@ -423,7 +421,6 @@ Makefile: ../../mimi.pro ../../../../Desktop/qt/6.7.3/mingw_64/mkspecs/features/
 		../../../../Desktop/qt/6.7.3/mingw_64/lib/Qt6QmlModels.prl \
 		../../../../Desktop/qt/6.7.3/mingw_64/lib/Qt6Qml.prl \
 		../../../../Desktop/qt/6.7.3/mingw_64/lib/Qt6Network.prl \
->>>>>>> f963b09 (projet qt)
 		../../../../Desktop/qt/6.7.3/mingw_64/lib/Qt6Core.prl \
 		../../../../Desktop/qt/6.7.3/mingw_64/lib/Qt6EntryPoint.prl \
 		../../../../Desktop/qt/6.7.3/mingw_64/mkspecs/features/build_pass.prf \
@@ -766,11 +763,9 @@ Makefile: ../../mimi.pro ../../../../Desktop/qt/6.7.3/mingw_64/mkspecs/features/
 ../../../../Desktop/qt/6.7.3/mingw_64/mkspecs/features/yacc.prf:
 ../../../../Desktop/qt/6.7.3/mingw_64/mkspecs/features/lex.prf:
 ../../mimi.pro:
-<<<<<<< HEAD
 ../../../../Desktop/qt/6.7.3/mingw_64/lib/Qt6Widgets.prl:
 ../../../../Desktop/qt/6.7.3/mingw_64/lib/Qt6Gui.prl:
 ../../../../Desktop/qt/6.7.3/mingw_64/lib/Qt6Sql.prl:
-=======
 ../../../../Desktop/qt/6.7.3/mingw_64/lib/Qt6Charts.prl:
 ../../../../Desktop/qt/6.7.3/mingw_64/lib/Qt6OpenGLWidgets.prl:
 ../../../../Desktop/qt/6.7.3/mingw_64/lib/Qt6PrintSupport.prl:
@@ -782,7 +777,6 @@ Makefile: ../../mimi.pro ../../../../Desktop/qt/6.7.3/mingw_64/mkspecs/features/
 ../../../../Desktop/qt/6.7.3/mingw_64/lib/Qt6QmlModels.prl:
 ../../../../Desktop/qt/6.7.3/mingw_64/lib/Qt6Qml.prl:
 ../../../../Desktop/qt/6.7.3/mingw_64/lib/Qt6Network.prl:
->>>>>>> f963b09 (projet qt)
 ../../../../Desktop/qt/6.7.3/mingw_64/lib/Qt6Core.prl:
 ../../../../Desktop/qt/6.7.3/mingw_64/lib/Qt6EntryPoint.prl:
 ../../../../Desktop/qt/6.7.3/mingw_64/mkspecs/features/build_pass.prf:
