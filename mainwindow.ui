@@ -1647,8 +1647,8 @@ QPushButton:hover {
        <widget class="QTabWidget" name="tabWidget">
         <property name="geometry">
          <rect>
-          <x>20</x>
-          <y>40</y>
+          <x>10</x>
+          <y>30</y>
           <width>1031</width>
           <height>691</height>
          </rect>
