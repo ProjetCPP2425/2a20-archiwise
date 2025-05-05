@@ -1,0 +1,17 @@
+release/buttondelegate.o
+release/chantier.o
+release/chantierdelegate.o
+release/main.o
+release/mainwindow.o
+release/connection.o
+release/partenaire.o
+release/barchartwidget.o
+release/employe.o
+release/projet.o
+release/serialtemperaturemanager.o
+release/qrc_Ressources.o
+release/moc_buttondelegate.o
+release/moc_chantierdelegate.o
+release/moc_mainwindow.o
+release/moc_barchartwidget.o
+release/moc_serialtemperaturemanager.o
