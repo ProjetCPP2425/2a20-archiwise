@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 QT       += core gui sql
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -9,12 +10,26 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+=======
+QT += core gui sql widgets charts printsupport
+QT += qml quick
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+CONFIG += c++17
+CONFIG += qzxing
+SOURCES += \
+    ../../Downloads/qrcode.cpp \
+>>>>>>> f963b09 (projet qt)
     connection.cpp \
     main.cpp \
     mainwindow.cpp \
     materiel.cpp
 
 HEADERS += \
+<<<<<<< HEAD
+=======
+    ../../Downloads/qrcode.h \
+>>>>>>> f963b09 (projet qt)
     connection.h \
     mainwindow.h \
     materiel.h
@@ -22,10 +37,13 @@ HEADERS += \
 FORMS += \
     mainwindow.ui
 
+<<<<<<< HEAD
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
+=======
+>>>>>>> f963b09 (projet qt)
 RESOURCES += \
     img.qrc

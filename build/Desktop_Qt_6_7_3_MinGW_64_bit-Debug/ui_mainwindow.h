@@ -24,7 +24,10 @@
 #include <QtWidgets/QStackedWidget>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QTableView>
+<<<<<<< HEAD
 #include <QtWidgets/QTableWidget>
+=======
+>>>>>>> f963b09 (projet qt)
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -48,6 +51,7 @@ public:
     QPushButton *btnmateriels_3;
     QSpacerItem *verticalSpacer_4;
     QStackedWidget *stackedWidget;
+<<<<<<< HEAD
     QWidget *page;
     QWidget *maincontent_2;
     QPushButton *pushButton_4;
@@ -59,15 +63,39 @@ public:
     QLabel *lis;
     QPushButton *ajmateriel_3;
     QComboBox *comboBox_5;
+=======
+    QWidget *page_5;
+    QWidget *page;
+    QWidget *maincontent_2;
+    QPushButton *btn_export_pdf;
+    QLabel *label_5;
+    QLineEdit *lineEditRecherche;
+    QLabel *label_6;
+    QComboBox *comboBox_3;
+    QPushButton *showStatsButton;
+    QLabel *lis;
+    QPushButton *ajmateriel_3;
+    QComboBox *comboBox_tri;
+>>>>>>> f963b09 (projet qt)
     QLabel *labell;
     QLabel *label;
     QLabel *label_19;
     QTableView *tableViewMateriel;
+<<<<<<< HEAD
+=======
+    QPushButton *pushButton_9;
+    QComboBox *comboBox;
+    QPushButton *pushButton_11;
+    QComboBox *comboBoxCritere;
+>>>>>>> f963b09 (projet qt)
     QWidget *page_2;
     QGroupBox *groupBox;
     QLineEdit *nom;
     QLineEdit *lineEditQuantite;
+<<<<<<< HEAD
     QLineEdit *lineEditEtat;
+=======
+>>>>>>> f963b09 (projet qt)
     QLineEdit *lineEditCout;
     QLineEdit *lineEditGarantie;
     QLabel *label_2;
@@ -79,6 +107,7 @@ public:
     QPushButton *pushButton;
     QPushButton *pushButton_2;
     QDateEdit *dateEditAchat;
+<<<<<<< HEAD
     QLabel *label_20;
     QWidget *page_3;
     QStackedWidget *stackedWidget_2;
@@ -101,6 +130,27 @@ public:
     QLineEdit *lineEdit_13;
     QLineEdit *lineEdit_14;
     QLineEdit *lineEdit_15;
+=======
+    QPushButton *pushButton_13;
+    QPushButton *pushButton_genererQR;
+    QComboBox *comboBoxEtat;
+    QLabel *label_20;
+    QLabel *label_qrcode;
+    QWidget *pageStatistiques;
+    QWidget *widgetStats;
+    QWidget *page_3;
+    QStackedWidget *stackedWidget_2;
+    QWidget *stackedWidget_2Page1;
+    QStackedWidget *stackedWidgetStats;
+    QWidget *stackedWidgetStatsPage1;
+    QWidget *stackedWidget_2Page2;
+    QGroupBox *groupBox_2;
+    QLineEdit *nom_2;
+    QLineEdit *qu;
+    QLineEdit *date;
+    QLineEdit *cout;
+    QLineEdit *garantie;
+>>>>>>> f963b09 (projet qt)
     QLabel *label_10;
     QLabel *label_14;
     QLabel *label_15;
@@ -109,8 +159,17 @@ public:
     QLabel *label_18;
     QPushButton *pushButton_3;
     QPushButton *pushButton_8;
+<<<<<<< HEAD
     QLabel *label_21;
     QWidget *page_6;
+=======
+    QPushButton *pushButton_10;
+    QComboBox *comboBox_2;
+    QPushButton *pushButton_12;
+    QComboBox *comboBoxEtat_2;
+    QLabel *label_21;
+    QWidget *stackedWidget_2Page3;
+>>>>>>> f963b09 (projet qt)
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -341,7 +400,11 @@ public:
 
         stackedWidget = new QStackedWidget(centralwidget);
         stackedWidget->setObjectName("stackedWidget");
+<<<<<<< HEAD
         stackedWidget->setGeometry(QRect(240, 0, 1051, 721));
+=======
+        stackedWidget->setGeometry(QRect(270, -10, 1021, 721));
+>>>>>>> f963b09 (projet qt)
         stackedWidget->setStyleSheet(QString::fromUtf8("QWidget {\n"
 "    background-color: #f8f9fa; /* Couleur de fond douce */\n"
 "}\n"
@@ -391,6 +454,12 @@ public:
 "    background-color: #b02a37;\n"
 "}\n"
 ""));
+<<<<<<< HEAD
+=======
+        page_5 = new QWidget();
+        page_5->setObjectName("page_5");
+        stackedWidget->addWidget(page_5);
+>>>>>>> f963b09 (projet qt)
         page = new QWidget();
         page->setObjectName("page");
         maincontent_2 = new QWidget(page);
@@ -406,10 +475,17 @@ public:
 "    background-color: white;\n"
 "}\n"
 ""));
+<<<<<<< HEAD
         pushButton_4 = new QPushButton(maincontent_2);
         pushButton_4->setObjectName("pushButton_4");
         pushButton_4->setGeometry(QRect(50, 600, 201, 41));
         pushButton_4->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+=======
+        btn_export_pdf = new QPushButton(maincontent_2);
+        btn_export_pdf->setObjectName("btn_export_pdf");
+        btn_export_pdf->setGeometry(QRect(50, 600, 201, 41));
+        btn_export_pdf->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+>>>>>>> f963b09 (projet qt)
 "    background-color: #007bff;  /* Bleu */\n"
 "    color: white;\n"
 "    border-radius: 5px;\n"
@@ -425,17 +501,28 @@ public:
 ""));
         label_5 = new QLabel(maincontent_2);
         label_5->setObjectName("label_5");
+<<<<<<< HEAD
         label_5->setGeometry(QRect(810, 140, 81, 31));
+=======
+        label_5->setGeometry(QRect(730, 140, 81, 31));
+>>>>>>> f963b09 (projet qt)
         label_5->setStyleSheet(QString::fromUtf8("QLabel {\n"
 "    font-size: 16px;\n"
 "    color: #0f3460;\n"
 "    padding-left: 8px;\n"
 "}\n"
 ""));
+<<<<<<< HEAD
         lineEdit_3 = new QLineEdit(maincontent_2);
         lineEdit_3->setObjectName("lineEdit_3");
         lineEdit_3->setGeometry(QRect(860, 140, 181, 31));
         lineEdit_3->setStyleSheet(QString::fromUtf8("QLineEdit {\n"
+=======
+        lineEditRecherche = new QLineEdit(maincontent_2);
+        lineEditRecherche->setObjectName("lineEditRecherche");
+        lineEditRecherche->setGeometry(QRect(870, 140, 181, 31));
+        lineEditRecherche->setStyleSheet(QString::fromUtf8("QLineEdit {\n"
+>>>>>>> f963b09 (projet qt)
 "    background-color: #f5f5f5;  /* Fond gris clair moderne */\n"
 "    border: 2px solid #0f3460;  /* Bordure bleu fonc\303\251 */\n"
 "    border-radius: 8px;  /* Coins arrondis */\n"
@@ -497,10 +584,17 @@ public:
 "    padding: 5px;\n"
 "}\n"
 ""));
+<<<<<<< HEAD
         pushButton_5 = new QPushButton(maincontent_2);
         pushButton_5->setObjectName("pushButton_5");
         pushButton_5->setGeometry(QRect(270, 600, 201, 41));
         pushButton_5->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+=======
+        showStatsButton = new QPushButton(maincontent_2);
+        showStatsButton->setObjectName("showStatsButton");
+        showStatsButton->setGeometry(QRect(270, 600, 201, 41));
+        showStatsButton->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+>>>>>>> f963b09 (projet qt)
 "    background-color: #007bff;  /* Bleu */\n"
 "    color: white;\n"
 "    border-radius: 5px;\n"
@@ -542,12 +636,21 @@ public:
 "    background-color: #0056b3;  /* Bleu fonc\303\251 au survol */\n"
 "}\n"
 ""));
+<<<<<<< HEAD
         comboBox_5 = new QComboBox(maincontent_2);
         comboBox_5->addItem(QString());
         comboBox_5->addItem(QString());
         comboBox_5->setObjectName("comboBox_5");
         comboBox_5->setGeometry(QRect(390, 140, 76, 26));
         comboBox_5->setStyleSheet(QString::fromUtf8("QComboBox {\n"
+=======
+        comboBox_tri = new QComboBox(maincontent_2);
+        comboBox_tri->addItem(QString());
+        comboBox_tri->addItem(QString());
+        comboBox_tri->setObjectName("comboBox_tri");
+        comboBox_tri->setGeometry(QRect(390, 140, 76, 26));
+        comboBox_tri->setStyleSheet(QString::fromUtf8("QComboBox {\n"
+>>>>>>> f963b09 (projet qt)
 "    background-color: #f5f5f5;  /* Fond gris clair */\n"
 "    border: 2px solid #0f3460;  /* Bordure bleu fonc\303\251 */\n"
 "    border-radius: 8px;  /* Coins arrondis */\n"
@@ -602,7 +705,151 @@ public:
         tableViewMateriel = new QTableView(maincontent_2);
         tableViewMateriel->setObjectName("tableViewMateriel");
         tableViewMateriel->setGeometry(QRect(55, 191, 661, 291));
+<<<<<<< HEAD
         tableViewMateriel->setStyleSheet(QString::fromUtf8("color: rgb(0, 0, 0);"));
+=======
+        tableViewMateriel->setStyleSheet(QString::fromUtf8("/* ---------------------------- */\n"
+"/* Style du tableau principal   */\n"
+"/* ---------------------------- */\n"
+"QTableView {\n"
+"    background-color: #ffffff;              /* Fond blanc */\n"
+"    alternate-background-color: #f8f9fa;    /* Alternance de lignes gris clair */\n"
+"    gridline-color: #e9ecef;                /* Couleur des lignes de grille */\n"
+"    border: 1px solid #dee2e6;              /* Bordure subtile */\n"
+"    border-radius: 8px;                     /* Coins arrondis */\n"
+"    font-family: \"Segoe UI\";                /* Police moderne */\n"
+"    font-size: 12px;                        /* Taille de texte */\n"
+"}\n"
+"\n"
+"/* ---------------------------- */\n"
+"/* En-t\303\252tes du tableau           */\n"
+"/* ---------------------------- */\n"
+"QHeaderView::section {\n"
+"    background-color: #0f3460;              /* Bleu fonc\303\251 */\n"
+"    color: white;                           /* Texte blanc */\n"
+"    padding: 12px;                          /* Espacement interne */\n"
+"   "
+                        " border: none;                           /* Pas de bordure */\n"
+"    font-weight: bold;                      /* Texte en gras */\n"
+"    font-size: 13px;                        /* Taille l\303\251g\303\250rement plus grande */\n"
+"}\n"
+"\n"
+"QHeaderView::section:hover {\n"
+"    background-color: #1a5276;              /* Bleu l\303\251g\303\250rement plus clair au survol */\n"
+"}\n"
+"\n"
+"/* ---------------------------- */\n"
+"/* Lignes et s\303\251lection           */\n"
+"/* ---------------------------- */\n"
+"QTableView::item {\n"
+"    padding: 8px;                           /* Espacement dans les cellules */\n"
+"    border-bottom: 1px solid #e9ecef;       /* Ligne de s\303\251paration entre les lignes */\n"
+"}\n"
+"\n"
+"QTableView::item:selected {\n"
+"    background-color: #e94560;              /* Rouge vif pour la s\303\251lection */\n"
+"    color: white;                           /* Texte blanc en s\303\251lection */\n"
+"}\n"
+"\n"
+"/* ---------------------------- */\n"
+"/* Barre de d\303\251filement       "
+                        "    */\n"
+"/* ---------------------------- */\n"
+"QScrollBar:vertical {\n"
+"    background: #f8f9fa;                    /* Fond gris clair */\n"
+"    width: 10px;                            /* Largeur r\303\251duite */\n"
+"    margin: 0px;\n"
+"}\n"
+"\n"
+"QScrollBar::handle:vertical {\n"
+"    background: #0f3460;                    /* Bleu fonc\303\251 */\n"
+"    min-height: 30px;                       /* Hauteur minimale */\n"
+"    border-radius: 4px;                     /* Coins arrondis */\n"
+"}\n"
+"\n"
+"QScrollBar::add-line:vertical, \n"
+"QScrollBar::sub-line:vertical {\n"
+"    height: 0px;                            /* Masquer les fl\303\250ches */\n"
+"}"));
+        pushButton_9 = new QPushButton(maincontent_2);
+        pushButton_9->setObjectName("pushButton_9");
+        pushButton_9->setGeometry(QRect(720, 530, 141, 41));
+        pushButton_9->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"    background-color: #f44336; /* Fond rouge */\n"
+"    color: white; /* Texte blanc */\n"
+"    font-size: 14px; /* Taille de la police */\n"
+"    font-weight: bold; /* Texte en gras */\n"
+"    border: none; /* Pas de bordure */\n"
+"    border-radius: 5px; /* Coins arrondis */\n"
+"    padding: 10px 20px; /* Espace int\303\251rieur */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: #d32f2f; /* Fond rouge fonc\303\251 au survol */\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #b71c1c; /* Fond rouge tr\303\250s fonc\303\251 au clic */\n"
+"}"));
+        comboBox = new QComboBox(maincontent_2);
+        comboBox->setObjectName("comboBox");
+        comboBox->setGeometry(QRect(620, 540, 76, 26));
+        pushButton_11 = new QPushButton(maincontent_2);
+        pushButton_11->setObjectName("pushButton_11");
+        pushButton_11->setGeometry(QRect(870, 530, 141, 41));
+        pushButton_11->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"    background-color: #2196f3; /* Fond bleu */\n"
+"    color: white; /* Texte blanc */\n"
+"    font-size: 14px; /* Taille de la police */\n"
+"    font-weight: bold; /* Texte en gras */\n"
+"    border: none; /* Pas de bordure */\n"
+"    border-radius: 5px; /* Coins arrondis */\n"
+"    padding: 10px 20px; /* Espace int\303\251rieur */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: #1976d2; /* Fond bleu fonc\303\251 au survol */\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #0d47a1; /* Fond bleu tr\303\250s fonc\303\251 au clic */\n"
+"}"));
+        comboBoxCritere = new QComboBox(maincontent_2);
+        comboBoxCritere->addItem(QString());
+        comboBoxCritere->addItem(QString());
+        comboBoxCritere->addItem(QString());
+        comboBoxCritere->setObjectName("comboBoxCritere");
+        comboBoxCritere->setGeometry(QRect(780, 140, 81, 31));
+        comboBoxCritere->setStyleSheet(QString::fromUtf8("QComboBox {\n"
+"    background-color: #f5f5f5;  /* Fond gris clair */\n"
+"    border: 2px solid #0f3460;  /* Bordure bleu fonc\303\251 */\n"
+"    border-radius: 8px;  /* Coins arrondis */\n"
+"    padding: 5px 10px;  /* Espacement interne */\n"
+"    font-size: 14px;\n"
+"    color: #333;  /* Texte noir */\n"
+"}\n"
+"\n"
+"QComboBox::drop-down {\n"
+"    border: none;\n"
+"    background: transparent;\n"
+"    width: 25px;\n"
+"}\n"
+"\n"
+"QComboBox::down-arrow {\n"
+"    image: url(dropdown-icon.png);  /* Ic\303\264ne personnalis\303\251e */\n"
+"    width: 16px;\n"
+"    height: 16px;\n"
+"}\n"
+"\n"
+"QComboBox QAbstractItemView {\n"
+"    background-color: white;\n"
+"    border: 1px solid #0f3460;  /* Bordure bleu fonc\303\251 */\n"
+"    selection-background-color: #e94560;  /* Fond rouge clair au survol */\n"
+"    selection-color: white;  /* Texte blanc */\n"
+"    padding: 5px;\n"
+"}\n"
+""));
+>>>>>>> f963b09 (projet qt)
         stackedWidget->addWidget(page);
         page_2 = new QWidget();
         page_2->setObjectName("page_2");
@@ -648,6 +895,7 @@ public:
 "QLineEdit:focus {\n"
 "    border: 2px solid #2196f3; /* Bordure bleue lorsqu'il est s\303\251lectionn\303\251 */\n"
 "}"));
+<<<<<<< HEAD
         lineEditEtat = new QLineEdit(groupBox);
         lineEditEtat->setObjectName("lineEditEtat");
         lineEditEtat->setGeometry(QRect(190, 270, 301, 51));
@@ -663,6 +911,8 @@ public:
 "QLineEdit:focus {\n"
 "    border: 2px solid #2196f3; /* Bordure bleue lorsqu'il est s\303\251lectionn\303\251 */\n"
 "}"));
+=======
+>>>>>>> f963b09 (projet qt)
         lineEditCout = new QLineEdit(groupBox);
         lineEditCout->setObjectName("lineEditCout");
         lineEditCout->setGeometry(QRect(190, 200, 301, 51));
@@ -789,16 +1039,48 @@ public:
         dateEditAchat = new QDateEdit(groupBox);
         dateEditAchat->setObjectName("dateEditAchat");
         dateEditAchat->setGeometry(QRect(190, 330, 301, 51));
+<<<<<<< HEAD
+=======
+        pushButton_13 = new QPushButton(groupBox);
+        pushButton_13->setObjectName("pushButton_13");
+        pushButton_13->setGeometry(QRect(540, 580, 141, 71));
+        pushButton_genererQR = new QPushButton(groupBox);
+        pushButton_genererQR->setObjectName("pushButton_genererQR");
+        pushButton_genererQR->setGeometry(QRect(10, 470, 171, 61));
+        comboBoxEtat = new QComboBox(groupBox);
+        comboBoxEtat->addItem(QString());
+        comboBoxEtat->addItem(QString());
+        comboBoxEtat->addItem(QString());
+        comboBoxEtat->addItem(QString());
+        comboBoxEtat->addItem(QString());
+        comboBoxEtat->setObjectName("comboBoxEtat");
+        comboBoxEtat->setGeometry(QRect(190, 265, 291, 51));
+>>>>>>> f963b09 (projet qt)
         label_20 = new QLabel(page_2);
         label_20->setObjectName("label_20");
         label_20->setGeometry(QRect(950, 10, 71, 71));
         label_20->setPixmap(QPixmap(QString::fromUtf8("../../Downloads/Capture_d_\303\251cran_2025-02-17_212705-removebg-preview.png")));
         label_20->setScaledContents(true);
+<<<<<<< HEAD
         stackedWidget->addWidget(page_2);
+=======
+        label_qrcode = new QLabel(page_2);
+        label_qrcode->setObjectName("label_qrcode");
+        label_qrcode->setGeometry(QRect(200, 510, 150, 150));
+        label_qrcode->setScaledContents(true);
+        stackedWidget->addWidget(page_2);
+        pageStatistiques = new QWidget();
+        pageStatistiques->setObjectName("pageStatistiques");
+        widgetStats = new QWidget(pageStatistiques);
+        widgetStats->setObjectName("widgetStats");
+        widgetStats->setGeometry(QRect(89, 39, 831, 561));
+        stackedWidget->addWidget(pageStatistiques);
+>>>>>>> f963b09 (projet qt)
         page_3 = new QWidget();
         page_3->setObjectName("page_3");
         stackedWidget_2 = new QStackedWidget(page_3);
         stackedWidget_2->setObjectName("stackedWidget_2");
+<<<<<<< HEAD
         stackedWidget_2->setGeometry(QRect(0, 0, 1021, 691));
         stackedWidget_2->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
         page_4 = new QWidget();
@@ -809,10 +1091,23 @@ public:
         sizePolicy.setHeightForWidth(maincontent_3->sizePolicy().hasHeightForWidth());
         maincontent_3->setSizePolicy(sizePolicy);
         maincontent_3->setStyleSheet(QString::fromUtf8("QWidget#maincontent\n"
+=======
+        stackedWidget_2->setGeometry(QRect(10, 30, 1021, 691));
+        stackedWidget_2->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
+        stackedWidget_2Page1 = new QWidget();
+        stackedWidget_2Page1->setObjectName("stackedWidget_2Page1");
+        stackedWidgetStats = new QStackedWidget(stackedWidget_2Page1);
+        stackedWidgetStats->setObjectName("stackedWidgetStats");
+        stackedWidgetStats->setGeometry(QRect(10, 10, 1061, 711));
+        sizePolicy.setHeightForWidth(stackedWidgetStats->sizePolicy().hasHeightForWidth());
+        stackedWidgetStats->setSizePolicy(sizePolicy);
+        stackedWidgetStats->setStyleSheet(QString::fromUtf8("QWidget#maincontent\n"
+>>>>>>> f963b09 (projet qt)
 " {\n"
 "    background-color: white;\n"
 "}\n"
 ""));
+<<<<<<< HEAD
         pushButton_6 = new QPushButton(maincontent_3);
         pushButton_6->setObjectName("pushButton_6");
         pushButton_6->setGeometry(QRect(570, 600, 201, 41));
@@ -1062,6 +1357,15 @@ public:
         page_5 = new QWidget();
         page_5->setObjectName("page_5");
         groupBox_2 = new QGroupBox(page_5);
+=======
+        stackedWidgetStatsPage1 = new QWidget();
+        stackedWidgetStatsPage1->setObjectName("stackedWidgetStatsPage1");
+        stackedWidgetStats->addWidget(stackedWidgetStatsPage1);
+        stackedWidget_2->addWidget(stackedWidget_2Page1);
+        stackedWidget_2Page2 = new QWidget();
+        stackedWidget_2Page2->setObjectName("stackedWidget_2Page2");
+        groupBox_2 = new QGroupBox(stackedWidget_2Page2);
+>>>>>>> f963b09 (projet qt)
         groupBox_2->setObjectName("groupBox_2");
         groupBox_2->setGeometry(QRect(160, 10, 691, 671));
         groupBox_2->setStyleSheet(QString::fromUtf8("QGroupBox {\n"
@@ -1073,10 +1377,17 @@ public:
 "    color: #007bff;\n"
 "}\n"
 ""));
+<<<<<<< HEAD
         lineEdit_10 = new QLineEdit(groupBox_2);
         lineEdit_10->setObjectName("lineEdit_10");
         lineEdit_10->setGeometry(QRect(190, 60, 301, 51));
         lineEdit_10->setStyleSheet(QString::fromUtf8("QLineEdit {\n"
+=======
+        nom_2 = new QLineEdit(groupBox_2);
+        nom_2->setObjectName("nom_2");
+        nom_2->setGeometry(QRect(190, 60, 301, 51));
+        nom_2->setStyleSheet(QString::fromUtf8("QLineEdit {\n"
+>>>>>>> f963b09 (projet qt)
 "    background-color: #ffffff; /* Fond blanc */\n"
 "    border: 1px solid #cccccc; /* Bordure grise */\n"
 "    border-radius: 5px; /* Coins arrondis */\n"
@@ -1088,10 +1399,17 @@ public:
 "QLineEdit:focus {\n"
 "    border: 2px solid #2196f3; /* Bordure bleue lorsqu'il est s\303\251lectionn\303\251 */\n"
 "}"));
+<<<<<<< HEAD
         lineEdit_11 = new QLineEdit(groupBox_2);
         lineEdit_11->setObjectName("lineEdit_11");
         lineEdit_11->setGeometry(QRect(190, 130, 301, 51));
         lineEdit_11->setStyleSheet(QString::fromUtf8("QLineEdit {\n"
+=======
+        qu = new QLineEdit(groupBox_2);
+        qu->setObjectName("qu");
+        qu->setGeometry(QRect(190, 130, 301, 51));
+        qu->setStyleSheet(QString::fromUtf8("QLineEdit {\n"
+>>>>>>> f963b09 (projet qt)
 "    background-color: #ffffff; /* Fond blanc */\n"
 "    border: 1px solid #cccccc; /* Bordure grise */\n"
 "    border-radius: 5px; /* Coins arrondis */\n"
@@ -1103,10 +1421,17 @@ public:
 "QLineEdit:focus {\n"
 "    border: 2px solid #2196f3; /* Bordure bleue lorsqu'il est s\303\251lectionn\303\251 */\n"
 "}"));
+<<<<<<< HEAD
         lineEdit_12 = new QLineEdit(groupBox_2);
         lineEdit_12->setObjectName("lineEdit_12");
         lineEdit_12->setGeometry(QRect(190, 340, 301, 51));
         lineEdit_12->setStyleSheet(QString::fromUtf8("QLineEdit {\n"
+=======
+        date = new QLineEdit(groupBox_2);
+        date->setObjectName("date");
+        date->setGeometry(QRect(190, 340, 301, 51));
+        date->setStyleSheet(QString::fromUtf8("QLineEdit {\n"
+>>>>>>> f963b09 (projet qt)
 "    background-color: #ffffff; /* Fond blanc */\n"
 "    border: 1px solid #cccccc; /* Bordure grise */\n"
 "    border-radius: 5px; /* Coins arrondis */\n"
@@ -1118,10 +1443,17 @@ public:
 "QLineEdit:focus {\n"
 "    border: 2px solid #2196f3; /* Bordure bleue lorsqu'il est s\303\251lectionn\303\251 */\n"
 "}"));
+<<<<<<< HEAD
         lineEdit_13 = new QLineEdit(groupBox_2);
         lineEdit_13->setObjectName("lineEdit_13");
         lineEdit_13->setGeometry(QRect(190, 270, 301, 51));
         lineEdit_13->setStyleSheet(QString::fromUtf8("QLineEdit {\n"
+=======
+        cout = new QLineEdit(groupBox_2);
+        cout->setObjectName("cout");
+        cout->setGeometry(QRect(190, 200, 301, 51));
+        cout->setStyleSheet(QString::fromUtf8("QLineEdit {\n"
+>>>>>>> f963b09 (projet qt)
 "    background-color: #ffffff; /* Fond blanc */\n"
 "    border: 1px solid #cccccc; /* Bordure grise */\n"
 "    border-radius: 5px; /* Coins arrondis */\n"
@@ -1133,6 +1465,7 @@ public:
 "QLineEdit:focus {\n"
 "    border: 2px solid #2196f3; /* Bordure bleue lorsqu'il est s\303\251lectionn\303\251 */\n"
 "}"));
+<<<<<<< HEAD
         lineEdit_14 = new QLineEdit(groupBox_2);
         lineEdit_14->setObjectName("lineEdit_14");
         lineEdit_14->setGeometry(QRect(190, 200, 301, 51));
@@ -1152,6 +1485,12 @@ public:
         lineEdit_15->setObjectName("lineEdit_15");
         lineEdit_15->setGeometry(QRect(190, 410, 301, 51));
         lineEdit_15->setStyleSheet(QString::fromUtf8("QLineEdit {\n"
+=======
+        garantie = new QLineEdit(groupBox_2);
+        garantie->setObjectName("garantie");
+        garantie->setGeometry(QRect(190, 410, 301, 51));
+        garantie->setStyleSheet(QString::fromUtf8("QLineEdit {\n"
+>>>>>>> f963b09 (projet qt)
 "    background-color: #ffffff; /* Fond blanc */\n"
 "    border: 1px solid #cccccc; /* Bordure grise */\n"
 "    border-radius: 5px; /* Coins arrondis */\n"
@@ -1251,15 +1590,60 @@ public:
 "QPushButton:pressed {\n"
 "    background-color: #b71c1c; /* Fond rouge tr\303\250s fonc\303\251 au clic */\n"
 "}"));
+<<<<<<< HEAD
         label_21 = new QLabel(page_5);
+=======
+        pushButton_10 = new QPushButton(groupBox_2);
+        pushButton_10->setObjectName("pushButton_10");
+        pushButton_10->setGeometry(QRect(360, 10, 141, 41));
+        pushButton_10->setStyleSheet(QString::fromUtf8("QPushButton {\n"
+"    background-color: #2196f3; /* Fond bleu */\n"
+"    color: white; /* Texte blanc */\n"
+"    font-size: 14px; /* Taille de la police */\n"
+"    font-weight: bold; /* Texte en gras */\n"
+"    border: none; /* Pas de bordure */\n"
+"    border-radius: 5px; /* Coins arrondis */\n"
+"    padding: 10px 20px; /* Espace int\303\251rieur */\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: #1976d2; /* Fond bleu fonc\303\251 au survol */\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #0d47a1; /* Fond bleu tr\303\250s fonc\303\251 au clic */\n"
+"}"));
+        comboBox_2 = new QComboBox(groupBox_2);
+        comboBox_2->setObjectName("comboBox_2");
+        comboBox_2->setGeometry(QRect(250, 20, 76, 26));
+        pushButton_12 = new QPushButton(groupBox_2);
+        pushButton_12->setObjectName("pushButton_12");
+        pushButton_12->setGeometry(QRect(540, 580, 141, 71));
+        comboBoxEtat_2 = new QComboBox(groupBox_2);
+        comboBoxEtat_2->addItem(QString());
+        comboBoxEtat_2->addItem(QString());
+        comboBoxEtat_2->addItem(QString());
+        comboBoxEtat_2->addItem(QString());
+        comboBoxEtat_2->addItem(QString());
+        comboBoxEtat_2->setObjectName("comboBoxEtat_2");
+        comboBoxEtat_2->setGeometry(QRect(200, 270, 291, 51));
+        label_21 = new QLabel(stackedWidget_2Page2);
+>>>>>>> f963b09 (projet qt)
         label_21->setObjectName("label_21");
         label_21->setGeometry(QRect(950, 0, 71, 71));
         label_21->setPixmap(QPixmap(QString::fromUtf8("../../Downloads/Capture_d_\303\251cran_2025-02-17_212705-removebg-preview.png")));
         label_21->setScaledContents(true);
+<<<<<<< HEAD
         stackedWidget_2->addWidget(page_5);
         page_6 = new QWidget();
         page_6->setObjectName("page_6");
         stackedWidget_2->addWidget(page_6);
+=======
+        stackedWidget_2->addWidget(stackedWidget_2Page2);
+        stackedWidget_2Page3 = new QWidget();
+        stackedWidget_2Page3->setObjectName("stackedWidget_2Page3");
+        stackedWidget_2->addWidget(stackedWidget_2Page3);
+>>>>>>> f963b09 (projet qt)
         stackedWidget->addWidget(page_3);
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
@@ -1272,8 +1656,13 @@ public:
 
         retranslateUi(MainWindow);
 
+<<<<<<< HEAD
         stackedWidget->setCurrentIndex(0);
         stackedWidget_2->setCurrentIndex(1);
+=======
+        stackedWidget->setCurrentIndex(2);
+        stackedWidget_2->setCurrentIndex(0);
+>>>>>>> f963b09 (projet qt)
 
 
         QMetaObject::connectSlotsByName(MainWindow);
@@ -1290,7 +1679,11 @@ public:
         btnchantiers_2->setText(QCoreApplication::translate("MainWindow", "\360\237\217\227\357\270\217 Chantiers", nullptr));
         btnmateriels_2->setText(QCoreApplication::translate("MainWindow", "\360\237\233\240\357\270\217 Mat\303\251riels", nullptr));
         btnmateriels_3->setText(QCoreApplication::translate("MainWindow", "fournisseurs", nullptr));
+<<<<<<< HEAD
         pushButton_4->setText(QCoreApplication::translate("MainWindow", "exporter en PDF", nullptr));
+=======
+        btn_export_pdf->setText(QCoreApplication::translate("MainWindow", "exporter en PDF", nullptr));
+>>>>>>> f963b09 (projet qt)
         label_5->setText(QCoreApplication::translate("MainWindow", "\360\237\224\215", nullptr));
         label_6->setText(QCoreApplication::translate("MainWindow", "voir ", nullptr));
         comboBox_3->setItemText(0, QCoreApplication::translate("MainWindow", "10", nullptr));
@@ -1298,19 +1691,39 @@ public:
         comboBox_3->setItemText(2, QCoreApplication::translate("MainWindow", "50", nullptr));
         comboBox_3->setItemText(3, QCoreApplication::translate("MainWindow", "100", nullptr));
 
+<<<<<<< HEAD
         pushButton_5->setText(QCoreApplication::translate("MainWindow", "statistique", nullptr));
         lis->setText(QCoreApplication::translate("MainWindow", "Liste des mat\303\251riels", nullptr));
         ajmateriel_3->setText(QCoreApplication::translate("MainWindow", "ajouter mat\303\251riel", nullptr));
         comboBox_5->setItemText(0, QCoreApplication::translate("MainWindow", "nom", nullptr));
         comboBox_5->setItemText(1, QCoreApplication::translate("MainWindow", "cout", nullptr));
+=======
+        showStatsButton->setText(QCoreApplication::translate("MainWindow", "statistique", nullptr));
+        lis->setText(QCoreApplication::translate("MainWindow", "Liste des mat\303\251riels", nullptr));
+        ajmateriel_3->setText(QCoreApplication::translate("MainWindow", "ajouter mat\303\251riel", nullptr));
+        comboBox_tri->setItemText(0, QCoreApplication::translate("MainWindow", "nom", nullptr));
+        comboBox_tri->setItemText(1, QCoreApplication::translate("MainWindow", "cout", nullptr));
+>>>>>>> f963b09 (projet qt)
 
         labell->setText(QCoreApplication::translate("MainWindow", "trier par", nullptr));
         label->setText(QString());
         label_19->setText(QString());
+<<<<<<< HEAD
         groupBox->setTitle(QCoreApplication::translate("MainWindow", "remplir ce formulaire", nullptr));
         nom->setText(QString());
         lineEditQuantite->setText(QString());
         lineEditEtat->setText(QString());
+=======
+        pushButton_9->setText(QCoreApplication::translate("MainWindow", "supprimer", nullptr));
+        pushButton_11->setText(QCoreApplication::translate("MainWindow", "modifier", nullptr));
+        comboBoxCritere->setItemText(0, QCoreApplication::translate("MainWindow", "id", nullptr));
+        comboBoxCritere->setItemText(1, QCoreApplication::translate("MainWindow", "nom", nullptr));
+        comboBoxCritere->setItemText(2, QCoreApplication::translate("MainWindow", "cout", nullptr));
+
+        groupBox->setTitle(QCoreApplication::translate("MainWindow", "remplir ce formulaire", nullptr));
+        nom->setText(QString());
+        lineEditQuantite->setText(QString());
+>>>>>>> f963b09 (projet qt)
         lineEditCout->setText(QString());
         lineEditGarantie->setText(QString());
         label_2->setText(QCoreApplication::translate("MainWindow", "nom", nullptr));
@@ -1321,6 +1734,7 @@ public:
         label_9->setText(QCoreApplication::translate("MainWindow", "Garantie", nullptr));
         pushButton->setText(QCoreApplication::translate("MainWindow", "ajouter", nullptr));
         pushButton_2->setText(QCoreApplication::translate("MainWindow", "annuler", nullptr));
+<<<<<<< HEAD
         label_20->setText(QString());
         pushButton_6->setText(QCoreApplication::translate("MainWindow", "exporter en PDF", nullptr));
         label_11->setText(QCoreApplication::translate("MainWindow", "\360\237\224\215", nullptr));
@@ -1359,14 +1773,46 @@ public:
         lineEdit_13->setText(QString());
         lineEdit_14->setText(QString());
         lineEdit_15->setText(QString());
+=======
+        pushButton_13->setText(QCoreApplication::translate("MainWindow", "\342\227\200\357\270\217", nullptr));
+        pushButton_genererQR->setText(QCoreApplication::translate("MainWindow", "G\303\251n\303\251rer QR Code\n"
+"", nullptr));
+        comboBoxEtat->setItemText(0, QCoreApplication::translate("MainWindow", "En service", nullptr));
+        comboBoxEtat->setItemText(1, QCoreApplication::translate("MainWindow", "En panne", nullptr));
+        comboBoxEtat->setItemText(2, QCoreApplication::translate("MainWindow", "en maintenance", nullptr));
+        comboBoxEtat->setItemText(3, QCoreApplication::translate("MainWindow", "Hors service", nullptr));
+        comboBoxEtat->setItemText(4, QCoreApplication::translate("MainWindow", "En stock", nullptr));
+
+        label_20->setText(QString());
+        label_qrcode->setText(QString());
+        groupBox_2->setTitle(QCoreApplication::translate("MainWindow", "modifier ce formulaire", nullptr));
+        nom_2->setText(QString());
+        qu->setText(QString());
+        date->setText(QString());
+        cout->setText(QString());
+        garantie->setText(QString());
+>>>>>>> f963b09 (projet qt)
         label_10->setText(QCoreApplication::translate("MainWindow", "nom", nullptr));
         label_14->setText(QCoreApplication::translate("MainWindow", "quantit\303\251", nullptr));
         label_15->setText(QCoreApplication::translate("MainWindow", "cout", nullptr));
         label_16->setText(QCoreApplication::translate("MainWindow", "etat", nullptr));
         label_17->setText(QCoreApplication::translate("MainWindow", "date d'achat", nullptr));
         label_18->setText(QCoreApplication::translate("MainWindow", "Garantie", nullptr));
+<<<<<<< HEAD
         pushButton_3->setText(QCoreApplication::translate("MainWindow", "ajouter", nullptr));
         pushButton_8->setText(QCoreApplication::translate("MainWindow", "annuler", nullptr));
+=======
+        pushButton_3->setText(QCoreApplication::translate("MainWindow", "modifier", nullptr));
+        pushButton_8->setText(QCoreApplication::translate("MainWindow", "annuler", nullptr));
+        pushButton_10->setText(QCoreApplication::translate("MainWindow", "recupurer ", nullptr));
+        pushButton_12->setText(QCoreApplication::translate("MainWindow", "\342\227\200\357\270\217", nullptr));
+        comboBoxEtat_2->setItemText(0, QCoreApplication::translate("MainWindow", "En service", nullptr));
+        comboBoxEtat_2->setItemText(1, QCoreApplication::translate("MainWindow", "En panne", nullptr));
+        comboBoxEtat_2->setItemText(2, QCoreApplication::translate("MainWindow", "en maintenance", nullptr));
+        comboBoxEtat_2->setItemText(3, QCoreApplication::translate("MainWindow", "Hors service", nullptr));
+        comboBoxEtat_2->setItemText(4, QCoreApplication::translate("MainWindow", "En stock", nullptr));
+
+>>>>>>> f963b09 (projet qt)
         label_21->setText(QString());
     } // retranslateUi
 

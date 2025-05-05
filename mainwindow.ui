@@ -303,9 +303,15 @@ QPushButton:pressed {
    <widget class="QStackedWidget" name="stackedWidget">
     <property name="geometry">
      <rect>
+<<<<<<< HEAD
       <x>240</x>
       <y>0</y>
       <width>1051</width>
+=======
+      <x>270</x>
+      <y>-10</y>
+      <width>1021</width>
+>>>>>>> f963b09 (projet qt)
       <height>721</height>
      </rect>
     </property>
@@ -361,8 +367,14 @@ QPushButton#annuler:hover {
 </string>
     </property>
     <property name="currentIndex">
+<<<<<<< HEAD
      <number>0</number>
     </property>
+=======
+     <number>2</number>
+    </property>
+    <widget class="QWidget" name="page_5"/>
+>>>>>>> f963b09 (projet qt)
     <widget class="QWidget" name="page">
      <widget class="QWidget" name="maincontent_2" native="true">
       <property name="geometry">
@@ -386,7 +398,11 @@ QPushButton#annuler:hover {
 }
 </string>
       </property>
+<<<<<<< HEAD
       <widget class="QPushButton" name="pushButton_4">
+=======
+      <widget class="QPushButton" name="btn_export_pdf">
+>>>>>>> f963b09 (projet qt)
        <property name="geometry">
         <rect>
          <x>50</x>
@@ -418,7 +434,11 @@ QPushButton:hover {
       <widget class="QLabel" name="label_5">
        <property name="geometry">
         <rect>
+<<<<<<< HEAD
          <x>810</x>
+=======
+         <x>730</x>
+>>>>>>> f963b09 (projet qt)
          <y>140</y>
          <width>81</width>
          <height>31</height>
@@ -436,10 +456,17 @@ QPushButton:hover {
         <string>🔍</string>
        </property>
       </widget>
+<<<<<<< HEAD
       <widget class="QLineEdit" name="lineEdit_3">
        <property name="geometry">
         <rect>
          <x>860</x>
+=======
+      <widget class="QLineEdit" name="lineEditRecherche">
+       <property name="geometry">
+        <rect>
+         <x>870</x>
+>>>>>>> f963b09 (projet qt)
          <y>140</y>
          <width>181</width>
          <height>31</height>
@@ -547,7 +574,11 @@ QComboBox QAbstractItemView {
         </property>
        </item>
       </widget>
+<<<<<<< HEAD
       <widget class="QPushButton" name="pushButton_5">
+=======
+      <widget class="QPushButton" name="showStatsButton">
+>>>>>>> f963b09 (projet qt)
        <property name="geometry">
         <rect>
          <x>270</x>
@@ -628,7 +659,11 @@ QPushButton:hover {
         <string>ajouter matériel</string>
        </property>
       </widget>
+<<<<<<< HEAD
       <widget class="QComboBox" name="comboBox_5">
+=======
+      <widget class="QComboBox" name="comboBox_tri">
+>>>>>>> f963b09 (projet qt)
        <property name="geometry">
         <rect>
          <x>390</x>
@@ -752,9 +787,205 @@ QComboBox QAbstractItemView {
         </rect>
        </property>
        <property name="styleSheet">
+<<<<<<< HEAD
         <string notr="true">color: rgb(0, 0, 0);</string>
        </property>
       </widget>
+=======
+        <string notr="true">/* ---------------------------- */
+/* Style du tableau principal   */
+/* ---------------------------- */
+QTableView {
+    background-color: #ffffff;              /* Fond blanc */
+    alternate-background-color: #f8f9fa;    /* Alternance de lignes gris clair */
+    gridline-color: #e9ecef;                /* Couleur des lignes de grille */
+    border: 1px solid #dee2e6;              /* Bordure subtile */
+    border-radius: 8px;                     /* Coins arrondis */
+    font-family: &quot;Segoe UI&quot;;                /* Police moderne */
+    font-size: 12px;                        /* Taille de texte */
+}
+
+/* ---------------------------- */
+/* En-têtes du tableau           */
+/* ---------------------------- */
+QHeaderView::section {
+    background-color: #0f3460;              /* Bleu foncé */
+    color: white;                           /* Texte blanc */
+    padding: 12px;                          /* Espacement interne */
+    border: none;                           /* Pas de bordure */
+    font-weight: bold;                      /* Texte en gras */
+    font-size: 13px;                        /* Taille légèrement plus grande */
+}
+
+QHeaderView::section:hover {
+    background-color: #1a5276;              /* Bleu légèrement plus clair au survol */
+}
+
+/* ---------------------------- */
+/* Lignes et sélection           */
+/* ---------------------------- */
+QTableView::item {
+    padding: 8px;                           /* Espacement dans les cellules */
+    border-bottom: 1px solid #e9ecef;       /* Ligne de séparation entre les lignes */
+}
+
+QTableView::item:selected {
+    background-color: #e94560;              /* Rouge vif pour la sélection */
+    color: white;                           /* Texte blanc en sélection */
+}
+
+/* ---------------------------- */
+/* Barre de défilement           */
+/* ---------------------------- */
+QScrollBar:vertical {
+    background: #f8f9fa;                    /* Fond gris clair */
+    width: 10px;                            /* Largeur réduite */
+    margin: 0px;
+}
+
+QScrollBar::handle:vertical {
+    background: #0f3460;                    /* Bleu foncé */
+    min-height: 30px;                       /* Hauteur minimale */
+    border-radius: 4px;                     /* Coins arrondis */
+}
+
+QScrollBar::add-line:vertical, 
+QScrollBar::sub-line:vertical {
+    height: 0px;                            /* Masquer les flèches */
+}</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_9">
+       <property name="geometry">
+        <rect>
+         <x>720</x>
+         <y>530</y>
+         <width>141</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #f44336; /* Fond rouge */
+    color: white; /* Texte blanc */
+    font-size: 14px; /* Taille de la police */
+    font-weight: bold; /* Texte en gras */
+    border: none; /* Pas de bordure */
+    border-radius: 5px; /* Coins arrondis */
+    padding: 10px 20px; /* Espace intérieur */
+}
+
+QPushButton:hover {
+    background-color: #d32f2f; /* Fond rouge foncé au survol */
+}
+
+QPushButton:pressed {
+    background-color: #b71c1c; /* Fond rouge très foncé au clic */
+}</string>
+       </property>
+       <property name="text">
+        <string>supprimer</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="comboBox">
+       <property name="geometry">
+        <rect>
+         <x>620</x>
+         <y>540</y>
+         <width>76</width>
+         <height>26</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_11">
+       <property name="geometry">
+        <rect>
+         <x>870</x>
+         <y>530</y>
+         <width>141</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #2196f3; /* Fond bleu */
+    color: white; /* Texte blanc */
+    font-size: 14px; /* Taille de la police */
+    font-weight: bold; /* Texte en gras */
+    border: none; /* Pas de bordure */
+    border-radius: 5px; /* Coins arrondis */
+    padding: 10px 20px; /* Espace intérieur */
+}
+
+QPushButton:hover {
+    background-color: #1976d2; /* Fond bleu foncé au survol */
+}
+
+QPushButton:pressed {
+    background-color: #0d47a1; /* Fond bleu très foncé au clic */
+}</string>
+       </property>
+       <property name="text">
+        <string>modifier</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="comboBoxCritere">
+       <property name="geometry">
+        <rect>
+         <x>780</x>
+         <y>140</y>
+         <width>81</width>
+         <height>31</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QComboBox {
+    background-color: #f5f5f5;  /* Fond gris clair */
+    border: 2px solid #0f3460;  /* Bordure bleu foncé */
+    border-radius: 8px;  /* Coins arrondis */
+    padding: 5px 10px;  /* Espacement interne */
+    font-size: 14px;
+    color: #333;  /* Texte noir */
+}
+
+QComboBox::drop-down {
+    border: none;
+    background: transparent;
+    width: 25px;
+}
+
+QComboBox::down-arrow {
+    image: url(dropdown-icon.png);  /* Icône personnalisée */
+    width: 16px;
+    height: 16px;
+}
+
+QComboBox QAbstractItemView {
+    background-color: white;
+    border: 1px solid #0f3460;  /* Bordure bleu foncé */
+    selection-background-color: #e94560;  /* Fond rouge clair au survol */
+    selection-color: white;  /* Texte blanc */
+    padding: 5px;
+}
+</string>
+       </property>
+       <item>
+        <property name="text">
+         <string>id</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>nom</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>cout</string>
+        </property>
+       </item>
+      </widget>
+>>>>>>> f963b09 (projet qt)
      </widget>
     </widget>
     <widget class="QWidget" name="page_2">
@@ -835,6 +1066,7 @@ QLineEdit:focus {
         <string/>
        </property>
       </widget>
+<<<<<<< HEAD
       <widget class="QLineEdit" name="lineEditEtat">
        <property name="geometry">
         <rect>
@@ -862,6 +1094,8 @@ QLineEdit:focus {
         <string/>
        </property>
       </widget>
+=======
+>>>>>>> f963b09 (projet qt)
       <widget class="QLineEdit" name="lineEditCout">
        <property name="geometry">
         <rect>
@@ -1115,6 +1349,71 @@ QPushButton:pressed {
         </rect>
        </property>
       </widget>
+<<<<<<< HEAD
+=======
+      <widget class="QPushButton" name="pushButton_13">
+       <property name="geometry">
+        <rect>
+         <x>540</x>
+         <y>580</y>
+         <width>141</width>
+         <height>71</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>◀️</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="pushButton_genererQR">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>470</y>
+         <width>171</width>
+         <height>61</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Générer QR Code
+</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="comboBoxEtat">
+       <property name="geometry">
+        <rect>
+         <x>190</x>
+         <y>265</y>
+         <width>291</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>En service</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>En panne</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>en maintenance</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Hors service</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>En stock</string>
+        </property>
+       </item>
+      </widget>
+>>>>>>> f963b09 (projet qt)
      </widget>
      <widget class="QLabel" name="label_20">
       <property name="geometry">
@@ -1135,13 +1434,49 @@ QPushButton:pressed {
        <bool>true</bool>
       </property>
      </widget>
+<<<<<<< HEAD
+=======
+     <widget class="QLabel" name="label_qrcode">
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>510</y>
+        <width>150</width>
+        <height>150</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="pageStatistiques">
+     <widget class="QWidget" name="widgetStats" native="true">
+      <property name="geometry">
+       <rect>
+        <x>89</x>
+        <y>39</y>
+        <width>831</width>
+        <height>561</height>
+       </rect>
+      </property>
+     </widget>
+>>>>>>> f963b09 (projet qt)
     </widget>
     <widget class="QWidget" name="page_3">
      <widget class="QStackedWidget" name="stackedWidget_2">
       <property name="geometry">
        <rect>
+<<<<<<< HEAD
         <x>0</x>
         <y>0</y>
+=======
+        <x>10</x>
+        <y>30</y>
+>>>>>>> f963b09 (projet qt)
         <width>1021</width>
         <height>691</height>
        </rect>
@@ -1150,6 +1485,7 @@ QPushButton:pressed {
        <string notr="true">background-color: rgb(255, 255, 255);</string>
       </property>
       <property name="currentIndex">
+<<<<<<< HEAD
        <number>1</number>
       </property>
       <widget class="QWidget" name="page_4">
@@ -1157,6 +1493,15 @@ QPushButton:pressed {
         <property name="geometry">
          <rect>
           <x>-20</x>
+=======
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="stackedWidget_2Page1">
+       <widget class="QStackedWidget" name="stackedWidgetStats">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+>>>>>>> f963b09 (projet qt)
           <y>10</y>
           <width>1061</width>
           <height>711</height>
@@ -1175,6 +1520,7 @@ QPushButton:pressed {
 }
 </string>
         </property>
+<<<<<<< HEAD
         <widget class="QPushButton" name="pushButton_6">
          <property name="geometry">
           <rect>
@@ -1622,6 +1968,12 @@ QPushButton:hover {
        </widget>
       </widget>
       <widget class="QWidget" name="page_5">
+=======
+        <widget class="QWidget" name="stackedWidgetStatsPage1" native="true"/>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="stackedWidget_2Page2">
+>>>>>>> f963b09 (projet qt)
        <widget class="QGroupBox" name="groupBox_2">
         <property name="geometry">
          <rect>
@@ -1645,7 +1997,11 @@ QPushButton:hover {
         <property name="title">
          <string>modifier ce formulaire</string>
         </property>
+<<<<<<< HEAD
         <widget class="QLineEdit" name="lineEdit_10">
+=======
+        <widget class="QLineEdit" name="nom_2">
+>>>>>>> f963b09 (projet qt)
          <property name="geometry">
           <rect>
            <x>190</x>
@@ -1672,7 +2028,11 @@ QLineEdit:focus {
           <string/>
          </property>
         </widget>
+<<<<<<< HEAD
         <widget class="QLineEdit" name="lineEdit_11">
+=======
+        <widget class="QLineEdit" name="qu">
+>>>>>>> f963b09 (projet qt)
          <property name="geometry">
           <rect>
            <x>190</x>
@@ -1699,7 +2059,11 @@ QLineEdit:focus {
           <string/>
          </property>
         </widget>
+<<<<<<< HEAD
         <widget class="QLineEdit" name="lineEdit_12">
+=======
+        <widget class="QLineEdit" name="date">
+>>>>>>> f963b09 (projet qt)
          <property name="geometry">
           <rect>
            <x>190</x>
@@ -1726,6 +2090,7 @@ QLineEdit:focus {
           <string/>
          </property>
         </widget>
+<<<<<<< HEAD
         <widget class="QLineEdit" name="lineEdit_13">
          <property name="geometry">
           <rect>
@@ -1754,6 +2119,9 @@ QLineEdit:focus {
          </property>
         </widget>
         <widget class="QLineEdit" name="lineEdit_14">
+=======
+        <widget class="QLineEdit" name="cout">
+>>>>>>> f963b09 (projet qt)
          <property name="geometry">
           <rect>
            <x>190</x>
@@ -1780,7 +2148,11 @@ QLineEdit:focus {
           <string/>
          </property>
         </widget>
+<<<<<<< HEAD
         <widget class="QLineEdit" name="lineEdit_15">
+=======
+        <widget class="QLineEdit" name="garantie">
+>>>>>>> f963b09 (projet qt)
          <property name="geometry">
           <rect>
            <x>190</x>
@@ -1956,7 +2328,11 @@ QPushButton:pressed {
 }</string>
          </property>
          <property name="text">
+<<<<<<< HEAD
           <string>ajouter</string>
+=======
+          <string>modifier</string>
+>>>>>>> f963b09 (projet qt)
          </property>
         </widget>
         <widget class="QPushButton" name="pushButton_8">
@@ -1991,6 +2367,99 @@ QPushButton:pressed {
           <string>annuler</string>
          </property>
         </widget>
+<<<<<<< HEAD
+=======
+        <widget class="QPushButton" name="pushButton_10">
+         <property name="geometry">
+          <rect>
+           <x>360</x>
+           <y>10</y>
+           <width>141</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
+    background-color: #2196f3; /* Fond bleu */
+    color: white; /* Texte blanc */
+    font-size: 14px; /* Taille de la police */
+    font-weight: bold; /* Texte en gras */
+    border: none; /* Pas de bordure */
+    border-radius: 5px; /* Coins arrondis */
+    padding: 10px 20px; /* Espace intérieur */
+}
+
+QPushButton:hover {
+    background-color: #1976d2; /* Fond bleu foncé au survol */
+}
+
+QPushButton:pressed {
+    background-color: #0d47a1; /* Fond bleu très foncé au clic */
+}</string>
+         </property>
+         <property name="text">
+          <string>recupurer </string>
+         </property>
+        </widget>
+        <widget class="QComboBox" name="comboBox_2">
+         <property name="geometry">
+          <rect>
+           <x>250</x>
+           <y>20</y>
+           <width>76</width>
+           <height>26</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_12">
+         <property name="geometry">
+          <rect>
+           <x>540</x>
+           <y>580</y>
+           <width>141</width>
+           <height>71</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>◀️</string>
+         </property>
+        </widget>
+        <widget class="QComboBox" name="comboBoxEtat_2">
+         <property name="geometry">
+          <rect>
+           <x>200</x>
+           <y>270</y>
+           <width>291</width>
+           <height>51</height>
+          </rect>
+         </property>
+         <item>
+          <property name="text">
+           <string>En service</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>En panne</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>en maintenance</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Hors service</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>En stock</string>
+          </property>
+         </item>
+        </widget>
+>>>>>>> f963b09 (projet qt)
        </widget>
        <widget class="QLabel" name="label_21">
         <property name="geometry">
@@ -2012,7 +2481,11 @@ QPushButton:pressed {
         </property>
        </widget>
       </widget>
+<<<<<<< HEAD
       <widget class="QWidget" name="page_6"/>
+=======
+      <widget class="QWidget" name="stackedWidget_2Page3"/>
+>>>>>>> f963b09 (projet qt)
      </widget>
     </widget>
    </widget>
