@@ -4,8 +4,6 @@
 #include <QSqlQuery>
 #include <QSqlDatabase>
 #include <QDate>
-<<<<<<< HEAD
-=======
 #include <QPdfWriter>
 #include <QPainter>
 #include <QFileDialog>
@@ -20,7 +18,6 @@
 #include <QMap>
 #include <QPainter>
 
->>>>>>> f963b09 (projet qt)
 // 🔹 Constructeur par défaut
 Materiel::Materiel() {
     id = 0;
@@ -42,15 +39,6 @@ Materiel::Materiel(int id, double cout, QString nom, int quantite, QString etat,
     this->dateachat = dateachat;
     this->garantie = garantie;
 }
-<<<<<<< HEAD
-
-bool Materiel::ajouter() {
-    QSqlQuery query;
-
-    // 📅 Date actuelle au format "DD-MM-YYYY"
-    dateachat = QDate::currentDate();
-    QString dateachatStr = dateachat.toString("dd-MM-yyyy");
-=======
 QString Materiel::getNom() const {
     return this->nom;
 }
@@ -80,31 +68,19 @@ bool Materiel::ajouter() {
     // 📅 Date actuelle au format "YYYY-MM-DD" (correct pour Oracle)
     dateachat = QDate::currentDate();
     QString dateachatStr = dateachat.toString("yyyy-MM-dd");
->>>>>>> f963b09 (projet qt)
 
     qDebug() << "📅 Date achat insérée : " << dateachatStr; // 🔍 Debug
 
     // 🔹 Requête SQL avec TO_DATE() pour Oracle
-<<<<<<< HEAD
-    query.prepare("INSERT INTO materiel (id, cout, nom, quantite, etat, dateachat, garantie) "
-                  "VALUES (:id, :cout, :nom, :quantite, :etat, TO_DATE(:dateachat, 'YYYY-MM-DD'), :garantie)");
-
-    query.bindValue(":id", id);
-=======
     query.prepare("INSERT INTO materiel (cout, nom, quantite, etat, dateachat, garantie) "
                   "VALUES (:cout, :nom, :quantite, :etat, TO_DATE(:dateachat, 'YYYY-MM-DD'), :garantie)");
 
     //query.bindValue(":id", id);
->>>>>>> f963b09 (projet qt)
     query.bindValue(":cout", cout);
     query.bindValue(":nom", nom);
     query.bindValue(":quantite", quantite);
     query.bindValue(":etat", etat);
-<<<<<<< HEAD
-    query.bindValue(":dateachat", dateachatStr);
-=======
     query.bindValue(":dateachat", dateachatStr); // 🛠 Envoyer le format correct
->>>>>>> f963b09 (projet qt)
     query.bindValue(":garantie", garantie);
 
     if (query.exec()) {
@@ -114,19 +90,6 @@ bool Materiel::ajouter() {
         qDebug() << "❌ Erreur SQL :" << query.lastError().text();
         return false;
     }
-<<<<<<< HEAD
-}
-
-
-// 🔹 Afficher la liste des matériels
-QSqlQueryModel* Materiel::afficher() {
-    QSqlQueryModel* model = new QSqlQueryModel();
-    model->setQuery("SELECT * FROM materiel");
-   //  model->setQuery("SELECT id, nom, cout, quantité, etat, dateachat, garantie FROM materiel");
-    model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
-    model->setHeaderData(1, Qt::Horizontal, QObject::tr("Coût"));
-    model->setHeaderData(2, Qt::Horizontal, QObject::tr("Nom"));
-=======
     if (quantite <= 5) { // Vérification immédiate
         QTimer::singleShot(100, [this]() { // Petit délai pour laisser l'opération se compléter
             verifierStockCritique();
@@ -153,7 +116,7 @@ bool Materiel::recupererParId(int id) {
     etat = query.value(3).toString();
     dateachat = query.value(4).toDate();
     garantie = query.value(5).toString();
-  //  projetid = query.value(6).toInt();
+    //  projetid = query.value(6).toInt();
 
 
     return true;
@@ -175,21 +138,13 @@ QSqlQueryModel* Materiel::afficher(const QString &sortBy) {
     model->setHeaderData(0, Qt::Horizontal, QObject::tr("ID"));
     model->setHeaderData(1, Qt::Horizontal, QObject::tr("Nom"));
     model->setHeaderData(2, Qt::Horizontal, QObject::tr("Cout"));
->>>>>>> f963b09 (projet qt)
     model->setHeaderData(3, Qt::Horizontal, QObject::tr("Quantité"));
     model->setHeaderData(4, Qt::Horizontal, QObject::tr("État"));
     model->setHeaderData(5, Qt::Horizontal, QObject::tr("Dateachat"));
     model->setHeaderData(6, Qt::Horizontal, QObject::tr("Garantie"));
-<<<<<<< HEAD
-    model->insertColumn(model->columnCount());
-    model->insertColumn(model->columnCount());
-    model->setHeaderData(8, Qt::Horizontal, QObject::tr("Update"));
-    model->setHeaderData(9, Qt::Horizontal, QObject::tr("Delete"));
-=======
 
 
 
->>>>>>> f963b09 (projet qt)
     return model;
 }
 
@@ -199,12 +154,6 @@ bool Materiel::supprimer(int id) {
         qDebug() << "⚠️ ID invalide ! L'ID doit être un entier positif.";
         return false;
     }
-<<<<<<< HEAD
-    for (tableViewMateriel *item : selectedItems) {
-        int row = item->row();
-        QString id = ui->tw->item(row, 0)->text();
-=======
->>>>>>> f963b09 (projet qt)
 
     QSqlQuery query;
     query.prepare("DELETE FROM materiel WHERE id = :id");
@@ -220,17 +169,6 @@ bool Materiel::supprimer(int id) {
 }
 
 // 🔹 Modifier un matériel
-<<<<<<< HEAD
-bool Materiel::modifier(int id,
-                        double cout,
-                        QString nom,
-                        int quantite,
-                        QString etat,
-                        QDate dateachat,
-                        QString garantie ) {
-    if (id <= 0) {
-        qDebug() << "⚠️ ID invalide ! L'ID doit être un entier positif.";
-=======
 
 // Dans materiel.cpp
 bool Materiel::modifier(int id, double cout, QString nom, int quantite, QString etat, QDate dateachat, QString garantie)
@@ -243,34 +181,10 @@ bool Materiel::modifier(int id, double cout, QString nom, int quantite, QString 
     QSqlDatabase db = QSqlDatabase::database();
     if(!db.isOpen()) {
         qDebug() << "Base de données non connectée";
->>>>>>> f963b09 (projet qt)
         return false;
     }
 
     QSqlQuery query;
-<<<<<<< HEAD
-    QString dateachatStr = dateachat.toString("yyyy-MM-dd"); // Format Oracle
-
-    query.prepare("UPDATE materiel SET cout = :cout, nom = :nom, quantite = :quantite, "
-                  "etat = :etat, dateachat = TO_DATE(:dateachat, 'YYYY-MM-DD'), garantie = :garantie "
-                  "WHERE id = :id");
-
-    query.bindValue(":cout", cout);
-    query.bindValue(":nom", nom);
-    query.bindValue(":quantite", quantite);
-    query.bindValue(":etat", etat);
-    query.bindValue(":dateachat", dateachatStr);
-    query.bindValue(":garantie", garantie);
-    query.bindValue(":id", id);
-
-    if (query.exec()) {
-        qDebug() << "✅ Matériel avec ID" << id << "modifié avec succès !";
-        return true;
-    } else {
-        qDebug() << "❌ Erreur SQL :" << query.lastError().text();
-        return false;
-    }
-=======
     QString dateStr = dateachat.toString("yyyy-MM-dd");
 
     query.prepare("UPDATE MATERIEL SET "
@@ -430,5 +344,4 @@ void Materiel::verifierStockCritique(QWidget *parent) {
         msgBox.setStyleSheet("QLabel{ color: red; }");
         msgBox.exec();
     }
->>>>>>> f963b09 (projet qt)
 }

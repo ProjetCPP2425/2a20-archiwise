@@ -7,8 +7,6 @@
 *****************************************************************************/
 
 #include "../../../mainwindow.h"
-<<<<<<< HEAD
-=======
 #include <QtGui/qtextcursor.h>
 #include <QtGui/qscreen.h>
 #include <QtCharts/qlineseries.h>
@@ -34,7 +32,6 @@
 #include <QtCore/qabstractitemmodel.h>
 #include <QtCharts/qxyseries.h>
 #include <QtCore/qabstractitemmodel.h>
->>>>>>> f963b09 (projet qt)
 #include <QtCore/qmetatype.h>
 
 #include <QtCore/qtmochelpers.h>
@@ -64,19 +61,12 @@ namespace {
 struct qt_meta_stringdata_CLASSMainWindowENDCLASS_t {};
 constexpr auto qt_meta_stringdata_CLASSMainWindowENDCLASS = QtMocHelpers::stringData(
     "MainWindow",
-<<<<<<< HEAD
-    "on_ajmateriel_3_clicked",
-    "",
-    "on_pushButton_clicked"
-=======
     "afficherListeMaterielsCritiques",
     "",
     "on_ajmateriel_3_clicked",
     "on_btnSupprimer_clicked",
     "on_pushButton_clicked",
     "on_pushButton_9_clicked",
-    "on_pushButton_2_clicked",
-    "on_pushButton_8_clicked",
     "on_pushButton_10_clicked",
     "verifierStockAuto",
     "on_pushButton_3_clicked",
@@ -90,7 +80,6 @@ constexpr auto qt_meta_stringdata_CLASSMainWindowENDCLASS = QtMocHelpers::string
     "on_btn_export_pdf_clicked",
     "on_pushButton_genererQR_clicked",
     "on_showStatsButton_clicked"
->>>>>>> f963b09 (projet qt)
 );
 #else  // !QT_MOC_HAS_STRINGDATA
 #error "qtmochelpers.h not found or too old."
@@ -103,55 +92,39 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainWindowENDCLASS[] = {
       12,       // revision
        0,       // classname
        0,    0, // classinfo
-<<<<<<< HEAD
-       2,   14, // methods
-=======
-      18,   14, // methods
->>>>>>> f963b09 (projet qt)
+      16,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-<<<<<<< HEAD
-       0,       // signalCount
-
- // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,   26,    2, 0x08,    1 /* Private */,
-       3,    0,   27,    2, 0x08,    2 /* Private */,
-=======
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags, initial metatype offsets
-       1,    0,  122,    2, 0x06,    1 /* Public */,
+       1,    0,  110,    2, 0x06,    1 /* Public */,
 
  // slots: name, argc, parameters, tag, flags, initial metatype offsets
-       3,    0,  123,    2, 0x08,    2 /* Private */,
-       4,    0,  124,    2, 0x08,    3 /* Private */,
-       5,    0,  125,    2, 0x08,    4 /* Private */,
-       6,    0,  126,    2, 0x08,    5 /* Private */,
-       7,    0,  127,    2, 0x08,    6 /* Private */,
-       8,    0,  128,    2, 0x08,    7 /* Private */,
-       9,    0,  129,    2, 0x08,    8 /* Private */,
-      10,    0,  130,    2, 0x08,    9 /* Private */,
-      11,    0,  131,    2, 0x08,   10 /* Private */,
-      12,    0,  132,    2, 0x08,   11 /* Private */,
-      13,    0,  133,    2, 0x08,   12 /* Private */,
-      14,    0,  134,    2, 0x08,   13 /* Private */,
-      15,    1,  135,    2, 0x08,   14 /* Private */,
-      17,    1,  138,    2, 0x08,   16 /* Private */,
-      19,    0,  141,    2, 0x08,   18 /* Private */,
-      20,    0,  142,    2, 0x08,   19 /* Private */,
-      21,    0,  143,    2, 0x08,   20 /* Private */,
+       3,    0,  111,    2, 0x08,    2 /* Private */,
+       4,    0,  112,    2, 0x08,    3 /* Private */,
+       5,    0,  113,    2, 0x08,    4 /* Private */,
+       6,    0,  114,    2, 0x08,    5 /* Private */,
+       7,    0,  115,    2, 0x08,    6 /* Private */,
+       8,    0,  116,    2, 0x08,    7 /* Private */,
+       9,    0,  117,    2, 0x08,    8 /* Private */,
+      10,    0,  118,    2, 0x08,    9 /* Private */,
+      11,    0,  119,    2, 0x08,   10 /* Private */,
+      12,    0,  120,    2, 0x08,   11 /* Private */,
+      13,    1,  121,    2, 0x08,   12 /* Private */,
+      15,    1,  124,    2, 0x08,   14 /* Private */,
+      17,    0,  127,    2, 0x08,   16 /* Private */,
+      18,    0,  128,    2, 0x08,   17 /* Private */,
+      19,    0,  129,    2, 0x08,   18 /* Private */,
 
  // signals: parameters
     QMetaType::Void,
->>>>>>> f963b09 (projet qt)
 
  // slots: parameters
     QMetaType::Void,
     QMetaType::Void,
-<<<<<<< HEAD
-=======
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -160,14 +133,11 @@ Q_CONSTINIT static const uint qt_meta_data_CLASSMainWindowENDCLASS[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void,
-    QMetaType::Void, QMetaType::Int,   16,
-    QMetaType::Void, QMetaType::QString,   18,
+    QMetaType::Void, QMetaType::Int,   14,
+    QMetaType::Void, QMetaType::QString,   16,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
->>>>>>> f963b09 (projet qt)
 
        0        // eod
 };
@@ -181,11 +151,6 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
     qt_incomplete_metaTypeArray<qt_meta_stringdata_CLASSMainWindowENDCLASS_t,
         // Q_OBJECT / Q_GADGET
         QtPrivate::TypeAndForceComplete<MainWindow, std::true_type>,
-<<<<<<< HEAD
-        // method 'on_ajmateriel_3_clicked'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'on_pushButton_clicked'
-=======
         // method 'afficherListeMaterielsCritiques'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'on_ajmateriel_3_clicked'
@@ -195,10 +160,6 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
         // method 'on_pushButton_clicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'on_pushButton_9_clicked'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'on_pushButton_2_clicked'
-        QtPrivate::TypeAndForceComplete<void, std::false_type>,
-        // method 'on_pushButton_8_clicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'on_pushButton_10_clicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
@@ -223,7 +184,6 @@ Q_CONSTINIT const QMetaObject MainWindow::staticMetaObject = { {
         // method 'on_pushButton_genererQR_clicked'
         QtPrivate::TypeAndForceComplete<void, std::false_type>,
         // method 'on_showStatsButton_clicked'
->>>>>>> f963b09 (projet qt)
         QtPrivate::TypeAndForceComplete<void, std::false_type>
     >,
     nullptr
@@ -235,32 +195,22 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         auto *_t = static_cast<MainWindow *>(_o);
         (void)_t;
         switch (_id) {
-<<<<<<< HEAD
-        case 0: _t->on_ajmateriel_3_clicked(); break;
-        case 1: _t->on_pushButton_clicked(); break;
-        default: ;
-        }
-    }
-    (void)_a;
-=======
         case 0: _t->afficherListeMaterielsCritiques(); break;
         case 1: _t->on_ajmateriel_3_clicked(); break;
         case 2: _t->on_btnSupprimer_clicked(); break;
         case 3: _t->on_pushButton_clicked(); break;
         case 4: _t->on_pushButton_9_clicked(); break;
-        //case 5: _t->on_pushButton_2_clicked(); break;
-       // case 6: _t->on_pushButton_8_clicked(); break;
-        case 7: _t->on_pushButton_10_clicked(); break;
-        case 8: _t->verifierStockAuto(); break;
-        case 9: _t->on_pushButton_3_clicked(); break;
-        case 10: _t->on_pushButton_11_clicked(); break;
-        case 11: _t->on_pushButton_12_clicked(); break;
-        case 12: _t->on_pushButton_13_clicked(); break;
-        case 13: _t->on_comboBox_tri_currentIndexChanged((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
-        case 14: _t->on_recherche_textChanged((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
-        case 15: _t->on_btn_export_pdf_clicked(); break;
-        case 16: _t->on_pushButton_genererQR_clicked(); break;
-        case 17: _t->on_showStatsButton_clicked(); break;
+        case 5: _t->on_pushButton_10_clicked(); break;
+        case 6: _t->verifierStockAuto(); break;
+        case 7: _t->on_pushButton_3_clicked(); break;
+        case 8: _t->on_pushButton_11_clicked(); break;
+        case 9: _t->on_pushButton_12_clicked(); break;
+        case 10: _t->on_pushButton_13_clicked(); break;
+        case 11: _t->on_comboBox_tri_currentIndexChanged((*reinterpret_cast< std::add_pointer_t<int>>(_a[1]))); break;
+        case 12: _t->on_recherche_textChanged((*reinterpret_cast< std::add_pointer_t<QString>>(_a[1]))); break;
+        case 13: _t->on_btn_export_pdf_clicked(); break;
+        case 14: _t->on_pushButton_genererQR_clicked(); break;
+        case 15: _t->on_showStatsButton_clicked(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -273,7 +223,6 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
             }
         }
     }
->>>>>>> f963b09 (projet qt)
 }
 
 const QMetaObject *MainWindow::metaObject() const
@@ -295,25 +244,13 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-<<<<<<< HEAD
-        if (_id < 2)
+        if (_id < 16)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 16;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 2)
+        if (_id < 16)
             *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 2;
-    }
-    return _id;
-}
-=======
-        if (_id < 18)
-            qt_static_metacall(this, _c, _id, _a);
-        _id -= 18;
-    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 18)
-            *reinterpret_cast<QMetaType *>(_a[0]) = QMetaType();
-        _id -= 18;
+        _id -= 16;
     }
     return _id;
 }
@@ -323,5 +260,4 @@ void MainWindow::afficherListeMaterielsCritiques()
 {
     QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
 }
->>>>>>> f963b09 (projet qt)
 QT_WARNING_POP

@@ -3,10 +3,6 @@
 #include <QSqlQuery>
 #include <QMessageBox>
 #include <QDebug>
-<<<<<<< HEAD
-#include <QSqlError> // Pour QSqlError
-#include <QSqlDatabase> // Pour QSqlDatabase (si vous l'utilisez)
-=======
 #include <QSqlError>
 #include <QRegularExpression>
 #include <QRegularExpressionValidator>
@@ -20,27 +16,14 @@
 #include <QtCharts/QChartView>
 #include <QtCharts/QPieSeries>
 #include <QtCharts/QPieSlice>
-#include "  ..\..\..\..\Downloads\qrcode.h "
+#include "qrcode.h "
 using namespace qrcodegen;
 
->>>>>>> f963b09 (projet qt)
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-<<<<<<< HEAD
-    model = new QSqlQueryModel(this);
-    // Connect the "Ajouter" button to the slot
-    connect(ui->pushButton, &QPushButton::clicked, this, &MainWindow::on_pushButton_clicked);
-
-}
-
-MainWindow::~MainWindow()
-{
-    delete ui;
-
-=======
     ui->stackedWidget->setCurrentIndex(1);
     remplirComboBoxEtats();
 
@@ -54,7 +37,7 @@ MainWindow::~MainWindow()
 
     // Connecter les boutons
     connect(ui->pushButton, &QPushButton::clicked, this, &MainWindow::on_pushButton_clicked);
-connect(ui->pushButton_11, &QPushButton::clicked, this, &MainWindow::on_pushButton_11_clicked);
+    connect(ui->pushButton_11, &QPushButton::clicked, this, &MainWindow::on_pushButton_11_clicked);
     connect(ui->pushButton_9, &QPushButton::clicked, this, &MainWindow::on_pushButton_9_clicked);
     connect(ui->pushButton_10, &QPushButton::clicked, this, &MainWindow::on_pushButton_10_clicked);
     connect(ui->pushButton_3, &QPushButton::clicked, this, &MainWindow::on_pushButton_3_clicked);
@@ -148,69 +131,10 @@ void MainWindow::afficherMateriel() {
 MainWindow::~MainWindow()
 {
     delete ui;
->>>>>>> f963b09 (projet qt)
 }
 
 void MainWindow::on_ajmateriel_3_clicked()
 {
-<<<<<<< HEAD
-    ui->stackedWidget->setCurrentIndex(1);
-}
-
-
-void MainWindow::on_pushButton_clicked()
-{
-    // Récupérer les valeurs saisies
-    QString nom = ui->nom->text().trimmed();
-    double cout = ui->lineEditCout->text().toDouble();
-    int quantite = ui->lineEditQuantite->text().toInt();
-    QString etat = ui->lineEditEtat->text().trimmed();
-    QString dateachat = ui->dateEditAchat->date().toString("yyyy-MM-dd"); // Conversion correcte pour SQL
-    QString garantie = ui->lineEditGarantie->text().trimmed();
-
-    // Validation des entrées
-    if (nom.isEmpty() || etat.isEmpty() || garantie.isEmpty()) {
-        QMessageBox::warning(this, "Erreur", "Veuillez remplir tous les champs !");
-        return;
-    }
-
-    // Vérification que le coût et la quantité sont valides
-    if (cout <= 0 || quantite <= 0) {
-        QMessageBox::warning(this, "Erreur", "Le coût et la quantité doivent être supérieurs à zéro !");
-        return;
-    }
-
-    // Requête préparée pour ajouter un matériel
-    QSqlQuery query;
-    query.prepare("INSERT INTO materiel (nom, cout, quantite, etat, dateachat, garantie) "
-                  "VALUES (:nom, :cout, :quantite, :etat, TO_DATE(:dateachat, 'YYYY-MM-DD'), :garantie)");
-    query.bindValue(":nom", nom);
-    query.bindValue(":cout", cout);
-    query.bindValue(":quantite", quantite);
-    query.bindValue(":etat", etat);
-    query.bindValue(":dateachat", dateachat); // Utilisation correcte du nom de la colonne
-    query.bindValue(":garantie", garantie);
-
-    // Exécution de la requête
-    if (query.exec()) {
-        QMessageBox::information(this, "Succès", "Matériel ajouté avec succès !");
-
-        // Effacer les champs après ajout
-        ui->nom->clear();
-        ui->lineEditCout->clear();
-        ui->lineEditQuantite->clear();
-        ui->lineEditEtat->clear();
-        ui->dateEditAchat->setDate(QDate::currentDate());
-        ui->lineEditGarantie->clear();
-
-        // Retour à la page principale
-        ui->stackedWidget->setCurrentIndex(0);
-
-        // Rafraîchir la table view pour afficher les éléments mis à jour
-        ui->tableViewMateriel->setModel(materiel.afficher());
-    } else {
-        QMessageBox::critical(this, "Erreur SQL", "Échec de l'ajout du matériel : " + query.lastError().text());
-=======
     ui->stackedWidget->setCurrentIndex(2);
 }
 
@@ -273,16 +197,13 @@ void MainWindow::on_pushButton_clicked() {
         QMessageBox::information(this, "Succès", "Matériel ajouté avec succès !");
         afficherMateriel();
         remplirComboBox();
-        ui->stackedWidget->setCurrentIndex(0);
+        ui->stackedWidget->setCurrentIndex(1);
     } else {
         QMessageBox::critical(this, "Erreur", "Échec de l'ajout du matériel !");
->>>>>>> f963b09 (projet qt)
     }
 }
 
 
-<<<<<<< HEAD
-=======
 void MainWindow::on_pushButton_9_clicked()
 {
     int id = ui->comboBox->currentData().toInt();
@@ -387,8 +308,15 @@ void MainWindow::on_pushButton_3_clicked()
     }
 }
 void MainWindow::on_pushButton_11_clicked()
-{   ui->stackedWidget->setCurrentIndex(4);
+
+{
+    // 1. Accéder à la page parente (page_3) dans le QStackedWidget principal
+    ui->stackedWidget->setCurrentIndex(4); // Index 4 = page_3
+
+    // 2. Accéder au formulaire de modification dans le QStackedWidget imbriqué (stackedWidget_2)
+    ui->stackedWidget_2->setCurrentIndex(1); // Index 1 = page de modification
 }
+
 void MainWindow::on_btnSupprimer_clicked()
 {
     int id = ui->comboBox->currentData().toInt();
@@ -409,7 +337,7 @@ void MainWindow::on_btnSupprimer_clicked()
 
 void MainWindow::on_pushButton_12_clicked()
 {
-     ui->stackedWidget->setCurrentIndex(0);
+    ui->stackedWidget->setCurrentIndex(0);
 }
 
 
@@ -563,4 +491,3 @@ void MainWindow::on_showStatsButton_clicked()
     updateMaterielStats();
     ui->stackedWidget->setCurrentWidget(ui->pageStatistiques);
 }
->>>>>>> f963b09 (projet qt)
