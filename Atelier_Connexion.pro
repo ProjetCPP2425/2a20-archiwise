@@ -1,44 +1,61 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2018-10-26T21:45:23
-#
-#-------------------------------------------------
+QT += core gui sql printsupport charts
+QT += core gui widgets sql texttospeech charts
+QT += printsupport quickwidgets
+QT += network
+QT += serialport
 
-QT       += core gui sql
+QT += core gui sql network
 
+QT += core gui sql printsupport
+QT += charts
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+CONFIG += c++17
+CONFIG += qt6 c++17
 
 TARGET = Atelier_Connexion
 TEMPLATE = app
 
-# The following define makes your compiler emit warnings if you use
-# any feature of Qt which has been marked as deprecated (the exact warnings
-# depend on your compiler). Please consult the documentation of the
-# deprecated API in order to know how to port your code away from it.
 DEFINES += QT_DEPRECATED_WARNINGS
 
-# You can also make your code fail to compile if you use deprecated APIs.
-# In order to do so, uncomment the following line.
-# You can also select to disable deprecated APIs only up to a certain version of Qt.
-#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
-
-CONFIG += c++11
-
 SOURCES += \
+    buttondelegate.cpp \
+    chantier.cpp \
+    chantierdelegate.cpp \
     client.cpp \
-        main.cpp \
-        mainwindow.cpp \
-    connection.cpp
+    main.cpp \
+    mainwindow.cpp \
+    connection.cpp \
+    partenaire.cpp\
+    barchartwidget.cpp\
+    employe.cpp \
+    projet.cpp \
+    serialtemperaturemanager.cpp \
+    sms.cpp
 
 HEADERS += \
+    buttondelegate.h \
+    chantier.h \
+    chantierdelegate.h \
     client.h \
-        mainwindow.h \
-    connection.h
+    mainwindow.h \
+    connection.h \
+    partenaire.h\
+    barchartwidget.h\
+    employe.h \
+    projet.h \
+    serialtemperaturemanager.h \
+    sms.h
 
 FORMS += \
-        mainwindow.ui
+    mainwindow.ui
 
-# Default rules for deployment.
+# Règles de déploiement (à ne pas toucher sauf besoin spécifique)
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES +=
+
+RESOURCES += \
+    Ressources.qrc
